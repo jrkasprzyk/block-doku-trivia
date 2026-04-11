@@ -5,8 +5,21 @@
 
 #include <algorithm>
 #include <sstream>
+#include <unordered_map>
+#include <filesystem>
+#include <memory>
 
 namespace td {
+
+// Private implementation to keep raylib types out of the public header.
+struct Renderer::Impl {
+    bool audioInitialized = false;
+    std::unordered_map<std::string, Sound> sfx;
+    std::unordered_map<std::string, Music> music;
+    std::string currentMusicId;
+};
+
+namespace fs = std::filesystem;
 
 namespace {
 // Palette. Kept private to this translation unit so they don't leak into headers
@@ -39,7 +52,95 @@ std::vector<std::string> wrapText(const std::string& text, int maxWidth, int fon
 }
 } // namespace
 
-Renderer::Renderer(const Layout& layout) : layout_(layout) {}
+Renderer::Renderer(const Layout& layout) : layout_(layout), impl_(std::make_unique<Impl>()) {}
+
+Renderer::~Renderer() {
+    shutdownAudio();
+}
+
+bool Renderer::initAudio() {
+    if (!impl_) impl_ = std::make_unique<Impl>();
+    if (impl_->audioInitialized) return true;
+    InitAudioDevice();
+    impl_->audioInitialized = true;
+    return true;
+}
+
+void Renderer::shutdownAudio() {
+    if (!impl_ || !impl_->audioInitialized) return;
+
+    // Unload sound effects
+    for (auto &p : impl_->sfx) {
+        UnloadSound(p.second);
+    }
+    impl_->sfx.clear();
+
+    // Stop and unload music streams
+    for (auto &p : impl_->music) {
+        StopMusicStream(p.second);
+        UnloadMusicStream(p.second);
+    }
+    impl_->music.clear();
+
+    impl_->currentMusicId.clear();
+    CloseAudioDevice();
+    impl_->audioInitialized = false;
+}
+
+bool Renderer::loadSoundEffect(const std::string& id, const std::string& path) {
+    if (!impl_) impl_ = std::make_unique<Impl>();
+    if (!impl_->audioInitialized) initAudio();
+    if (!fs::exists(path)) return false;
+    Sound s = LoadSound(path.c_str());
+    impl_->sfx[id] = s;
+    return true;
+}
+
+bool Renderer::loadMusic(const std::string& id, const std::string& path) {
+    if (!impl_) impl_ = std::make_unique<Impl>();
+    if (!impl_->audioInitialized) initAudio();
+    if (!fs::exists(path)) return false;
+    Music m = LoadMusicStream(path.c_str());
+    impl_->music[id] = m;
+    return true;
+}
+
+void Renderer::playSoundEffect(const std::string& id) {
+    if (!impl_ || !impl_->audioInitialized) return;
+    const auto it = impl_->sfx.find(id);
+    if (it == impl_->sfx.end()) return;
+    PlaySound(it->second);
+}
+
+void Renderer::playMusicStream(const std::string& id) {
+    if (!impl_ || !impl_->audioInitialized) return;
+    const auto it = impl_->music.find(id);
+    if (it == impl_->music.end()) return;
+
+    // Stop previous music if any
+    if (!impl_->currentMusicId.empty()) {
+        auto pit = impl_->music.find(impl_->currentMusicId);
+        if (pit != impl_->music.end()) StopMusicStream(pit->second);
+    }
+
+    PlayMusicStream(it->second);
+    impl_->currentMusicId = id;
+}
+
+void Renderer::stopMusic() {
+    if (!impl_ || !impl_->audioInitialized) return;
+    if (impl_->currentMusicId.empty()) return;
+    auto it = impl_->music.find(impl_->currentMusicId);
+    if (it != impl_->music.end()) StopMusicStream(it->second);
+    impl_->currentMusicId.clear();
+}
+
+void Renderer::updateAudio() {
+    if (!impl_ || !impl_->audioInitialized) return;
+    if (impl_->currentMusicId.empty()) return;
+    auto it = impl_->music.find(impl_->currentMusicId);
+    if (it != impl_->music.end()) UpdateMusicStream(it->second);
+}
 
 void Renderer::drawBoard(const Board& board) const {
     const int cell = layout_.cellPixels;

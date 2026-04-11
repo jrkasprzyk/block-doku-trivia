@@ -119,6 +119,23 @@ int main() {
     td::TriviaBank triviaBank;
     triviaBank.loadFromFile("assets/trivia.json");
 
+    // Optional: initialize audio and attempt to load conventionally-named assets
+    // (no-op if files don't exist). User-provided assets should live under
+    // `assets/` and follow names documented in /docs/audio-assets.md.
+    renderer.initAudio();
+    renderer.loadMusic("bg", "assets/music.ogg");
+    renderer.loadSoundEffect("place",    "assets/sfx_place.wav");
+    renderer.loadSoundEffect("clear",    "assets/sfx_clear.wav");
+    renderer.loadSoundEffect("correct",  "assets/sfx_correct.wav");
+    renderer.loadSoundEffect("wrong",    "assets/sfx_wrong.wav");
+    renderer.loadSoundEffect("pickup",   "assets/sfx_pickup.wav");
+    renderer.loadSoundEffect("cancel",   "assets/sfx_cancel.wav");
+    renderer.loadSoundEffect("deal",     "assets/sfx_deal.wav");
+    renderer.loadSoundEffect("shatter",  "assets/sfx_shatter.wav");
+    renderer.loadSoundEffect("gameover", "assets/sfx_gameover.wav");
+    renderer.loadSoundEffect("restart",  "assets/sfx_restart.wav");
+    renderer.playMusicStream("bg");
+
     auto tray = td::makeTray();
 
     int score  = 0;
@@ -150,6 +167,7 @@ int main() {
             triviaModal  = {};
             drag         = {};
             phase        = Phase::Playing;
+            renderer.playSoundEffect("restart");
         }
 
         // ── Trivia modal input ──────────────────────────────────────────────
@@ -175,14 +193,17 @@ int main() {
                         streak++;
                         if (streak >= 3) {
                             const int shattered = board.shatterStones();
+                            if (shattered > 0) renderer.playSoundEffect("shatter");
                             score  += shattered * 5;
                             streak  = 0;
                         }
+                        renderer.playSoundEffect("correct");
                     } else {
                         score  += static_cast<int>(triviaModal.clearedCells.size()) * 10;
                         streak  = 0;
                         board.placeStone(triviaModal.triviaOrigin.row,
                                          triviaModal.triviaOrigin.col);
+                        renderer.playSoundEffect("wrong");
                     }
                 }
             } else {
@@ -197,6 +218,7 @@ int main() {
                     triviaModal = {};
                     phase = Phase::Playing;
                     checkGameOver(phase, board, tray);
+                    if (phase == Phase::GameOver) renderer.playSoundEffect("gameover");
                 }
             }
         }
@@ -214,6 +236,7 @@ int main() {
                     drag.traySlot = slot;
                     drag.piece    = tray[slot];
                     tray[slot].shape.cells.clear(); // hide from tray while dragging
+                    renderer.playSoundEffect("pickup");
                 }
             }
         }
@@ -229,6 +252,7 @@ int main() {
             if (board.canPlace(drag.piece.shape.cells, anchor.row, anchor.col)) {
                 board.place(drag.piece.shape.cells, anchor.row, anchor.col,
                             drag.piece.isTrivia);
+                renderer.playSoundEffect("place");
 
                 const auto result = board.detectAndClear();
 
@@ -246,12 +270,15 @@ int main() {
                     // Flash still fires so the clear is satisfying.
                     if (!result.clearedCells.empty())
                         clearAnim.trigger(result.clearedCells);
+                    if (!result.clearedCells.empty()) renderer.playSoundEffect("clear");
                     phase = Phase::Trivia;
                 } else {
                     // Normal clear: score immediately.
                     score += static_cast<int>(result.clearedCells.size()) * 10;
-                    if (!result.clearedCells.empty())
+                    if (!result.clearedCells.empty()) {
                         clearAnim.trigger(result.clearedCells);
+                        renderer.playSoundEffect("clear");
+                    }
                 }
 
                 placed = true;
@@ -260,17 +287,22 @@ int main() {
             if (!placed) {
                 // Return the piece to its original slot.
                 tray[drag.traySlot] = drag.piece;
+                renderer.playSoundEffect("cancel");
             } else {
                 // Refill the tray when every slot is exhausted.
                 bool allEmpty = true;
                 for (const auto& p : tray) {
                     if (!p.shape.cells.empty()) { allEmpty = false; break; }
                 }
-                if (allEmpty) tray = td::makeTray();
+                if (allEmpty) {
+                    tray = td::makeTray();
+                    renderer.playSoundEffect("deal");
+                }
 
                 // Game-over check only when not paused for a question.
                 if (phase == Phase::Playing) {
                     checkGameOver(phase, board, tray);
+                    if (phase == Phase::GameOver) renderer.playSoundEffect("gameover");
                 }
             }
 
@@ -278,6 +310,8 @@ int main() {
         }
 
         clearAnim.tick();
+        // Keep streaming music alive.
+        renderer.updateAudio();
 
         // ── Draw ────────────────────────────────────────────────────────────
         BeginDrawing();
@@ -319,6 +353,7 @@ int main() {
         EndDrawing();
     }
 
+    renderer.shutdownAudio();
     CloseWindow();
     return 0;
 }

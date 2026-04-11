@@ -44,8 +44,7 @@ Mental model: this is your `pip install raylib nlohmann-json`. First run takes a
 From the project root:
 
 ```powershell
-cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
-cmake --build build --config Release
+.\scripts\build.ps1
 ```
 
 (Adjust `C:/vcpkg/...` to wherever you installed vcpkg.)

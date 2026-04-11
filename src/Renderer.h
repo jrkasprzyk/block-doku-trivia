@@ -12,6 +12,7 @@
 
 #include <array>
 #include <string>
+#include <memory>
 
 namespace td {
 
@@ -41,6 +42,7 @@ struct Layout {
 class Renderer {
 public:
     explicit Renderer(const Layout& layout);
+    ~Renderer();
 
     // Draw the board's current state: cells, grid lines, and sub-square borders.
     void drawBoard(const Board& board) const;
@@ -74,8 +76,29 @@ public:
                          bool answered, bool correct,
                          const std::string& quip) const;
 
+    // Audio API — implemented in Renderer.cpp (keeps raylib types out of headers)
+    // Initialize audio subsystem. Safe to call multiple times.
+    bool initAudio();
+    // Unload audio and shut down audio device.
+    void shutdownAudio();
+    // Load a short sound effect (WAV/OGG/etc) and register it under `id`.
+    // Returns true on success.
+    bool loadSoundEffect(const std::string& id, const std::string& path);
+    // Load streaming music (OGG/MP3) and register under `id`.
+    bool loadMusic(const std::string& id, const std::string& path);
+    // Play a previously loaded sound effect (no-op if id missing).
+    void playSoundEffect(const std::string& id);
+    // Start playing a previously loaded music stream. Stops any other music.
+    void playMusicStream(const std::string& id);
+    // Stop currently playing music (if any).
+    void stopMusic();
+    // Must be called each frame to update streaming music playback.
+    void updateAudio();
+
 private:
     Layout layout_;
+    struct Impl;
+    std::unique_ptr<Impl> impl_;
 };
 
 } // namespace td
