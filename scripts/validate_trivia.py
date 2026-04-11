@@ -8,7 +8,7 @@ from pathlib import Path
 
 TRIVIA_PATH = Path(__file__).resolve().parent.parent / "assets" / "trivia.json"
 
-VALID_CATEGORIES = {"motorsport", "music", "film", "general", "meta", "asia"}
+VALID_CATEGORIES = {"motorsport", "music", "film-and-tv", "general", "meta", "asia", "books"}
 VALID_DIFFICULTIES = {"easy", "medium", "hard"}
 REQUIRED_FIELDS = {"id", "category", "difficulty", "prompt", "choices", "answer"}
 

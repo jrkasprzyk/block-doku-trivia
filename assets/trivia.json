@@ -9,10 +9,11 @@
   "categories": [
     "motorsport",
     "music",
-    "film",
+    "film-and-tv",
     "general",
     "meta",
-    "asia"
+    "asia",
+    "books"
   ],
   "questions": [
     {
@@ -94,7 +95,7 @@
       "id": "motorsport_006",
       "category": "motorsport",
       "difficulty": "medium",
-      "prompt": "Who was the last driver to win the Formula 1 World Championship for Ferrari?",
+      "prompt": "As of 2025, who was the last driver to win the Formula 1 World Championship for Ferrari?",
       "choices": [
         "Michael Schumacher",
         "Fernando Alonso",
@@ -109,7 +110,7 @@
       "id": "motorsport_007",
       "category": "motorsport",
       "difficulty": "hard",
-      "prompt": "Who holds the all-time record for most Formula 1 pole positions?",
+      "prompt": "As of 2024, who holds the all-time record for most Formula 1 pole positions?",
       "choices": [
         "Lewis Hamilton",
         "Michael Schumacher",
@@ -301,7 +302,7 @@
     },
     {
       "id": "film_001",
-      "category": "film",
+      "category": "film-and-tv",
       "difficulty": "easy",
       "prompt": "Which Miyazaki film features a fish-girl who loves ham?",
       "choices": [
@@ -315,7 +316,7 @@
     },
     {
       "id": "film_002",
-      "category": "film",
+      "category": "film-and-tv",
       "difficulty": "easy",
       "prompt": "In which Pixar film does the main character dream of becoming a chef?",
       "choices": [
@@ -330,7 +331,7 @@
     },
     {
       "id": "film_003",
-      "category": "film",
+      "category": "film-and-tv",
       "difficulty": "medium",
       "prompt": "Who directed 'Parasite' (2019)?",
       "choices": [
@@ -345,7 +346,7 @@
     },
     {
       "id": "film_004",
-      "category": "film",
+      "category": "film-and-tv",
       "difficulty": "medium",
       "prompt": "What was left in a character's bed as a warning in 'The Godfather'?",
       "choices": [
@@ -360,7 +361,7 @@
     },
     {
       "id": "film_005",
-      "category": "film",
+      "category": "film-and-tv",
       "difficulty": "hard",
       "prompt": "What was the first film to win the Academy Award for Best Picture?",
       "choices": [
@@ -375,7 +376,7 @@
     },
     {
       "id": "film_006",
-      "category": "film",
+      "category": "film-and-tv",
       "difficulty": "hard",
       "prompt": "What song does HAL 9000 sing as it is shut down in '2001: A Space Odyssey'?",
       "choices": [
@@ -390,7 +391,7 @@
     },
     {
       "id": "film_007",
-      "category": "film",
+      "category": "film-and-tv",
       "difficulty": "easy",
       "prompt": "In 'Home Alone,' what city is Kevin McCallister's family flying to for Christmas?",
       "choices": [
@@ -405,7 +406,7 @@
     },
     {
       "id": "film_008",
-      "category": "film",
+      "category": "film-and-tv",
       "difficulty": "medium",
       "prompt": "Which director made 'Mulholland Drive,' 'Blue Velvet,' and 'Twin Peaks'?",
       "choices": [
@@ -511,7 +512,7 @@
       "id": "general_007",
       "category": "general",
       "difficulty": "hard",
-      "prompt": "Which planet in our solar system has the most moons?",
+      "prompt": "As of 2024, which planet in our solar system has the most moons?",
       "choices": [
         "Jupiter",
         "Saturn",
@@ -721,7 +722,7 @@
       "id": "asia_008",
       "category": "asia",
       "difficulty": "medium",
-      "prompt": "What is the capital of Indonesia?",
+      "prompt": "As of 2026, Indonesia is mid-move to a jungle capital called Nusantara — but what is still the current official capital?",
       "choices": [
         "Bali",
         "Jakarta",
@@ -729,8 +730,8 @@
         "Bandung"
       ],
       "answer": 1,
-      "quip_correct": "The dev remembers this one from the competition. Nusantara is coming though.",
-      "quip_wrong": "Jakarta — though Indonesia is building a new capital called Nusantara."
+      "quip_correct": "Jakarta — for now. Nusantara has 10,000 residents and a half-built palace.",
+      "quip_wrong": "Jakarta — still the capital, but Indonesia is mid-move. Nusantara won't be ready until at least 2028."
     },
     {
       "id": "asia_009",
@@ -908,6 +909,336 @@
       ],
       "answer": 1,
       "quip_correct": "You've been paying attention."
+    },
+    {
+      "id": "film-and-tv_009",
+      "category": "film-and-tv",
+      "difficulty": "easy",
+      "prompt": "What city does Frasier Crane move to at the start of the series?",
+      "choices": [
+        "Seattle",
+        "Boston",
+        "Portland",
+        "Chicago"
+      ],
+      "answer": 0,
+      "quip_correct": "KACL 780, Seattle.",
+      "quip_wrong": "Seattle — he left Boston (and Cheers) behind."
+    },
+    {
+      "id": "film-and-tv_010",
+      "category": "film-and-tv",
+      "difficulty": "easy",
+      "prompt": "What is the name of Frasier's call-in radio show?",
+      "choices": [
+        "Frasier at Large",
+        "Talk of the Town",
+        "The Crane Hour",
+        "The Dr. Frasier Crane Show"
+      ],
+      "answer": 3,
+      "quip_correct": "I'm listening.",
+      "quip_wrong": "The Dr. Frasier Crane Show — on KACL 780 AM."
+    },
+    {
+      "id": "film-and-tv_011",
+      "category": "film-and-tv",
+      "difficulty": "medium",
+      "prompt": "What is the name of Frasier's retired-cop father who moves in with him?",
+      "choices": [
+        "Frank Crane",
+        "Martin Crane",
+        "Walt Crane",
+        "Roy Crane"
+      ],
+      "answer": 1,
+      "quip_correct": "Dad, that chair is an eyesore.",
+      "quip_wrong": "Martin Crane — played by John Mahoney."
+    },
+    {
+      "id": "film-and-tv_012",
+      "category": "film-and-tv",
+      "difficulty": "medium",
+      "prompt": "What breed is Martin Crane's dog Eddie?",
+      "choices": [
+        "Beagle",
+        "Corgi",
+        "Jack Russell Terrier",
+        "Dachshund"
+      ],
+      "answer": 2,
+      "quip_correct": "Eddie stared. Frasier stared back. Eddie won.",
+      "quip_wrong": "Jack Russell Terrier — played by Moose, and later his son Enzo."
+    },
+    {
+      "id": "film-and-tv_013",
+      "category": "film-and-tv",
+      "difficulty": "hard",
+      "prompt": "What is the name of the coffee shop where Frasier and Niles are regulars?",
+      "choices": [
+        "Café Nervosa",
+        "Café Tosca",
+        "The Grind",
+        "Beantown"
+      ],
+      "answer": 0,
+      "quip_correct": "Double tall latte, no foam.",
+      "quip_wrong": "Café Nervosa — their natural habitat."
+    },
+    {
+      "id": "film-and-tv_014",
+      "category": "film-and-tv",
+      "difficulty": "hard",
+      "prompt": "What is the name of the Seattle high-rise where Frasier lives?",
+      "choices": [
+        "The Briarwood",
+        "The Arcadia",
+        "Elliott Bay Towers",
+        "The Grandview"
+      ],
+      "answer": 2,
+      "quip_correct": "Penthouse. Of course it's the penthouse.",
+      "quip_wrong": "Elliott Bay Towers — with a view of the Space Needle, naturally."
+    },
+    {
+      "id": "film-and-tv_015",
+      "category": "film-and-tv",
+      "difficulty": "hard",
+      "prompt": "Niles's wife Maris never appears on screen. What is her most frequently mentioned physical trait?",
+      "choices": [
+        "Her magnificent singing voice",
+        "Her extreme thinness",
+        "Her towering height",
+        "Her athletic build"
+      ],
+      "answer": 1,
+      "quip_correct": "She once got a paper cut from a strong breeze.",
+      "quip_wrong": "Maris is reed-thin — practically a running gag for eleven seasons."
+    },
+    {
+      "id": "film-and-tv_016",
+      "category": "film-and-tv",
+      "difficulty": "medium",
+      "prompt": "What is the call sign of the Seattle radio station where Frasier works?",
+      "choices": [
+        "KCAL",
+        "KPAX",
+        "KACL",
+        "KSEA"
+      ],
+      "answer": 2,
+      "quip_correct": "780 AM. Good radio.",
+      "quip_wrong": "KACL 780 AM — home of the Dr. Frasier Crane Show."
+    },
+    {
+      "id": "film-and-tv_017",
+      "category": "film-and-tv",
+      "difficulty": "hard",
+      "prompt": "Roz Doyle, Frasier's producer, studied broadcasting at which university?",
+      "choices": [
+        "University of Wisconsin",
+        "Northwestern",
+        "University of Oregon",
+        "Michigan State"
+      ],
+      "answer": 0,
+      "quip_correct": "Go Badgers.",
+      "quip_wrong": "University of Wisconsin — she mentions it more than once."
+    },
+    {
+      "id": "film-and-tv_018",
+      "category": "film-and-tv",
+      "difficulty": "hard",
+      "prompt": "Frasier and Niles's mother was a psychiatrist who appears only in old home movies. What was her first name?",
+      "choices": [
+        "Lillian",
+        "Margaret",
+        "Hester",
+        "Dorothy"
+      ],
+      "answer": 2,
+      "quip_correct": "Dr. Hester Crane. The apple didn't fall far.",
+      "quip_wrong": "Hester Crane — seen only in home movies, but her influence looms large."
+    },
+    {
+      "id": "books_001",
+      "category": "books",
+      "difficulty": "easy",
+      "prompt": "Who wrote 'To Kill a Mockingbird'?",
+      "choices": [
+        "Ernest Hemingway",
+        "John Steinbeck",
+        "Harper Lee",
+        "William Faulkner"
+      ],
+      "answer": 2,
+      "quip_correct": "Atticus Finch, one of fiction's great fathers.",
+      "quip_wrong": "Harper Lee — published 1960, Pulitzer the year after."
+    },
+    {
+      "id": "books_002",
+      "category": "books",
+      "difficulty": "easy",
+      "prompt": "What is the name of the fictional school Harry Potter attends?",
+      "choices": [
+        "Hogwarts",
+        "Beauxbatons",
+        "Durmstrang",
+        "Ilvermorny"
+      ],
+      "answer": 0,
+      "quip_correct": "Platform 9¾, don't be late.",
+      "quip_wrong": "Hogwarts — school of witchcraft and wizardry."
+    },
+    {
+      "id": "books_003",
+      "category": "books",
+      "difficulty": "easy",
+      "prompt": "George Orwell's '1984' is set in a superstate called what?",
+      "choices": [
+        "Eurasia",
+        "Eastasia",
+        "Airstrip One",
+        "Oceania"
+      ],
+      "answer": 3,
+      "quip_correct": "Big Brother is watching.",
+      "quip_wrong": "Oceania — Airstrip One is what they call Britain within it."
+    },
+    {
+      "id": "books_004",
+      "category": "books",
+      "difficulty": "easy",
+      "prompt": "Which Shakespeare play features the line 'To be, or not to be, that is the question'?",
+      "choices": [
+        "Macbeth",
+        "Hamlet",
+        "Othello",
+        "King Lear"
+      ],
+      "answer": 1,
+      "quip_correct": "Act III, Scene I. Classic.",
+      "quip_wrong": "Hamlet — the most quoted line in the English language."
+    },
+    {
+      "id": "books_005",
+      "category": "books",
+      "difficulty": "medium",
+      "prompt": "Which novel begins with the line 'Call me Ishmael'?",
+      "choices": [
+        "Moby-Dick",
+        "Billy Budd",
+        "The Old Man and the Sea",
+        "Lord Jim"
+      ],
+      "answer": 0,
+      "quip_correct": "Three of the most famous words in American literature.",
+      "quip_wrong": "Moby-Dick — Melville, 1851. The whale wins."
+    },
+    {
+      "id": "books_006",
+      "category": "books",
+      "difficulty": "medium",
+      "prompt": "Who wrote 'One Hundred Years of Solitude'?",
+      "choices": [
+        "Pablo Neruda",
+        "Octavio Paz",
+        "Mario Vargas Llosa",
+        "Gabriel García Márquez"
+      ],
+      "answer": 3,
+      "quip_correct": "Macondo. Magical realism. Nobel Prize.",
+      "quip_wrong": "García Márquez — the founding text of magical realism."
+    },
+    {
+      "id": "books_007",
+      "category": "books",
+      "difficulty": "medium",
+      "prompt": "In Tolkien's 'The Lord of the Rings,' what is the name of the inn where Frodo first meets Aragorn?",
+      "choices": [
+        "The Green Dragon",
+        "The Ivy Bush",
+        "The Prancing Pony",
+        "The Golden Perch"
+      ],
+      "answer": 2,
+      "quip_correct": "Bree. Strider in the corner, pipe in hand.",
+      "quip_wrong": "The Prancing Pony — in the town of Bree."
+    },
+    {
+      "id": "books_008",
+      "category": "books",
+      "difficulty": "medium",
+      "prompt": "In 'The Great Gatsby,' what color is the light at the end of Daisy's dock?",
+      "choices": [
+        "Red",
+        "Green",
+        "White",
+        "Yellow"
+      ],
+      "answer": 1,
+      "quip_correct": "So we beat on, boats against the current.",
+      "quip_wrong": "Green — Gatsby reaches for it every night across the bay."
+    },
+    {
+      "id": "books_009",
+      "category": "books",
+      "difficulty": "hard",
+      "prompt": "Which Dostoevsky novel follows the murderer Raskolnikov?",
+      "choices": [
+        "Crime and Punishment",
+        "The Brothers Karamazov",
+        "The Idiot",
+        "Demons"
+      ],
+      "answer": 0,
+      "quip_correct": "He convinced himself murder could be justified. It couldn't.",
+      "quip_wrong": "Crime and Punishment — St. Petersburg, an axe, and a lot of guilt."
+    },
+    {
+      "id": "books_010",
+      "category": "books",
+      "difficulty": "hard",
+      "prompt": "What is the first book of the Bible?",
+      "choices": [
+        "Exodus",
+        "Psalms",
+        "Leviticus",
+        "Genesis"
+      ],
+      "answer": 3,
+      "quip_correct": "In the beginning.",
+      "quip_wrong": "Genesis — in the beginning, God created the heavens and the earth."
+    },
+    {
+      "id": "books_011",
+      "category": "books",
+      "difficulty": "hard",
+      "prompt": "'The Sound and the Fury' takes its title from a speech in which Shakespeare play?",
+      "choices": [
+        "King Lear",
+        "Hamlet",
+        "Macbeth",
+        "Othello"
+      ],
+      "answer": 2,
+      "quip_correct": "Tomorrow and tomorrow and tomorrow.",
+      "quip_wrong": "Macbeth — Act V. 'Full of sound and fury, signifying nothing.'"
+    },
+    {
+      "id": "books_012",
+      "category": "books",
+      "difficulty": "hard",
+      "prompt": "Which novel coined the term 'doublethink'?",
+      "choices": [
+        "1984",
+        "Brave New World",
+        "We",
+        "Fahrenheit 451"
+      ],
+      "answer": 0,
+      "quip_correct": "War is peace. Freedom is slavery. Ignorance is strength.",
+      "quip_wrong": "1984 — Orwell's word for holding two contradictory beliefs simultaneously."
     }
   ]
 }
