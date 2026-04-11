@@ -1,0 +1,154 @@
+{
+  "_schema_notes": [
+    "Each question has: id, category, difficulty (easy|medium|hard), prompt, choices (array of 4 strings), answer (0-3 index into choices).",
+    "Optional: quip_correct, quip_wrong — shown in the modal after answering. If absent, the game falls back to generic quips.",
+    "Scoring multipliers by difficulty: easy 1.5x, medium 2.0x, hard 3.0x. Configurable in Scoring.h.",
+    "The 'meta' category is for questions about the game itself — rules, mechanics, what a stone block does. These are always fair game.",
+    "Add as many questions as you like. The loader shuffles at startup and tracks what's been asked this session so repeats are rare."
+  ],
+  "categories": ["motorsport", "music", "film", "general", "meta"],
+  "questions": [
+    {
+      "id": "motorsport_001",
+      "category": "motorsport",
+      "difficulty": "easy",
+      "prompt": "Which series uses the Dallara IR-18 chassis?",
+      "choices": ["Formula 1", "IndyCar", "NASCAR Cup", "Formula E"],
+      "answer": 1,
+      "quip_correct": "Spec chassis, wild racing.",
+      "quip_wrong": "That's a stone for your trouble."
+    },
+    {
+      "id": "motorsport_002",
+      "category": "motorsport",
+      "difficulty": "medium",
+      "prompt": "EXAMPLE — replace with your own: what year did the Indy 500 first run?",
+      "choices": ["1909", "1911", "1920", "1925"],
+      "answer": 1
+    },
+    {
+      "id": "motorsport_003",
+      "category": "motorsport",
+      "difficulty": "hard",
+      "prompt": "EXAMPLE — your turn: a hard motorsport question of your choosing.",
+      "choices": ["Option A", "Option B", "Option C", "Option D"],
+      "answer": 0
+    },
+
+    {
+      "id": "music_001",
+      "category": "music",
+      "difficulty": "easy",
+      "prompt": "Which album opens with 'Thunder Road'?",
+      "choices": ["Nebraska", "Born to Run", "The River", "Darkness on the Edge of Town"],
+      "answer": 1,
+      "quip_correct": "Screen door slams, Mary's dress waves."
+    },
+    {
+      "id": "music_002",
+      "category": "music",
+      "difficulty": "medium",
+      "prompt": "EXAMPLE — replace: which Bad Bunny album came first?",
+      "choices": ["YHLQMDLG", "X 100PRE", "Un Verano Sin Ti", "El Último Tour Del Mundo"],
+      "answer": 1
+    },
+    {
+      "id": "music_003",
+      "category": "music",
+      "difficulty": "hard",
+      "prompt": "EXAMPLE — your turn: a hard music question of your choosing.",
+      "choices": ["Option A", "Option B", "Option C", "Option D"],
+      "answer": 0
+    },
+
+    {
+      "id": "film_001",
+      "category": "film",
+      "difficulty": "easy",
+      "prompt": "Which Miyazaki film features a fish-girl who loves ham?",
+      "choices": ["Spirited Away", "Ponyo", "Totoro", "Princess Mononoke"],
+      "answer": 1,
+      "quip_correct": "Named a cat after her, didn't you."
+    },
+    {
+      "id": "film_002",
+      "category": "film",
+      "difficulty": "medium",
+      "prompt": "EXAMPLE — replace with your own film question.",
+      "choices": ["Option A", "Option B", "Option C", "Option D"],
+      "answer": 0
+    },
+    {
+      "id": "film_003",
+      "category": "film",
+      "difficulty": "hard",
+      "prompt": "EXAMPLE — your turn.",
+      "choices": ["Option A", "Option B", "Option C", "Option D"],
+      "answer": 0
+    },
+
+    {
+      "id": "general_001",
+      "category": "general",
+      "difficulty": "easy",
+      "prompt": "At roughly 5,400 ft elevation, water boils at approximately what temperature?",
+      "choices": ["212°F", "208°F", "202°F", "196°F"],
+      "answer": 2,
+      "quip_correct": "Why your cakes need an altitude adjustment."
+    },
+    {
+      "id": "general_002",
+      "category": "general",
+      "difficulty": "medium",
+      "prompt": "EXAMPLE — replace with your own.",
+      "choices": ["Option A", "Option B", "Option C", "Option D"],
+      "answer": 0
+    },
+    {
+      "id": "general_003",
+      "category": "general",
+      "difficulty": "hard",
+      "prompt": "EXAMPLE — your turn.",
+      "choices": ["Option A", "Option B", "Option C", "Option D"],
+      "answer": 0
+    },
+
+    {
+      "id": "meta_001",
+      "category": "meta",
+      "difficulty": "easy",
+      "prompt": "How many correct trivia answers in a row clear all stones from the board?",
+      "choices": ["2", "3", "5", "10"],
+      "answer": 1,
+      "quip_correct": "Redemption arc unlocked.",
+      "quip_wrong": "Read the manual! (Press ? in game.)"
+    },
+    {
+      "id": "meta_002",
+      "category": "meta",
+      "difficulty": "medium",
+      "prompt": "What happens to a cell's row/column/square if it contains a stone?",
+      "choices": [
+        "Nothing — stones clear normally",
+        "It can never clear until the stone is removed",
+        "It clears for double points",
+        "The whole board resets"
+      ],
+      "answer": 1
+    },
+    {
+      "id": "meta_003",
+      "category": "meta",
+      "difficulty": "hard",
+      "prompt": "A trivia block only triggers a question when...",
+      "choices": [
+        "It is placed anywhere on the board",
+        "Its placement completes a row, column, or 3x3 square",
+        "Three of them are on the board at once",
+        "The player presses the T key"
+      ],
+      "answer": 1,
+      "quip_correct": "You've been paying attention."
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+C:/GitHub/block-doku-trivia/build/CMakeFiles/trivia_doku.dir
+C:/GitHub/block-doku-trivia/build/CMakeFiles/ALL_BUILD.dir
+C:/GitHub/block-doku-trivia/build/CMakeFiles/ZERO_CHECK.dir

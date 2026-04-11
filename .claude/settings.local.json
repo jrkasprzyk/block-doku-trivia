@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm -rf build)",
+      "Bash(cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows)",
+      "Bash(cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows -G \"Visual Studio 17 2022\" -A x64)",
+      "Bash(cmake --version)",
+      "Bash(cl.exe)",
+      "Bash(where vcpkg:*)",
+      "Bash(git --version)",
+      "Bash(C:/vcpkg/vcpkg.exe list:*)",
+      "Bash(cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake)",
+      "Bash(\"C:/Program Files \\(x86\\)/Microsoft Visual Studio/Installer/vswhere.exe\" -all -legacy)",
+      "Bash(\"C:/Program Files \\(x86\\)/Microsoft Visual Studio/Installer/vswhere.exe\" -all -prerelease -format json)",
+      "Bash(cmake -G \"Visual Studio 18 2025\" -B build -S \"C:/GitHub/block-doku-trivia\" -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake)",
+      "Bash(cmake -G \"Visual Studio 18 2026\" -A x64 -B \"C:/GitHub/block-doku-trivia/build\" -S \"C:/GitHub/block-doku-trivia\" -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake)",
+      "Bash(cmake --build \"C:/GitHub/block-doku-trivia/build\" --config Release)",
+      "Bash(cmake --build build --config Release)"
+    ]
+  }
+}
