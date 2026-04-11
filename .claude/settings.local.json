@@ -15,7 +15,12 @@
       "Bash(cmake -G \"Visual Studio 18 2025\" -B build -S \"C:/GitHub/block-doku-trivia\" -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake)",
       "Bash(cmake -G \"Visual Studio 18 2026\" -A x64 -B \"C:/GitHub/block-doku-trivia/build\" -S \"C:/GitHub/block-doku-trivia\" -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake)",
       "Bash(cmake --build \"C:/GitHub/block-doku-trivia/build\" --config Release)",
-      "Bash(cmake --build build --config Release)"
+      "Bash(cmake --build build --config Release)",
+      "Bash(where py:*)",
+      "Bash(where python:*)",
+      "Bash(py --version)",
+      "Bash(py -m venv .venv)",
+      "Bash(py scripts/validate_trivia.py)"
     ]
   }
 }

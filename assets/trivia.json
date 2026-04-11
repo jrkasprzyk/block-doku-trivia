@@ -6,7 +6,7 @@
     "The 'meta' category is for questions about the game itself — rules, mechanics, what a stone block does. These are always fair game.",
     "Add as many questions as you like. The loader shuffles at startup and tracks what's been asked this session so repeats are rare."
   ],
-  "categories": ["motorsport", "music", "film", "general", "meta"],
+  "categories": ["motorsport", "music", "film", "general", "meta", "asia"],
   "questions": [
     {
       "id": "motorsport_001",
@@ -32,11 +32,11 @@
       "id": "motorsport_003",
       "category": "motorsport",
       "difficulty": "easy",
-      "prompt": "In Formula 1, how many drivers share the front row of the starting grid?",
-      "choices": ["1", "3", "4", "2"],
+      "prompt": "Which flag color signals that a Formula 1 race has been stopped?",
+      "choices": ["Yellow", "Blue", "White", "Red"],
       "answer": 3,
-      "quip_correct": "Pole and P2, side by side.",
-      "quip_wrong": "It's just two — pole and P2."
+      "quip_correct": "Everyone pit, party's over.",
+      "quip_wrong": "Red flag — race suspended, everyone slows and pits."
     },
     {
       "id": "motorsport_004",
@@ -146,7 +146,7 @@
     {
       "id": "music_006",
       "category": "music",
-      "difficulty": "hard",
+      "difficulty": "medium",
       "prompt": "Which instrument did Miles Davis primarily play?",
       "choices": ["Saxophone", "Piano", "Drums", "Trumpet"],
       "answer": 3,
@@ -162,6 +162,16 @@
       "answer": 2,
       "quip_correct": "Five beats per measure — feel it.",
       "quip_wrong": "5/4 — five beats per measure, written by Paul Desmond."
+    },
+    {
+      "id": "music_008",
+      "category": "music",
+      "difficulty": "hard",
+      "prompt": "On which label did Joy Division release 'Unknown Pleasures' (1979)?",
+      "choices": ["Rough Trade", "4AD", "Factory Records", "Creation Records"],
+      "answer": 2,
+      "quip_correct": "FAC 10. Peter Saville's pulsar.",
+      "quip_wrong": "Factory Records — Tony Wilson's Manchester label."
     },
 
     {
@@ -222,6 +232,26 @@
       "answer": 2,
       "quip_correct": "Daisy, Daisy, give me your answer do.",
       "quip_wrong": "'Daisy Bell' — the first song ever sung by a computer, in 1961."
+    },
+    {
+      "id": "film_007",
+      "category": "film",
+      "difficulty": "easy",
+      "prompt": "In 'Home Alone,' what city is Kevin McCallister's family flying to for Christmas?",
+      "choices": ["London", "Rome", "Paris", "Madrid"],
+      "answer": 2,
+      "quip_correct": "Buzz, your girlfriend — woof.",
+      "quip_wrong": "Paris — Kevin gets left behind at the house in Winnetka."
+    },
+    {
+      "id": "film_008",
+      "category": "film",
+      "difficulty": "medium",
+      "prompt": "Which director made 'Mulholland Drive,' 'Blue Velvet,' and 'Twin Peaks'?",
+      "choices": ["David Fincher", "David Lynch", "Terrence Malick", "Paul Thomas Anderson"],
+      "answer": 1,
+      "quip_correct": "It's a strange world, Sandy.",
+      "quip_wrong": "David Lynch — surrealism, small towns, red curtains."
     },
 
     {
@@ -292,6 +322,229 @@
       "answer": 1,
       "quip_correct": "146 confirmed moons and counting.",
       "quip_wrong": "Saturn — it overtook Jupiter in 2023 with confirmed new moons."
+    },
+
+    {
+      "id": "general_008",
+      "category": "general",
+      "difficulty": "easy",
+      "prompt": "Who was the first person to walk on the Moon?",
+      "choices": ["Buzz Aldrin", "Yuri Gagarin", "Neil Armstrong", "John Glenn"],
+      "answer": 2,
+      "quip_correct": "One small step, one giant leap.",
+      "quip_wrong": "Neil Armstrong — July 20, 1969."
+    },
+    {
+      "id": "general_009",
+      "category": "general",
+      "difficulty": "easy",
+      "prompt": "What was the name of the first artificial satellite, launched by the USSR in 1957?",
+      "choices": ["Sputnik 1", "Vostok 1", "Luna 1", "Cosmos 1"],
+      "answer": 0,
+      "quip_correct": "The beep heard around the world.",
+      "quip_wrong": "Sputnik 1 — October 4, 1957, kicked off the space race."
+    },
+    {
+      "id": "general_010",
+      "category": "general",
+      "difficulty": "medium",
+      "prompt": "In what year did Voyager 1 launch from Earth?",
+      "choices": ["1969", "1977", "1983", "1990"],
+      "answer": 1,
+      "quip_correct": "Still transmitting from interstellar space.",
+      "quip_wrong": "1977 — now the farthest human-made object from Earth."
+    },
+    {
+      "id": "general_011",
+      "category": "general",
+      "difficulty": "medium",
+      "prompt": "What was the first space station launched by the United States?",
+      "choices": ["Mir", "Tiangong", "The ISS", "Skylab"],
+      "answer": 3,
+      "quip_correct": "Launched 1973, fell back to Earth in 1979.",
+      "quip_wrong": "Skylab — it orbited from 1973 to 1979."
+    },
+    {
+      "id": "general_012",
+      "category": "general",
+      "difficulty": "hard",
+      "prompt": "What was the name of the Apollo 11 lunar module that landed on the Moon?",
+      "choices": ["Columbia", "Intrepid", "Eagle", "Odyssey"],
+      "answer": 2,
+      "quip_correct": "The Eagle has landed.",
+      "quip_wrong": "Eagle — Columbia was the command module that stayed in orbit."
+    },
+
+    {
+      "id": "asia_001",
+      "category": "asia",
+      "difficulty": "easy",
+      "prompt": "What is the capital of Japan?",
+      "choices": ["Osaka", "Tokyo", "Kyoto", "Yokohama"],
+      "answer": 1,
+      "quip_correct": "The game developer won a competition about this in elementary school. Easy points.",
+      "quip_wrong": "Tokyo — even the dev's fifth-grade self knew that one."
+    },
+    {
+      "id": "asia_002",
+      "category": "asia",
+      "difficulty": "easy",
+      "prompt": "What is the capital of China?",
+      "choices": ["Beijing", "Shanghai", "Hong Kong", "Guangzhou"],
+      "answer": 0,
+      "quip_correct": "Round one material at the dev's elementary school competition.",
+      "quip_wrong": "Beijing — Shanghai is the biggest city, but not the capital."
+    },
+    {
+      "id": "asia_003",
+      "category": "asia",
+      "difficulty": "easy",
+      "prompt": "What is the capital of India?",
+      "choices": ["Mumbai", "Kolkata", "Bangalore", "New Delhi"],
+      "answer": 3,
+      "quip_correct": "The dev nailed this one in elementary school and never forgot it.",
+      "quip_wrong": "New Delhi — Mumbai is the financial capital, not the political one."
+    },
+    {
+      "id": "asia_004",
+      "category": "asia",
+      "difficulty": "easy",
+      "prompt": "Seoul is the capital of which country?",
+      "choices": ["North Korea", "Japan", "South Korea", "Taiwan"],
+      "answer": 2,
+      "quip_correct": "The dev's elementary school competition glory started with questions like this.",
+      "quip_wrong": "South Korea — Pyongyang is the North Korean capital."
+    },
+    {
+      "id": "asia_005",
+      "category": "asia",
+      "difficulty": "medium",
+      "prompt": "What is the capital of Thailand?",
+      "choices": ["Chiang Mai", "Phuket", "Bangkok", "Pattaya"],
+      "answer": 2,
+      "quip_correct": "The dev's elementary school competition training is paying off for you.",
+      "quip_wrong": "Bangkok — its ceremonial name is 168 letters long."
+    },
+    {
+      "id": "asia_006",
+      "category": "asia",
+      "difficulty": "medium",
+      "prompt": "What is the capital of Vietnam?",
+      "choices": ["Hanoi", "Ho Chi Minh City", "Da Nang", "Hue"],
+      "answer": 0,
+      "quip_correct": "This was a clutch answer at the dev's elementary school competition.",
+      "quip_wrong": "Hanoi — Ho Chi Minh City is larger, but Hanoi is the capital."
+    },
+    {
+      "id": "asia_007",
+      "category": "asia",
+      "difficulty": "medium",
+      "prompt": "What is the capital of the Philippines?",
+      "choices": ["Cebu City", "Davao", "Quezon City", "Manila"],
+      "answer": 3,
+      "quip_correct": "The dev's elementary school competition judges would be proud.",
+      "quip_wrong": "Manila — Quezon City is actually more populous, but Manila is the capital."
+    },
+    {
+      "id": "asia_008",
+      "category": "asia",
+      "difficulty": "medium",
+      "prompt": "What is the capital of Indonesia?",
+      "choices": ["Bali", "Jakarta", "Surabaya", "Bandung"],
+      "answer": 1,
+      "quip_correct": "The dev remembers this one from the competition. Nusantara is coming though.",
+      "quip_wrong": "Jakarta — though Indonesia is building a new capital called Nusantara."
+    },
+    {
+      "id": "asia_009",
+      "category": "asia",
+      "difficulty": "hard",
+      "prompt": "What is the capital of Myanmar?",
+      "choices": ["Yangon", "Mandalay", "Naypyidaw", "Bagan"],
+      "answer": 2,
+      "quip_correct": "This one stumped half the kids at the dev's elementary school competition.",
+      "quip_wrong": "Naypyidaw — moved from Yangon in 2006. A real competition curveball."
+    },
+    {
+      "id": "asia_010",
+      "category": "asia",
+      "difficulty": "hard",
+      "prompt": "Sri Jayawardenepura Kotte is the legislative capital of which country?",
+      "choices": ["Sri Lanka", "Bangladesh", "Nepal", "Maldives"],
+      "answer": 0,
+      "quip_correct": "The dev won the elementary school competition partly by memorizing this name.",
+      "quip_wrong": "Sri Lanka — Colombo is the commercial capital, but Kotte is the official one."
+    },
+    {
+      "id": "asia_011",
+      "category": "asia",
+      "difficulty": "hard",
+      "prompt": "What is the capital of Kazakhstan?",
+      "choices": ["Almaty", "Shymkent", "Karaganda", "Astana"],
+      "answer": 3,
+      "quip_correct": "Renamed twice since 1997. The dev's competition flashcards are outdated.",
+      "quip_wrong": "Astana — it was Almaty until 1997. The name has changed multiple times since."
+    },
+    {
+      "id": "asia_012",
+      "category": "asia",
+      "difficulty": "hard",
+      "prompt": "What is the capital of Laos?",
+      "choices": ["Luang Prabang", "Vientiane", "Savannakhet", "Pakse"],
+      "answer": 1,
+      "quip_correct": "Deep cut. The dev's elementary school competition prep finally justified.",
+      "quip_wrong": "Vientiane — right on the Mekong River, bordering Thailand."
+    },
+
+    {
+      "id": "meta_004",
+      "category": "meta",
+      "difficulty": "hard",
+      "prompt": "What programming language is Trivia-Doku written in?",
+      "choices": ["Rust", "C", "C++", "Python"],
+      "answer": 2,
+      "quip_correct": "C++17 to be precise.",
+      "quip_wrong": "C++ — built with CMake and raylib."
+    },
+    {
+      "id": "meta_005",
+      "category": "meta",
+      "difficulty": "hard",
+      "prompt": "What graphics library does the game use for all its rendering?",
+      "choices": ["SDL2", "SFML", "Dear ImGui", "raylib"],
+      "answer": 3,
+      "quip_correct": "Simple, clean, and zero drama.",
+      "quip_wrong": "raylib — Renderer.h is the only file that includes it."
+    },
+    {
+      "id": "meta_006",
+      "category": "meta",
+      "difficulty": "hard",
+      "prompt": "How many cells does the largest piece in the game's shape catalog have?",
+      "choices": ["5", "6", "8", "9"],
+      "answer": 3,
+      "quip_correct": "The 3x3 square — good luck placing that one.",
+      "quip_wrong": "9 — it's the 3x3 square. Hope you've got room."
+    },
+    {
+      "id": "meta_007",
+      "category": "meta",
+      "difficulty": "hard",
+      "prompt": "Roughly what percent chance does each tray slot have of being a trivia piece?",
+      "choices": ["20%", "33%", "50%", "10%"],
+      "answer": 0,
+      "quip_correct": "One in five. Enough to keep you honest.",
+      "quip_wrong": "20% — each slot rolls independently."
+    },
+    {
+      "id": "meta_008",
+      "category": "meta",
+      "difficulty": "hard",
+      "prompt": "What AI model generated the trivia questions in this game?",
+      "choices": ["GPT-4o", "Gemini Pro", "Llama 3", "Claude"],
+      "answer": 3,
+      "quip_correct": "Anthropic's finest, at your service.",
+      "quip_wrong": "Claude — by Anthropic. Who else would write quips this good?"
     },
 
     {
