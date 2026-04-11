@@ -1,6 +1,7 @@
 // Renderer.cpp — raylib drawing implementation.
 
 #include "Renderer.h"
+#include "Version.h"
 #include <raylib.h>
 
 #include <algorithm>
@@ -260,6 +261,17 @@ void Renderer::drawHud(int score, int streak) const {
     DrawText(TextFormat("Streak: %d/3", streak), hudX, 120, lineSize, kTextColor);
     DrawText("ESC to quit",                      hudX, 180, smallSize, kGridLine);
     DrawText("? for help (soon)",                hudX, 206, smallSize, kGridLine);
+
+    // Version/build overlay in the lower-right corner.
+    {
+        const int margin = 8;
+        const char* verText = TextFormat("v%s (%s)", kAppVersion.data(), kBuildId.data());
+        const int tw = MeasureText(verText, smallSize);
+        DrawText(verText,
+                 layout_.windowWidth - tw - margin,
+                 layout_.windowHeight - smallSize - margin,
+                 smallSize, kGridLine);
+    }
 }
 
 void Renderer::drawDragGhost(const Piece& piece, int mouseX, int mouseY) const {

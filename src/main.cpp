@@ -123,17 +123,17 @@ int main() {
     // (no-op if files don't exist). User-provided assets should live under
     // `assets/` and follow names documented in /docs/audio-assets.md.
     renderer.initAudio();
-    renderer.loadMusic("bg", "assets/music.ogg");
-    renderer.loadSoundEffect("place",    "assets/sfx_place.wav");
-    renderer.loadSoundEffect("clear",    "assets/sfx_clear.wav");
-    renderer.loadSoundEffect("correct",  "assets/sfx_correct.wav");
-    renderer.loadSoundEffect("wrong",    "assets/sfx_wrong.wav");
-    renderer.loadSoundEffect("pickup",   "assets/sfx_pickup.wav");
-    renderer.loadSoundEffect("cancel",   "assets/sfx_cancel.wav");
-    renderer.loadSoundEffect("deal",     "assets/sfx_deal.wav");
-    renderer.loadSoundEffect("shatter",  "assets/sfx_shatter.wav");
-    renderer.loadSoundEffect("gameover", "assets/sfx_gameover.wav");
-    renderer.loadSoundEffect("restart",  "assets/sfx_restart.wav");
+    renderer.loadMusic("bg", "assets/hip-hop-vodka-main.ogg");
+    renderer.loadSoundEffect("place",    "assets/sfx_place.wav"); //todo
+    renderer.loadSoundEffect("clear",    "assets/healing_potion_001.wav");
+    renderer.loadSoundEffect("correct",  "assets/success_q.wav");
+    renderer.loadSoundEffect("wrong",    "assets/failure_q.wav");
+    renderer.loadSoundEffect("pickup",   "assets/sfx_pickup.wav");//todo
+    renderer.loadSoundEffect("cancel",   "assets/sfx_cancel.wav");//todo
+    renderer.loadSoundEffect("deal",     "assets/sfx_deal.wav");//todo
+    renderer.loadSoundEffect("shatter",  "assets/sfx_shatter.wav");//todo
+    renderer.loadSoundEffect("gameover", "assets/sfx_gameover.wav");//todo
+    renderer.loadSoundEffect("restart",  "assets/sfx_restart.wav");//todo
     renderer.playMusicStream("bg");
 
     auto tray = td::makeTray();
