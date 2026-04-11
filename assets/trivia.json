@@ -13,7 +13,8 @@
     "general",
     "meta",
     "asia",
-    "books"
+    "books",
+    "science and math"
   ],
   "questions": [
     {
@@ -169,7 +170,7 @@
       "id": "music_002",
       "category": "music",
       "difficulty": "easy",
-      "prompt": "What is the best-selling album of all time?",
+      "prompt": "Which album holds the 2021 Guinness World Record for best-selling album of all time?",
       "choices": [
         "Back in Black",
         "The Dark Side of the Moon",
@@ -177,8 +178,8 @@
         "Thriller"
       ],
       "answer": 3,
-      "quip_correct": "66 million copies and climbing.",
-      "quip_wrong": "Thriller — Michael Jackson, 1982."
+      "quip_correct": "67 million copies and climbing.",
+      "quip_wrong": "Spooky, that you don't know Thriller — Michael Jackson, 1982."
     },
     {
       "id": "music_003",
@@ -1269,6 +1270,396 @@
       "answer": 0,
       "quip_correct": "War is peace. Freedom is slavery. Ignorance is strength.",
       "quip_wrong": "1984 — Orwell's word for holding two contradictory beliefs simultaneously."
+    },
+    {
+      "id": "general_014",
+      "category": "general",
+      "difficulty": "medium",
+      "prompt": "Which Supreme Court case declared that 'separate but equal' facilities were constitutional?",
+      "choices": [
+        "Marbury v. Madison",
+        "Plessy v. Ferguson",
+        "Brown v. Board of Education",
+        "Gibbons v. Ogden"
+      ],
+      "answer": 1,
+      "quip_correct": "Separate but equal — a doctrine that haunted America for decades.",
+      "quip_wrong": "Plessy v. Ferguson legalized segregation for 58 years."
+    },
+    {
+      "id": "general_015",
+      "category": "general",
+      "difficulty": "medium",
+      "prompt": "In which year did the French and Indian War end?",
+      "choices": [
+        "1754",
+        "1759",
+        "1763",
+        "1775"
+      ],
+      "answer": 2,
+      "quip_correct": "The Treaty of Paris ended French colonial ambitions in North America.",
+      "quip_wrong": "1763 — France ceded Canada and territory east of the Mississippi."
+    },
+    {
+      "id": "general_016",
+      "category": "general",
+      "difficulty": "medium",
+      "prompt": "Which amendment abolished slavery in the United States?",
+      "choices": [
+        "10th Amendment",
+        "13th Amendment",
+        "14th Amendment",
+        "15th Amendment"
+      ],
+      "answer": 1,
+      "quip_correct": "Neither slavery nor involuntary servitude, except as punishment.",
+      "quip_wrong": "The 13th Amendment ended slavery after the Civil War."
+    },
+    {
+      "id": "general_017",
+      "category": "general",
+      "difficulty": "medium",
+      "prompt": "In what year did the Civil War end?",
+      "choices": [
+        "1862",
+        "1863",
+        "1865",
+        "1868"
+      ],
+      "answer": 2,
+      "quip_correct": "Lee surrendered at Appomattox — the Union held.",
+      "quip_wrong": "1865 — General Lee surrendered, ending the bloodiest conflict in American history."
+    },
+    {
+      "id": "general_018",
+      "category": "general",
+      "difficulty": "hard",
+      "prompt": "Which U.S. president was never elected to the presidency or vice presidency?",
+      "choices": [
+        "James K. Polk",
+        "Harry Truman",
+        "Gerald Ford",
+        "Lyndon B. Johnson"
+      ],
+      "answer": 2,
+      "quip_correct": "He was appointed V.P., then ascended to the Oval Office.",
+      "quip_wrong": "Ford was never elected to either office — appointed V.P., then became President."
+    },
+    {
+      "id": "general_019",
+      "category": "general",
+      "difficulty": "easy",
+      "prompt": "Which of the following is NOT on Mount Rushmore?",
+      "choices": [
+        "George Washington",
+        "Thomas Jefferson",
+        "Theodore Roosevelt",
+        "Benjamin Franklin"
+      ],
+      "answer": 3,
+      "quip_correct": "Only four presidents made the cut.",
+      "quip_wrong": "Franklin was brilliant, but he wasn't a president."
+    },
+    {
+      "id": "general_020",
+      "category": "general",
+      "difficulty": "easy",
+      "prompt": "How many terms did Franklin D. Roosevelt serve as president?",
+      "choices": [
+        "Two",
+        "Three",
+        "Four",
+        "Five"
+      ],
+      "answer": 2,
+      "quip_correct": "He led America through Depression and war.",
+      "quip_wrong": "FDR won four elections — the only president to do so."
+    },
+    {
+      "id": "general_021",
+      "category": "general",
+      "difficulty": "medium",
+      "prompt": "In what year was Andrew Johnson impeached?",
+      "choices": [
+        "1865",
+        "1868",
+        "1872",
+        "1876"
+      ],
+      "answer": 1,
+      "quip_correct": "Impeached but the Senate spared him removal.",
+      "quip_wrong": "Johnson's 1868 impeachment trial ended one vote short of conviction."
+    },
+    {
+      "id": "general_022",
+      "category": "general",
+      "difficulty": "medium",
+      "prompt": "In what year was Abraham Lincoln assassinated?",
+      "choices": [
+        "1861",
+        "1865",
+        "1869",
+        "1873"
+      ],
+      "answer": 1,
+      "quip_correct": "Five days after Lee's surrender, Lincoln fell.",
+      "quip_wrong": "April 14, 1865 — John Wilkes Booth struck at Ford's Theatre."
+    },
+    {
+      "id": "general_023",
+      "category": "general",
+      "difficulty": "medium",
+      "prompt": "Which president ended the Vietnam War?",
+      "choices": [
+        "Lyndon B. Johnson",
+        "Richard Nixon",
+        "Gerald Ford",
+        "Jimmy Carter"
+      ],
+      "answer": 1,
+      "quip_correct": "Vietnamization and diplomacy ended the conflict.",
+      "quip_wrong": "Nixon's Paris Peace Accords withdrew American troops."
+    },
+    {
+      "id": "general_024",
+      "category": "general",
+      "difficulty": "medium",
+      "prompt": "Which president served non-consecutive terms?",
+      "choices": [
+        "Zachary Taylor",
+        "Theodore Roosevelt",
+        "Benjamin Harrison",
+        "Grover Cleveland"
+      ],
+      "answer": 3,
+      "quip_correct": "The only president to serve two non-consecutive terms.",
+      "quip_wrong": "Cleveland won in 1884, lost in 1888, won again in 1892."
+    },
+    {
+      "id": "general_025",
+      "category": "general",
+      "difficulty": "hard",
+      "prompt": "As of 2026, which president is the only one to resign from office?",
+      "choices": [
+        "James Buchanan",
+        "Andrew Johnson",
+        "Richard Nixon",
+        "Lyndon B. Johnson"
+      ],
+      "answer": 2,
+      "quip_correct": "Watergate forced his hand.",
+      "quip_wrong": "Nixon resigned on August 9, 1974, facing certain impeachment."
+    },
+    {
+      "id": "general_026",
+      "category": "general",
+      "difficulty": "hard",
+      "prompt": "In what year did Ronald Reagan defeat incumbent Jimmy Carter?",
+      "choices": [
+        "1978",
+        "1980",
+        "1982",
+        "1984"
+      ],
+      "answer": 1,
+      "quip_correct": "The Reagan Revolution began at the ballot box.",
+      "quip_wrong": "1980 — Carter's presidency ended with the rising sun."
+    },
+    {
+      "id": "general_027",
+      "category": "general",
+      "difficulty": "hard",
+      "prompt": "In what year was Ronald Reagan shot but survived to complete his term?",
+      "choices": [
+        "1979",
+        "1981",
+        "1983",
+        "1985"
+      ],
+      "answer": 1,
+      "quip_correct": "John Hinckley Jr.'s bullet couldn't stop the Gipper.",
+      "quip_wrong": "Reagan survived an assassination attempt on March 30, 1981, and served two full terms."
+    },
+    {
+      "id": "general_028",
+      "category": "general",
+      "difficulty": "hard",
+      "prompt": "Which of these presidents won the Nobel Peace Prize while in office?",
+      "choices": [
+        "Harry Truman",
+        "Dwight Eisenhower",
+        "Theodore Roosevelt",
+        "Woodrow Wilson"
+      ],
+      "answer": 2,
+      "quip_correct": "He mediated peace between Russia and Japan.",
+      "quip_wrong": "Roosevelt won the Nobel Peace Prize in 1906 for negotiating the Russo-Japanese War."
+    },
+    {
+      "id": "motorsport_010",
+      "category": "motorsport",
+      "difficulty": "hard",
+      "prompt": "GTWorld and MotoGP have raced at the Pertamina Mandalika International Circuit. In which country is this track found?",
+      "choices": [
+        "The Philippines",
+        "Laos",
+        "Indonesia",
+        "Vietnam"
+      ],
+      "answer": 2,
+      "quip_correct": "Check out Lombok's top beach club if you attend the race!",
+      "quip_wrong": "Look, Indonesia is lovely this time of year, you should really go."
+    },
+    {
+      "id": "science_and_math_001",
+      "category": "science and math",
+      "difficulty": "easy",
+      "prompt": "What is the SI unit of force?",
+      "choices": [
+        "Joule",
+        "Newton",
+        "Watt",
+        "Pascal"
+      ],
+      "answer": 1,
+      "quip_correct": "F = ma, baby.",
+      "quip_wrong": "Newton — the SI unit of force, named after Isaac."
+    },
+    {
+      "id": "science_and_math_002",
+      "category": "science and math",
+      "difficulty": "easy",
+      "prompt": "At what temperature does water freeze in Celsius?",
+      "choices": [
+        "−40°C",
+        "0°C",
+        "32°C",
+        "100°C"
+      ],
+      "answer": 1,
+      "quip_correct": "The freezing point of water — nice and round.",
+      "quip_wrong": "0°C — that's where ice forms."
+    },
+    {
+      "id": "science_and_math_003",
+      "category": "science and math",
+      "difficulty": "easy",
+      "prompt": "What does the 'c' in E=mc² represent?",
+      "choices": [
+        "Circumference",
+        "Coefficient",
+        "Speed of light",
+        "Constant ratio"
+      ],
+      "answer": 2,
+      "quip_correct": "The speed of light — nothing's faster.",
+      "quip_wrong": "The speed of light, approximately 299,792,458 meters per second."
+    },
+    {
+      "id": "science_and_math_004",
+      "category": "science and math",
+      "difficulty": "medium",
+      "prompt": "Graham's number was defined to provide an upper bound for a problem in which field of mathematics?",
+      "choices": [
+        "Number theory",
+        "Ramsey theory",
+        "Topology",
+        "Cryptography"
+      ],
+      "answer": 1,
+      "quip_correct": "Ramsey theory — and the number is impossibly large.",
+      "quip_wrong": "Ramsey theory — a field dealing with combinatorial structures."
+    },
+    {
+      "id": "science_and_math_005",
+      "category": "science and math",
+      "difficulty": "medium",
+      "prompt": "What is a number that is larger than any finite number but not infinite called?",
+      "choices": [
+        "Infinite",
+        "Transfinite",
+        "Irrational",
+        "Complex"
+      ],
+      "answer": 1,
+      "quip_correct": "Transfinite — larger than finite, but not quite infinity.",
+      "quip_wrong": "Transfinite numbers are larger than any finite number."
+    },
+    {
+      "id": "science_and_math_006",
+      "category": "science and math",
+      "difficulty": "hard",
+      "prompt": "Which of these infinities is larger: the cardinality of the integers or the cardinality of the real numbers?",
+      "choices": [
+        "They are the same size",
+        "The cardinality of the integers",
+        "The cardinality of the real numbers",
+        "Neither can be compared"
+      ],
+      "answer": 2,
+      "quip_correct": "Uncountably infinite beats countably infinite.",
+      "quip_wrong": "The real numbers are uncountably infinite — Cantor proved it."
+    },
+    {
+      "id": "science_and_math_007",
+      "category": "science and math",
+      "difficulty": "hard",
+      "prompt": "In the Ackermann function, what is A(4, 4)?",
+      "choices": [
+        "Approximately 10^10^10^10",
+        "Graham's number",
+        "A number with billions of digits",
+        "Uncomputable with known methods"
+      ],
+      "answer": 3,
+      "quip_correct": "Far too large to compute — the Ackermann function grows absurdly fast.",
+      "quip_wrong": "A(4,4) is so large it can't be calculated with any practical computer."
+    },
+    {
+      "id": "science_and_math_008",
+      "category": "science and math",
+      "difficulty": "hard",
+      "prompt": "What is aleph-null, in set theory?",
+      "choices": [
+        "The cardinality of the real numbers",
+        "The cardinality of the natural numbers",
+        "A prime number",
+        "The smallest irrational number"
+      ],
+      "answer": 1,
+      "quip_correct": "The first infinite cardinal — countably infinite.",
+      "quip_wrong": "Aleph-null is the cardinality of the natural numbers."
+    },
+    {
+      "id": "science_and_math_009",
+      "category": "science and math",
+      "difficulty": "easy",
+      "prompt": "How many chambers does a human heart have?",
+      "choices": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "answer": 2,
+      "quip_correct": "Left and right, atrium and ventricle — four chambers total.",
+      "quip_wrong": "Four chambers — two atria and two ventricles."
+    },
+    {
+      "id": "science_and_math_010",
+      "category": "science and math",
+      "difficulty": "easy",
+      "prompt": "What is the powerhouse of the cell?",
+      "choices": [
+        "Nucleus",
+        "Ribosome",
+        "Mitochondrion",
+        "Chloroplast"
+      ],
+      "answer": 2,
+      "quip_correct": "The mitochondrion — where ATP gets made.",
+      "quip_wrong": "The mitochondrion, where cellular respiration happens."
     }
   ]
 }

@@ -288,16 +288,16 @@ int main() {
             TraceLog(LOG_WARNING, "Missing sound effect: %s", path.c_str());
         }
     };
-    tryLoad("place",    "assets/pro_memory_card_eject_insert_a.wav");
-    tryLoad("clear",    "assets/healing_potion_001.wav");
-    tryLoad("correct",  "assets/success_q.wav");
-    tryLoad("wrong",    "assets/failure_q.wav");
-    tryLoad("pickup",   "assets/handling_metal_equipment_b.wav");
-    tryLoad("cancel",   "assets/server_hum_end.wav");
-    tryLoad("deal",     "assets/stick_hit_001.wav");
-    tryLoad("shatter",  "assets/director_chair_creaking_a.wav");
-    tryLoad("gameover", "assets/jingle_win_003.wav");
-    tryLoad("restart",  "assets/bad_button_001.wav");
+    tryLoad("place",    "assets/sfx/pro_memory_card_eject_insert_a.wav");
+    tryLoad("clear",    "assets/sfx/healing_potion_001.wav");
+    tryLoad("correct",  "assets/sfx/success_q.wav");
+    tryLoad("wrong",    "assets/sfx/failure_q.wav");
+    tryLoad("pickup",   "assets/sfx/handling_metal_equipment_b.wav");
+    tryLoad("cancel",   "assets/sfx/server_hum_end.wav");
+    tryLoad("deal",     "assets/sfx/stick_hit_001.wav");
+    tryLoad("shatter",  "assets/sfx/director_chair_creaking_a.wav");
+    tryLoad("gameover", "assets/sfx/jingle_win_003.wav");
+    tryLoad("restart",  "assets/sfx/bad_button_001.wav");
     // (previous hardcoded playlist removed; dynamic playlist already started)
 
     auto tray = td::makeTray();

@@ -64,7 +64,9 @@
       "Bash(cmake -B build -S . -G Ninja -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Debug '-DCMAKE_CXX_COMPILER=C:/Program Files \\(x86\\)/Microsoft Visual Studio/18/BuildTools/VC/Tools/MSVC/14.50.35717/bin/Hostx64/x64/cl.exe' '-DCMAKE_RC_COMPILER=C:/Program Files \\(x86\\)/Windows Kits/10/bin/10.0.26100.0/x64/rc.exe')",
       "Bash(cmake -B build -S . -G Ninja -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Debug '-DCMAKE_CXX_COMPILER=C:/Program Files \\(x86\\)/Microsoft Visual Studio/18/BuildTools/VC/Tools/MSVC/14.50.35717/bin/Hostx64/x64/cl.exe' '-DCMAKE_RC_COMPILER=C:/Program Files \\(x86\\)/Windows Kits/10/bin/10.0.26100.0/x64/rc.exe' '-DCMAKE_MT=C:/Program Files \\(x86\\)/Windows Kits/10/bin/10.0.26100.0/x64/mt.exe')",
       "WebSearch",
-      "Bash(python -c ':*)"
+      "Bash(python -c ':*)",
+      "Bash(tail -100 c:\\\\\\\\GitHub\\\\\\\\block-doku-trivia\\\\\\\\assets\\\\\\\\trivia.json)",
+      "Bash(python)"
     ]
   }
 }
