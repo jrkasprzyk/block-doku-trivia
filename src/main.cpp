@@ -19,6 +19,9 @@
 
 namespace {
 
+// Game phase ——————————————————————————————————————————————————
+enum class Phase { Playing, GameOver };
+
 // Clear-flash animation ———————————————————————————————————————
 struct ClearAnim {
     std::vector<td::Cell> cells;
@@ -68,6 +71,7 @@ int main() {
     int score  = 0;
     int streak = 0;
     ClearAnim clearAnim;
+    Phase phase = Phase::Playing;
 
     // Tray geometry — must agree with Renderer::drawTray.
     const int trayY = layout.boardOriginY + td::kBoardSize * layout.cellPixels + 12;
@@ -82,8 +86,19 @@ int main() {
         const int mx = GetMouseX();
         const int my = GetMouseY();
 
+        // Restart from game-over screen.
+        if (phase == Phase::GameOver && IsKeyPressed(KEY_R)) {
+            board   = td::Board{};
+            tray    = td::makeTray();
+            score   = 0;
+            streak  = 0;
+            clearAnim = {};
+            drag    = {};
+            phase   = Phase::Playing;
+        }
+
         // Pick up a piece from the tray.
-        if (!drag.active && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+        if (phase == Phase::Playing && !drag.active && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
             const int relX = mx - layout.boardOriginX;
             if (my >= trayY && my < layout.windowHeight - 8 &&
                 relX >= 0 && relX < trayW) {
@@ -98,7 +113,7 @@ int main() {
         }
 
         // Drop or cancel.
-        if (drag.active && IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
+        if (phase == Phase::Playing && drag.active && IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
             bool placed = false;
 
             if (layout.isOverBoard(mx, my)) {
@@ -135,6 +150,15 @@ int main() {
                     if (!p.shape.cells.empty()) { allEmpty = false; break; }
                 }
                 if (allEmpty) tray = td::makeTray();
+
+                // Game over: none of the remaining tray pieces can be placed anywhere.
+                std::vector<std::vector<td::Cell>> shapes;
+                for (const auto& p : tray) {
+                    if (!p.shape.cells.empty()) shapes.push_back(p.shape.cells);
+                }
+                if (!board.anyPlacementPossible(shapes)) {
+                    phase = Phase::GameOver;
+                }
             }
 
             drag = {};
@@ -166,6 +190,11 @@ int main() {
             // Ghost on top of everything so it's always readable.
             if (drag.active) {
                 renderer.drawDragGhost(drag.piece, mx, my);
+            }
+
+            // Game-over overlay on top of the entire scene.
+            if (phase == Phase::GameOver) {
+                renderer.drawGameOver(score);
             }
         EndDrawing();
     }

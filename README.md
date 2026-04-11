@@ -6,7 +6,15 @@ Place polyomino pieces on a 9×9 board. Clear full rows, columns, and 3×3 squar
 
 ## Status
 
-**Day 4.** Clearing animations are live. When a placement completes a full row, column, or 3×3 square, the cleared cells flash bright yellow for ~0.3 s before fading out. All prior mechanics still work: drag-and-drop placement, green/red legality preview, score on clear, tray refill.
+**Day 5.** The core puzzle loop is complete and playable end-to-end:
+
+- **Board** — 9×9 grid with 3×3 sub-square highlights.
+- **Pieces** — a tray of 3 random polyomino shapes; a fresh tray is dealt when all 3 are placed.
+- **Drag-and-drop** — click a tray piece to lift it; a ghost follows the cursor. Hover over the board to snap to the grid with a green (legal) or red (illegal) preview; release to place or cancel.
+- **Clearing** — any full row, column, or 3×3 square clears. Cleared cells flash yellow for ~0.3 s before disappearing. Score: 1 pt per cell placed + 10 pts per cleared cell.
+- **Game over** — after each placement, the engine checks whether any remaining tray piece fits anywhere. If none can, a "GAME OVER" panel shows the final score. Press **R** to restart (resets board, tray, score, and streak). ESC quits.
+
+Trivia blocks, stone penalties, and streak mechanics are stubbed but not yet wired to UI (Days 6–7).
 
 ## Prerequisites (Windows native)
 
@@ -48,7 +56,13 @@ cmake --build build --config Release
 .\build\Release\trivia_doku.exe
 ```
 
-You should see a dark window titled "TRIVIA-DOKU" with an empty 9×9 grid, three pieces in the tray below, and a score/streak HUD on the right. Click and drag a piece onto the board. ESC to quit.
+A dark 900×700 window opens titled **TRIVIA-DOKU**. You'll see:
+
+- A 9×9 grid (the board) with darker 3×3 sub-square borders.
+- Three polyomino pieces in the tray below the board — click and drag one onto the board.
+- A HUD on the right: score, streak counter, and keyboard hints.
+
+When a piece completes a full row, column, or 3×3 square, those cells flash yellow before clearing. When the board fills up and no piece fits, a **GAME OVER** overlay shows your final score — press **R** to restart or **ESC** to quit.
 
 ## Project layout
 
@@ -68,7 +82,18 @@ trivia-doku/
 
 ## Trivia bank
 
-Questions live in `assets/trivia.json`. The file ships with 3 seed examples per category — **motorsport**, **music**, **film**, **general**, and **meta** (questions about the game itself). Fill in the `EXAMPLE — replace` entries and add as many more as you like. The schema is documented at the top of the file.
+Questions live in `assets/trivia.json`. The bank currently has **56 questions** across six categories:
+
+| Category | Count |
+|---|---|
+| motorsport | 8 |
+| music | 8 |
+| film | 8 |
+| general | 12 |
+| asia | 12 |
+| meta *(questions about the game itself)* | 8 |
+
+Add as many questions as you like — the schema is documented at the top of the file. The loader shuffles at startup and tracks what has been asked this session, so repeats are rare.
 
 Scoring multipliers by difficulty: easy 1.5×, medium 2×, hard 3×.
 
@@ -78,7 +103,7 @@ Scoring multipliers by difficulty: easy 1.5×, medium 2×, hard 3×.
 - [x] **Day 2** — Piece definitions, piece tray, render a set of 3 offered pieces
 - [x] **Day 3** — Drag-and-drop placement with legality checks
 - [x] **Day 4** — Line/column/square clearing animations
-- [ ] **Day 5** — Game over detection
+- [x] **Day 5** — Game over detection
 - [ ] **Day 6** — Trivia block flag + modal dialog + JSON loader
 - [ ] **Day 7** — Stones, streak tracking, redemption mechanic
 - [ ] **Day 8** — Help overlay (?), quips, polish

@@ -212,4 +212,40 @@ void Renderer::drawClearFlash(const std::vector<Cell>& cells, float t) const {
     }
 }
 
+void Renderer::drawGameOver(int finalScore) const {
+    const int W = layout_.windowWidth;
+    const int H = layout_.windowHeight;
+
+    // Semi-transparent full-screen dimmer.
+    DrawRectangle(0, 0, W, H, { 0, 0, 0, 175 });
+
+    // Panel
+    constexpr int kPanelW = 360;
+    constexpr int kPanelH = 210;
+    const int panelX = (W - kPanelW) / 2;
+    const int panelY = (H - kPanelH) / 2;
+
+    DrawRectangle(panelX,     panelY,     kPanelW,     kPanelH,     { 28,  32,  46, 248 });
+    DrawRectangle(panelX,     panelY,     kPanelW,       2,          { 200, 156,  50, 255 }); // top accent bar
+    DrawRectangleLines(panelX, panelY,    kPanelW,     kPanelH,     {  90, 100, 120, 200 });
+
+    // Title
+    const char* title = "GAME OVER";
+    constexpr int kTitleSize = 44;
+    const int tw = MeasureText(title, kTitleSize);
+    DrawText(title, panelX + (kPanelW - tw) / 2, panelY + 22, kTitleSize, { 240, 196, 68, 255 });
+
+    // Score
+    const char* scoreStr = TextFormat("Final score:  %d", finalScore);
+    constexpr int kScoreSize = 24;
+    const int sw = MeasureText(scoreStr, kScoreSize);
+    DrawText(scoreStr, panelX + (kPanelW - sw) / 2, panelY + 108, kScoreSize, { 230, 234, 244, 255 });
+
+    // Restart prompt
+    const char* prompt = "Press  R  to play again";
+    constexpr int kPromptSize = 18;
+    const int pw = MeasureText(prompt, kPromptSize);
+    DrawText(prompt, panelX + (kPanelW - pw) / 2, panelY + 162, kPromptSize, { 130, 148, 175, 255 });
+}
+
 } // namespace td
