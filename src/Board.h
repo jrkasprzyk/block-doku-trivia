@@ -60,9 +60,15 @@ public:
     // caller knows to pop the trivia modal.
     struct ClearResult {
         std::vector<Cell> clearedCells;
-        bool              triggeredTrivia;
+        std::vector<Cell> triviaCells;    // subset that held CellState::Trivia before erasure
+        bool              triggeredTrivia; // true iff triviaCells is non-empty
     };
     ClearResult detectAndClear();
+
+    // Place a single Stone at (row, col). Called when a wrong trivia answer is
+    // given; the trivia cell's position comes back as an unclearable penalty block.
+    // No-op if the coordinates are out of range.
+    void placeStone(int row, int col);
 
     // Shatter every stone on the board (called when the 3-in-a-row redemption
     // streak fires). Returns the number of stones removed, for bonus scoring.

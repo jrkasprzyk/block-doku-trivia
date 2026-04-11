@@ -90,19 +90,27 @@ Board::ClearResult Board::detectAndClear() {
         }
     }
 
-    // Sweep phase: collect cleared cells, note if any were Trivia, then erase.
+    // Sweep phase: collect cleared cells, capture trivia cells BEFORE erasing them.
     ClearResult result;
     result.triggeredTrivia = false;
     for (int r = 0; r < kBoardSize; ++r) {
         for (int c = 0; c < kBoardSize; ++c) {
             if (mark[r][c]) {
-                if (grid_[r][c] == CellState::Trivia) result.triggeredTrivia = true;
+                if (grid_[r][c] == CellState::Trivia) {
+                    result.triviaCells.push_back({r, c});
+                    result.triggeredTrivia = true;
+                }
                 result.clearedCells.push_back({r, c});
                 grid_[r][c] = CellState::Empty;
             }
         }
     }
     return result;
+}
+
+void Board::placeStone(int row, int col) {
+    if (row < 0 || row >= kBoardSize || col < 0 || col >= kBoardSize) return;
+    grid_[row][col] = CellState::Stone;
 }
 
 int Board::shatterStones() {

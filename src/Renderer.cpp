@@ -4,6 +4,7 @@
 #include <raylib.h>
 
 #include <algorithm>
+#include <sstream>
 
 namespace td {
 
@@ -18,6 +19,24 @@ constexpr Color kCellFilled    = { 92, 170, 230, 255 };
 constexpr Color kCellTrivia    = {240, 196,  68, 255 }; // glowing question mark color
 constexpr Color kCellStone     = { 90,  90,  95, 255 };
 constexpr Color kTextColor     = {230, 234, 244, 255 };
+
+// Greedy word-wrap: split `text` into lines that fit within `maxWidth` px at `fontSize`.
+std::vector<std::string> wrapText(const std::string& text, int maxWidth, int fontSize) {
+    std::vector<std::string> lines;
+    std::istringstream stream(text);
+    std::string word, current;
+    while (stream >> word) {
+        std::string candidate = current.empty() ? word : current + " " + word;
+        if (MeasureText(candidate.c_str(), fontSize) <= maxWidth) {
+            current = candidate;
+        } else {
+            if (!current.empty()) lines.push_back(current);
+            current = word;
+        }
+    }
+    if (!current.empty()) lines.push_back(current);
+    return lines;
+}
 } // namespace
 
 Renderer::Renderer(const Layout& layout) : layout_(layout) {}
@@ -75,8 +94,9 @@ void Renderer::drawTray(const std::array<Piece, 3>& tray, int hiddenSlot) const 
     const int trayY  = oy + kBoardSize * boardCell + 12;
     const int trayH  = layout_.windowHeight - trayY - 8;
     const int trayW  = kBoardSize * boardCell;          // same width as the board
-    const int slotW  = trayW / 3;                       // 168 px each at default layout
-    const int prev   = 20;                               // preview cell size in pixels
+    const int slotW  = trayW / 3;
+    const float s     = layout_.cellPixels / 56.0f;
+    const int prev    = std::max(12, static_cast<int>(20 * s)); // preview cell size scaled
 
     // Colours reused from the board (defined in the anonymous namespace above).
     constexpr Color kSlotBg     = { 32,  38,  50, 255 };
@@ -127,13 +147,18 @@ void Renderer::drawTray(const std::array<Piece, 3>& tray, int hiddenSlot) const 
 }
 
 void Renderer::drawHud(int score, int streak) const {
-    DrawText("TRIVIA-DOKU", layout_.boardOriginX, 16, 28, kTextColor);
+    const float s = layout_.cellPixels / 56.0f;
+    const int titleSize = std::max(16, static_cast<int>(28 * s));
+    const int lineSize  = std::max(12, static_cast<int>(22 * s));
+    const int smallSize = std::max(10, static_cast<int>(18 * s));
+
+    DrawText("TRIVIA-DOKU", layout_.boardOriginX, 16, titleSize, kTextColor);
 
     const int hudX = layout_.boardOriginX + kBoardSize * layout_.cellPixels + 40;
-    DrawText(TextFormat("Score:  %d", score),    hudX, 80,  22, kTextColor);
-    DrawText(TextFormat("Streak: %d/3", streak), hudX, 120, 22, kTextColor);
-    DrawText("ESC to quit",                      hudX, 180, 18, kGridLine);
-    DrawText("? for help (soon)",                hudX, 206, 18, kGridLine);
+    DrawText(TextFormat("Score:  %d", score),    hudX, 80,  lineSize, kTextColor);
+    DrawText(TextFormat("Streak: %d/3", streak), hudX, 120, lineSize, kTextColor);
+    DrawText("ESC to quit",                      hudX, 180, smallSize, kGridLine);
+    DrawText("? for help (soon)",                hudX, 206, smallSize, kGridLine);
 }
 
 void Renderer::drawDragGhost(const Piece& piece, int mouseX, int mouseY) const {
@@ -229,23 +254,119 @@ void Renderer::drawGameOver(int finalScore) const {
     DrawRectangle(panelX,     panelY,     kPanelW,       2,          { 200, 156,  50, 255 }); // top accent bar
     DrawRectangleLines(panelX, panelY,    kPanelW,     kPanelH,     {  90, 100, 120, 200 });
 
-    // Title
+    // Title (scaled to match board cell size)
+    const float s = layout_.cellPixels / 56.0f;
     const char* title = "GAME OVER";
-    constexpr int kTitleSize = 44;
+    const int kTitleSize = std::max(20, static_cast<int>(44 * s));
     const int tw = MeasureText(title, kTitleSize);
     DrawText(title, panelX + (kPanelW - tw) / 2, panelY + 22, kTitleSize, { 240, 196, 68, 255 });
 
     // Score
     const char* scoreStr = TextFormat("Final score:  %d", finalScore);
-    constexpr int kScoreSize = 24;
+    const int kScoreSize = std::max(14, static_cast<int>(24 * s));
     const int sw = MeasureText(scoreStr, kScoreSize);
     DrawText(scoreStr, panelX + (kPanelW - sw) / 2, panelY + 108, kScoreSize, { 230, 234, 244, 255 });
 
     // Restart prompt
     const char* prompt = "Press  R  to play again";
-    constexpr int kPromptSize = 18;
+    const int kPromptSize = std::max(12, static_cast<int>(18 * s));
     const int pw = MeasureText(prompt, kPromptSize);
     DrawText(prompt, panelX + (kPanelW - pw) / 2, panelY + 162, kPromptSize, { 130, 148, 175, 255 });
+}
+
+void Renderer::drawTriviaModal(const Question& q, int selected,
+                               bool answered, bool correct,
+                               const std::string& quip) const {
+    const int W = layout_.windowWidth;
+    const int H = layout_.windowHeight;
+
+    // Semi-transparent full-screen dimmer.
+    DrawRectangle(0, 0, W, H, { 0, 0, 0, 185 });
+
+    // Panel geometry.
+    constexpr int kPanelW = 560;
+    constexpr int kPanelH = 390;
+    const int panelX = (W - kPanelW) / 2;
+    const int panelY = (H - kPanelH) / 2;
+    const int pad    = 20;  // horizontal text padding inside panel
+
+    DrawRectangle(panelX,  panelY,  kPanelW, kPanelH, { 28,  32,  46, 250 });
+    DrawRectangle(panelX,  panelY,  kPanelW,       2,  {200, 156,  50, 255 }); // gold accent
+    DrawRectangleLines(panelX, panelY, kPanelW, kPanelH, { 90, 100, 120, 200 });
+
+    // Category + difficulty badges (top row).
+    constexpr int kBadgeSize = 14;
+    DrawText(q.category.c_str(),   panelX + pad, panelY + 10, kBadgeSize, {200, 156, 50, 200});
+    const char* diff = q.difficulty.c_str();
+    const int dw = MeasureText(diff, kBadgeSize);
+    DrawText(diff, panelX + kPanelW - pad - dw, panelY + 10, kBadgeSize, {130, 148, 175, 200});
+
+    // Question text — word-wrapped.
+    constexpr int kQSize   = 19;
+    constexpr int kQTextW  = kPanelW - pad * 2;
+    const auto lines = wrapText(q.prompt, kQTextW, kQSize);
+    int qY = panelY + 34;
+    for (const auto& line : lines) {
+        DrawText(line.c_str(), panelX + pad, qY, kQSize, kTextColor);
+        qY += kQSize + 4;
+    }
+
+    // Choice rows.
+    constexpr int kChoiceSize = 17;
+    constexpr int kChoiceH    = 34;
+    const char kLabels[]      = "ABCD";
+    int choiceY = panelY + 120;
+
+    for (int i = 0; i < 4; ++i) {
+        const bool isSelected = (i == selected);
+
+        // Highlight rect for selected (or correct/wrong) row.
+        Color rowBg = { 0, 0, 0, 0 };
+        if (answered) {
+            if (i == q.answer)                   rowBg = { 20,  80,  20, 180 }; // correct answer
+            else if (isSelected && !correct)     rowBg = { 80,  20,  20, 180 }; // wrong pick
+        } else if (isSelected) {
+            rowBg = { 60,  50,  10, 200 }; // gold tint for hover
+        }
+        if (rowBg.a > 0)
+            DrawRectangle(panelX + pad - 4, choiceY - 2, kPanelW - pad * 2 + 8, kChoiceH, rowBg);
+
+        // Selection arrow.
+        if (isSelected && !answered)
+            DrawText(">", panelX + pad - 4, choiceY + (kChoiceH - kChoiceSize) / 2,
+                     kChoiceSize, {240, 196, 68, 255});
+
+        // Label (A/B/C/D).
+        const char label[3] = { kLabels[i], ' ', '\0' };
+        DrawText(label, panelX + pad + 12, choiceY + (kChoiceH - kChoiceSize) / 2,
+                 kChoiceSize, {170, 185, 210, 255});
+
+        // Choice text.
+        DrawText(q.choices[i].c_str(), panelX + pad + 30, choiceY + (kChoiceH - kChoiceSize) / 2,
+                 kChoiceSize, kTextColor);
+
+        choiceY += kChoiceH;
+    }
+
+    // Feedback row (shown after answering).
+    if (answered) {
+        const int feedY = panelY + kPanelH - 80;
+        if (correct) {
+            const std::string msg = quip.empty() ? "CORRECT!" : "CORRECT!  " + quip;
+            DrawText(msg.c_str(), panelX + pad, feedY, 18, {100, 220, 100, 255});
+        } else {
+            const std::string msg = quip.empty() ? "WRONG." : "WRONG.  " + quip;
+            DrawText(msg.c_str(), panelX + pad, feedY, 18, {220, 80, 80, 255});
+        }
+    }
+
+    // Hint line at the bottom.
+    const char* hint = answered ? "Press any key to continue"
+                                : "1-4 / \x18\x19 to choose   Enter to confirm";
+    constexpr int kHintSize = 14;
+    const int hw = MeasureText(hint, kHintSize);
+    DrawText(hint, panelX + (kPanelW - hw) / 2, panelY + kPanelH - 26,
+             kHintSize, {130, 148, 175, 255});
 }
 
 } // namespace td

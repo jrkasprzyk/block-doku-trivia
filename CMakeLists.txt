@@ -25,6 +25,7 @@ add_executable(trivia_doku
     src/Board.cpp
     src/Piece.cpp
     src/Renderer.cpp
+    src/TriviaBank.cpp
 )
 
 target_include_directories(trivia_doku PRIVATE src)

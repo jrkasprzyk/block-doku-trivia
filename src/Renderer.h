@@ -8,17 +8,19 @@
 
 #include "Board.h"
 #include "Piece.h"
+#include "TriviaBank.h"
 
 #include <array>
+#include <string>
 
 namespace td {
 
 struct Layout {
-    int windowWidth  = 900;
-    int windowHeight = 700;
-    int cellPixels   = 56;   // size of one board cell in pixels
-    int boardOriginX = 60;   // top-left of the board in window coords
-    int boardOriginY = 60;
+    int windowWidth  = 1200;
+    int windowHeight = 880;
+    int cellPixels   = 72;   // size of one board cell in pixels
+    int boardOriginX = 80;   // top-left of the board in window coords
+    int boardOriginY = 80;
 
     // Convert pixel position to board cell. Returns {-1,-1} if outside the board.
     Cell boardCellAt(int px, int py) const {
@@ -63,6 +65,14 @@ public:
 
     // Full-screen game-over overlay with final score and restart prompt.
     void drawGameOver(int finalScore) const;
+
+    // Trivia modal overlay. Shows question, choices, and (after answering) feedback.
+    // `selected` is the currently highlighted choice (0-3).
+    // `answered` / `correct` control whether feedback is shown.
+    // `quip` is the per-question flavour text (may be empty — falls back to generic).
+    void drawTriviaModal(const Question& q, int selected,
+                         bool answered, bool correct,
+                         const std::string& quip) const;
 
 private:
     Layout layout_;
