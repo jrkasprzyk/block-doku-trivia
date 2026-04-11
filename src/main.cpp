@@ -26,6 +26,17 @@
 
 #include <algorithm>
 #include <cmath>
+#include <filesystem>
+#include <cctype>
+// Logging helpers
+#include <cstdarg>
+#include <cstdio>
+#include <fstream>
+#include <mutex>
+#include <chrono>
+#include <iomanip>
+#include <ctime>
+#include <sstream>
 
 namespace {
 
@@ -145,7 +156,67 @@ void checkGameOver(Phase& phase,
 
 } // namespace
 
+// Trace-to-file callback: writes raylib TraceLog output to `logs/trivia_doku.log`
+namespace {
+    static std::ofstream g_logFile;
+    static std::mutex g_logMutex;
+
+    static void TraceToFile(int logType, const char *text, va_list args) {
+        // Also print to stderr so console output remains visible
+        {
+            va_list copy;
+            va_copy(copy, args);
+            vfprintf(stderr, text, copy);
+            fprintf(stderr, "\n");
+            va_end(copy);
+        }
+
+        // Format the message into a buffer
+        char buf[4096];
+        va_list copy2;
+        va_copy(copy2, args);
+        vsnprintf(buf, sizeof(buf), text, copy2);
+        va_end(copy2);
+
+        // Timestamp
+        auto now = std::chrono::system_clock::now();
+        std::time_t t = std::chrono::system_clock::to_time_t(now);
+        std::tm tm{};
+#ifdef _WIN32
+        localtime_s(&tm, &t);
+#else
+        localtime_r(&t, &tm);
+#endif
+        char timestr[64];
+        std::strftime(timestr, sizeof(timestr), "%F %T", &tm);
+
+        const char* level = "LOG";
+        switch (logType) {
+            case LOG_INFO: level = "INFO"; break;
+            case LOG_WARNING: level = "WARN"; break;
+            case LOG_ERROR: level = "ERROR"; break;
+            case LOG_DEBUG: level = "DEBUG"; break;
+            case LOG_TRACE: level = "TRACE"; break;
+        }
+
+        std::lock_guard<std::mutex> lk(g_logMutex);
+        if (!g_logFile.is_open()) {
+            try {
+                std::filesystem::create_directories("logs");
+                g_logFile.open("logs/trivia_doku.log", std::ios::app);
+            } catch (...) {}
+        }
+        if (g_logFile.is_open()) {
+            g_logFile << "[" << timestr << "] [" << level << "] " << buf << '\n';
+            g_logFile.flush();
+        }
+    }
+} // namespace
+
 int main() {
+    // Install trace callback to mirror logs to a file (logs/trivia_doku.log)
+    SetTraceLogCallback(TraceToFile);
+
     td::Layout layout;
     // Allow the window to be resized by the OS; initialize at the preferred size.
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
@@ -162,17 +233,55 @@ int main() {
     // Optional: initialize audio and attempt to load conventionally-named assets
     // (no-op if files don't exist). User-provided assets should live under
     // `assets/` and follow names documented in /docs/audio-assets.md.
+    //
+    // for examples see: https://www.raylib.com/examples/audio/loader.html?name=audio_music_stream
+    
     renderer.initAudio();
-    // Load background playlist tracks (skip any missing files).
-    auto tryLoadMusic = [&](const std::string& id, const std::string& path){
+    // Load background playlist tracks: scan `assets/bg_music` and load all
+    // supported files (sorted alphabetically). If none are found, fall back
+    // to the original hardcoded list.
+    auto tryLoadMusic = [&](const std::string& id, const std::string& path) -> bool {
         if (!renderer.loadMusic(id, path)) {
             TraceLog(LOG_WARNING, "Missing music: %s", path.c_str());
+            return false;
         }
+        return true;
     };
-    tryLoadMusic("bg_amapiano", "assets/bg_music/amapiano_logging_the_drum_main.ogg");
-    tryLoadMusic("bg_hiphop",    "assets/bg_music/hip-hop-vodka-main.ogg");
-    tryLoadMusic("bg_synth",     "assets/bg_music/synthwave_cybertruck_chase_main.ogg");
-    tryLoadMusic("bg_west",      "assets/bg_music/westernaftrica_kalahari_main.ogg");
+
+    std::vector<std::string> playlistIds;
+    namespace fs = std::filesystem;
+    const fs::path musicDir("assets/bg_music");
+    if (fs::exists(musicDir) && fs::is_directory(musicDir)) {
+        std::vector<std::pair<std::string, fs::path>> files;
+        for (const auto& entry : fs::directory_iterator(musicDir)) {
+            if (!entry.is_regular_file()) continue;
+            std::string ext = entry.path().extension().string();
+            std::transform(ext.begin(), ext.end(), ext.begin(), [](unsigned char c){ return static_cast<char>(std::tolower(c)); });
+            if (ext == ".ogg" || ext == ".mp3" || ext == ".wav" || ext == ".flac" || ext == ".m4a") {
+                files.emplace_back(entry.path().stem().string(), entry.path());
+            }
+        }
+        if (!files.empty()) {
+            std::sort(files.begin(), files.end(), [](auto &a, auto &b){ return a.first < b.first; });
+            for (const auto& p : files) {
+                std::string stem = p.first;
+                std::string id = "bg_" + stem;
+                for (auto &ch : id) if (!(std::isalnum((unsigned char)ch) || ch == '_')) ch = '_';
+                if (tryLoadMusic(id, p.second.string())) playlistIds.push_back(id);
+            }
+        }
+    }
+
+    // Fallback: if nothing was discovered/loaded, use the original hardcoded list.
+    if (playlistIds.empty()) {
+        if (tryLoadMusic("bg_amapiano", "assets/bg_music/amapiano_logging_the_drum_main.ogg")) playlistIds.push_back("bg_amapiano");
+        if (tryLoadMusic("bg_hiphop",    "assets/bg_music/hip-hop-vodka-main.ogg")) playlistIds.push_back("bg_hiphop");
+        if (tryLoadMusic("bg_synth",     "assets/bg_music/synthwave_cybertruck_chase_main.ogg")) playlistIds.push_back("bg_synth");
+        if (tryLoadMusic("bg_west",      "assets/bg_music/westernaftrica_kalahari_main.ogg")) playlistIds.push_back("bg_west");
+    }
+
+    // Start the playlist (looping).
+    renderer.playMusicPlaylist(playlistIds, true);
     // Helper to try loading sfx and log missing ones.
     auto tryLoad = [&](const std::string& id, const std::string& path){
         if (!renderer.loadSoundEffect(id, path)) {
@@ -189,8 +298,7 @@ int main() {
     tryLoad("shatter",  "assets/director_chair_creaking_a.wav");
     tryLoad("gameover", "assets/jingle_win_003.wav");
     tryLoad("restart",  "assets/bad_button_001.wav");
-    // Start the playlist (looping).
-    renderer.playMusicPlaylist({"bg_amapiano", "bg_hiphop", "bg_synth", "bg_west"}, true);
+    // (previous hardcoded playlist removed; dynamic playlist already started)
 
     auto tray = td::makeTray();
 
@@ -325,8 +433,7 @@ int main() {
                     }
                 }
             } else {
-                // After answer: any key/click/button skips the countdown.
-                triviaModal.dismissFrames--;
+                // After answer: wait for explicit input (no automatic timeout).
                 bool anyInput = false;
                 for (int k = 32; k < 350; ++k) {
                     if (IsKeyPressed(k)) { anyInput = true; break; }
@@ -338,7 +445,7 @@ int main() {
                         if (IsGamepadButtonPressed(gp, b)) { anyInput = true; break; }
                     }
                 }
-                if (triviaModal.dismissFrames <= 0 || anyInput) {
+                if (anyInput) {
                     triviaModal = {};
                     phase = Phase::Playing;
                     checkGameOver(phase, board, tray);

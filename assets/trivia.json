@@ -911,6 +911,36 @@
       "quip_correct": "You've been paying attention."
     },
     {
+      "id": "meta_009",
+      "category": "meta",
+      "difficulty": "medium",
+      "prompt": "This software engineering term got its name from a centuries-old mechanical testing protocol.",
+      "choices": [
+        "bug testing",
+        "linting",
+        "smoke testing",
+        "chocolatey scripts"
+      ],
+      "answer": 2,
+      "quip_correct": "It's also to make sure that your electronics don't start smoking when you turn them on...",
+      "quip_wrong": "What, you never watched Gunsmoke as a child?"
+    },
+    {
+      "id": "meta_010",
+      "category": "meta",
+      "difficulty": "easy",
+      "prompt": "A programmer's first program in a new programming language is usually:",
+      "choices": [
+        "where \"is my car\"",
+        "print \"Hello, World!\"",
+        "install_printer()",
+        "which python()"
+      ],
+      "answer": 1,
+      "quip_correct": "Hello, you!",
+      "quip_wrong": "Next time you go to a new place, you should say \"Hello, World!\" and see what they say"
+    },
+    {
       "id": "film-and-tv_009",
       "category": "film-and-tv",
       "difficulty": "easy",

@@ -23,6 +23,9 @@ struct Renderer::Impl {
     std::vector<std::string> playlist;
     size_t playlistIndex = 0;
     bool playlistLoop = true;
+    // Normalized playback progress for current music [0..1], used to detect
+    // when a track has looped back to start so we can advance the playlist.
+    float lastMusicNorm = 0.0f;
 };
 
 namespace fs = std::filesystem;
@@ -99,6 +102,7 @@ void Renderer::shutdownAudio() {
     impl_->playlistLoop = true;
 
     impl_->currentMusicId.clear();
+    impl_->lastMusicNorm = 0.0f;
     CloseAudioDevice();
     impl_->audioInitialized = false;
 }
@@ -164,22 +168,30 @@ void Renderer::playMusicPlaylist(const std::vector<std::string>& ids, bool loop)
     impl_->playlistLoop = loop;
 
     // Start the first available track in the playlist (skip missing ids).
+    // Use a local scan index and only write back the selected index so we
+    // don't accidentally lose the playlist position during the search.
+    bool found = false;
+    size_t scanIdx = impl_->playlistIndex;
     for (size_t i = 0; i < impl_->playlist.size(); ++i) {
-        const auto& id = impl_->playlist[impl_->playlistIndex];
+        const auto& id = impl_->playlist[scanIdx];
         auto it = impl_->music.find(id);
         if (it != impl_->music.end()) {
             PlayMusicStream(it->second);
             impl_->currentMusicId = id;
-            return;
+            impl_->playlistIndex = scanIdx; // persist the index of the started track
+            impl_->lastMusicNorm = 0.0f;
+            TraceLog(LOG_INFO, "playMusicPlaylist: started '%s' (idx=%zu)", id.c_str(), impl_->playlistIndex);
+            found = true;
+            break;
         }
-        // advance index; if we wrapped, nothing was found
-        impl_->playlistIndex = (impl_->playlistIndex + 1) % impl_->playlist.size();
-        if (impl_->playlistIndex == 0) break;
+        scanIdx = (scanIdx + 1) % impl_->playlist.size();
     }
 
-    // If no valid tracks were found, clear playlist state.
-    impl_->playlist.clear();
-    impl_->currentMusicId.clear();
+    if (!found) {
+        // If no valid tracks were found, clear playlist state.
+        impl_->playlist.clear();
+        impl_->currentMusicId.clear();
+    }
 }
 
 void Renderer::stopMusic() {
@@ -192,6 +204,7 @@ void Renderer::stopMusic() {
     impl_->playlist.clear();
     impl_->playlistIndex = 0;
     impl_->playlistLoop = true;
+    impl_->lastMusicNorm = 0.0f;
 }
 
 void Renderer::updateAudio() {
@@ -202,10 +215,18 @@ void Renderer::updateAudio() {
 
     UpdateMusicStream(it->second);
 
-    // If we're playing a playlist, auto-advance when the current track ends.
+    // If we're playing a playlist, auto-advance when the current track ends
+    // or when the stream loops back to the start (some backends loop files).
     if (!impl_->playlist.empty()) {
-        // If the stream is still playing, nothing to do.
-        if (IsMusicStreamPlaying(it->second)) return;
+        // Detect loop by observing normalized playback time drop from near-1 back to near-0.
+        const float curTime = GetMusicTimePlayed(it->second);
+        const float len = GetMusicTimeLength(it->second);
+        const float curNorm = (len > 0.0f) ? (curTime / len) : 0.0f;
+        const bool looped = (impl_->lastMusicNorm > 0.9f && curNorm < 0.1f);
+        impl_->lastMusicNorm = curNorm;
+
+        // If the stream is still playing and hasn't just looped, nothing to do.
+        if (IsMusicStreamPlaying(it->second) && !looped) return;
 
         // Advance to the next track in the playlist.
         size_t nextIndex = impl_->playlistIndex + 1;
@@ -226,9 +247,14 @@ void Renderer::updateAudio() {
             const auto& nextId = impl_->playlist[idx];
             auto nit = impl_->music.find(nextId);
             if (nit != impl_->music.end()) {
+                TraceLog(LOG_INFO, "updateAudio: advancing playlist from '%s' (idx=%zu) to '%s' (idx=%zu)",
+                         impl_->currentMusicId.c_str(), impl_->playlistIndex, nextId.c_str(), idx);
+                // Ensure previous stream is stopped before starting the next one.
+                if (it != nit) StopMusicStream(it->second);
                 PlayMusicStream(nit->second);
                 impl_->currentMusicId = nextId;
                 impl_->playlistIndex = idx;
+                TraceLog(LOG_INFO, "updateAudio: now playing '%s' (idx=%zu)", nextId.c_str(), impl_->playlistIndex);
                 found = true;
                 break;
             }
