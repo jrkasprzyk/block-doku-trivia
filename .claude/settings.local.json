@@ -21,7 +21,13 @@
       "Bash(py --version)",
       "Bash(py -m venv .venv)",
       "Bash(py scripts/validate_trivia.py)",
-      "Bash(git rm:*)"
+      "Bash(git rm:*)",
+      "Bash(git -C /c/GitHub/block-doku-trivia log --oneline -15)",
+      "Bash(git -C /c/GitHub/block-doku-trivia show bf9c640 --stat)",
+      "Bash(python3 -c \"import json; data=json.load\\(open\\('/c/GitHub/block-doku-trivia/assets/trivia.json'\\)\\); cats=data['categories']; qs=data['questions']; from collections import Counter; c=Counter\\(q['category'] for q in qs\\); print\\('Categories:', cats\\); print\\('Count per cat:', dict\\(c\\)\\); print\\('Total:', len\\(qs\\)\\)\")",
+      "Bash(git -C /c/GitHub/block-doku-trivia add src/Renderer.h src/Renderer.cpp src/main.cpp README.md)",
+      "Bash(git -C /c/GitHub/block-doku-trivia status)",
+      "Bash(git -C /c/GitHub/block-doku-trivia commit -m ':*)"
     ]
   }
 }
