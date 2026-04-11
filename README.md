@@ -6,7 +6,7 @@ Place polyomino pieces on a 9×9 board. Clear full rows, columns, and 3×3 squar
 
 ## Status
 
-**Day 3.** Drag-and-drop placement is live. Click a piece in the tray, drag it over the board — a green/red preview snaps to the grid showing whether the placement is legal. Drop to place; release outside the board to cancel (piece returns to its slot). Clearing full rows, columns, and 3×3 squares scores points automatically. The tray refills when all three pieces are used.
+**Day 4.** Clearing animations are live. When a placement completes a full row, column, or 3×3 square, the cleared cells flash bright yellow for ~0.3 s before fading out. All prior mechanics still work: drag-and-drop placement, green/red legality preview, score on clear, tray refill.
 
 ## Prerequisites (Windows native)
 
@@ -77,7 +77,7 @@ Scoring multipliers by difficulty: easy 1.5×, medium 2×, hard 3×.
 - [x] **Day 1** — window + empty board + HUD
 - [x] **Day 2** — Piece definitions, piece tray, render a set of 3 offered pieces
 - [x] **Day 3** — Drag-and-drop placement with legality checks
-- [ ] **Day 4** — Line/column/square detection and clearing
+- [x] **Day 4** — Line/column/square clearing animations
 - [ ] **Day 5** — Game over detection
 - [ ] **Day 6** — Trivia block flag + modal dialog + JSON loader
 - [ ] **Day 7** — Stones, streak tracking, redemption mechanic

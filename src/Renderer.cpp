@@ -191,4 +191,25 @@ void Renderer::drawPlacementPreview(const Board& board, const Piece& piece,
     }
 }
 
+void Renderer::drawClearFlash(const std::vector<Cell>& cells, float t) const {
+    // t = 1.0 at the start of the animation, 0.0 when done.
+    // Hold full brightness for the first third, then fade out — gives a crisp
+    // "pop" before the glow dissolves.
+    const float fade = (t > 0.67f) ? 1.0f : (t / 0.67f);
+    const uint8_t alpha = static_cast<uint8_t>(fade * 210);
+
+    const Color flash = { 255, 240, 130, alpha };
+
+    const int cell = layout_.cellPixels;
+    const int ox   = layout_.boardOriginX;
+    const int oy   = layout_.boardOriginY;
+
+    for (const auto& c : cells) {
+        const int px = ox + c.col * cell;
+        const int py = oy + c.row  * cell;
+        // Slightly inset so the flash doesn't bleed over grid lines.
+        DrawRectangle(px + 1, py + 1, cell - 2, cell - 2, flash);
+    }
+}
+
 } // namespace td

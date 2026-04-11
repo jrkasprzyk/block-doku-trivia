@@ -19,6 +19,22 @@
 
 namespace {
 
+// Clear-flash animation ———————————————————————————————————————
+struct ClearAnim {
+    std::vector<td::Cell> cells;
+    int framesLeft = 0;
+    static constexpr int kDuration = 18;   // ~0.3 s at 60 fps
+
+    bool active() const { return framesLeft > 0; }
+    float t()     const { return framesLeft / static_cast<float>(kDuration); }
+
+    void trigger(std::vector<td::Cell> cleared) {
+        cells      = std::move(cleared);
+        framesLeft = kDuration;
+    }
+    void tick() { if (framesLeft > 0) --framesLeft; }
+};
+
 // Drag state —————————————————————————————————————————————————
 struct DragState {
     bool  active    = false;
@@ -51,6 +67,7 @@ int main() {
 
     int score  = 0;
     int streak = 0;
+    ClearAnim clearAnim;
 
     // Tray geometry — must agree with Renderer::drawTray.
     const int trayY = layout.boardOriginY + td::kBoardSize * layout.cellPixels + 12;
@@ -98,6 +115,9 @@ int main() {
                     score += static_cast<int>(drag.piece.shape.cells.size());
                     score += static_cast<int>(result.clearedCells.size()) * 10;
 
+                    if (!result.clearedCells.empty())
+                        clearAnim.trigger(result.clearedCells);
+
                     // Trivia modal will land in Day 6; note the trigger for now.
                     // if (result.triggeredTrivia) { ... }
 
@@ -120,6 +140,8 @@ int main() {
             drag = {};
         }
 
+        clearAnim.tick();
+
         // ── Draw ────────────────────────────────────────────────────────────
         BeginDrawing();
             ClearBackground({ 24, 28, 38, 255 });
@@ -133,6 +155,11 @@ int main() {
             }
 
             renderer.drawBoard(board);
+
+            // Clear flash draws on top of the (now-empty) cells.
+            if (clearAnim.active())
+                renderer.drawClearFlash(clearAnim.cells, clearAnim.t());
+
             renderer.drawTray(tray, drag.active ? drag.traySlot : -1);
             renderer.drawHud(score, streak);
 

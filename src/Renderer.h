@@ -57,6 +57,10 @@ public:
     void drawPlacementPreview(const Board& board, const Piece& piece,
                               int anchorRow, int anchorCol) const;
 
+    // Flash overlay for cells that were just cleared.
+    // t is a 0→1 progress value (0 = animation done, 1 = just triggered).
+    void drawClearFlash(const std::vector<Cell>& cells, float t) const;
+
 private:
     Layout layout_;
 };
