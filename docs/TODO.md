@@ -3,7 +3,7 @@
 Based on a playtest on 4/11/2026, we started a TODO list. I don't know how to make checkboxes in markdown but perhaps we can add those later.
 
 ## Question validation and accuracy: specific questions that need patches
-- [ ] Thriller question: needs to add an "as of" date
+- [x] Thriller question: needs to add an "as of" date
 
 ## Claude suggestions about overall workflow
 - [ ] Commit a little CONTRIBUTING.md or docs/trivia-style-guide.md to the repo that captures the rules in human-readable form. Future-you (and any collaborators, including any future Claude session that needs to understand the project) will benefit from having the style explicit and version-controlled rather than living only inside a Claude Code skill file. The skill enforces it; the doc explains why. The "as of 2024" rule deserves a footnote explaining that it exists because of an Academy Awards Trivial Pursuit incident in (year), and that Lauren was right. Note: I have added new material to the audit-trivia.md file (and will add more as new ideas surface)
@@ -28,11 +28,15 @@ Based on a playtest on 4/11/2026, we started a TODO list. I don't know how to ma
 
 ## Audio
 
-- [ ] Playlist isn't switching to the next song
+- [x] Playlist isn't switching to the next song
+
+- [x] Enable the playlist to update dynamically when new files are added to the background music folder
 
 - [ ] Add a mute button
 
 ## Feature enhancements
+
+- [ ] Grab asset for executable icon (see exe-icon.md)
 
 - [ ] Global leaderboard that defaults to local one with no internet connection. I have the logic built out in another Javascript game I made, and I have a Supabase database that can be used to store scores
 
