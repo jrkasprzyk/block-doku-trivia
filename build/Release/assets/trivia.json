@@ -12,34 +12,93 @@
       "id": "motorsport_001",
       "category": "motorsport",
       "difficulty": "easy",
-      "prompt": "Which series uses the Dallara IR-18 chassis?",
-      "choices": ["Formula 1", "IndyCar", "NASCAR Cup", "Formula E"],
-      "answer": 1,
+      "prompt": "Which series uses the Dallara IR-18 as its spec chassis?",
+      "choices": ["IndyCar", "Formula 1", "NASCAR Cup", "Formula E"],
+      "answer": 0,
       "quip_correct": "Spec chassis, wild racing.",
       "quip_wrong": "That's a stone for your trouble."
     },
     {
       "id": "motorsport_002",
       "category": "motorsport",
-      "difficulty": "medium",
-      "prompt": "EXAMPLE — replace with your own: what year did the Indy 500 first run?",
+      "difficulty": "easy",
+      "prompt": "What year did the first Indianapolis 500 take place?",
       "choices": ["1909", "1911", "1920", "1925"],
-      "answer": 1
+      "answer": 1,
+      "quip_correct": "Ray Harroun won it in a Marmon Wasp.",
+      "quip_wrong": "May 30, 1911 — mark it down."
     },
     {
       "id": "motorsport_003",
       "category": "motorsport",
+      "difficulty": "easy",
+      "prompt": "In Formula 1, how many drivers share the front row of the starting grid?",
+      "choices": ["1", "3", "4", "2"],
+      "answer": 3,
+      "quip_correct": "Pole and P2, side by side.",
+      "quip_wrong": "It's just two — pole and P2."
+    },
+    {
+      "id": "motorsport_004",
+      "category": "motorsport",
+      "difficulty": "medium",
+      "prompt": "How many laps make up the Indianapolis 500?",
+      "choices": ["100", "150", "200", "250"],
+      "answer": 2,
+      "quip_correct": "500 miles at 2.5 miles per lap.",
+      "quip_wrong": "200 laps around the 2.5-mile oval."
+    },
+    {
+      "id": "motorsport_005",
+      "category": "motorsport",
+      "difficulty": "medium",
+      "prompt": "What does DRS stand for in Formula 1?",
+      "choices": ["Driver Rating System", "Dynamic Rear Stabilizer", "Differential Ratio Setting", "Drag Reduction System"],
+      "answer": 3,
+      "quip_correct": "Open the wing, close the gap.",
+      "quip_wrong": "Drag Reduction System — opens the rear wing to cut drag."
+    },
+    {
+      "id": "motorsport_006",
+      "category": "motorsport",
+      "difficulty": "medium",
+      "prompt": "Who was the last driver to win the Formula 1 World Championship for Ferrari?",
+      "choices": ["Michael Schumacher", "Fernando Alonso", "Kimi Räikkönen", "Sebastian Vettel"],
+      "answer": 2,
+      "quip_correct": "Iceman, 2007.",
+      "quip_wrong": "Kimi Räikkönen, 2007 — the Iceman cometh."
+    },
+    {
+      "id": "motorsport_007",
+      "category": "motorsport",
       "difficulty": "hard",
-      "prompt": "EXAMPLE — your turn: a hard motorsport question of your choosing.",
-      "choices": ["Option A", "Option B", "Option C", "Option D"],
-      "answer": 0
+      "prompt": "Who holds the all-time record for most Formula 1 pole positions?",
+      "choices": ["Lewis Hamilton", "Michael Schumacher", "Sebastian Vettel", "Ayrton Senna"],
+      "answer": 0,
+      "quip_correct": "104 poles and counting.",
+      "quip_wrong": "Lewis Hamilton — 104 poles as of 2024."
+    },
+    {
+      "id": "motorsport_008",
+      "category": "motorsport",
+      "difficulty": "hard",
+      "prompt": "In rallying, what does the term 'pacenote' refer to?",
+      "choices": [
+        "The co-driver's verbal instructions describing upcoming road features",
+        "A penalty added to a driver's stage time",
+        "The target lap time set by the event organizer",
+        "A fine issued for exceeding service park speed limits"
+      ],
+      "answer": 0,
+      "quip_correct": "Left 3, tightens, don't cut.",
+      "quip_wrong": "The co-driver reads ahead so the driver can focus on going fast."
     },
 
     {
       "id": "music_001",
       "category": "music",
       "difficulty": "easy",
-      "prompt": "Which album opens with 'Thunder Road'?",
+      "prompt": "Which Springsteen album opens with 'Thunder Road'?",
       "choices": ["Nebraska", "Born to Run", "The River", "Darkness on the Edge of Town"],
       "answer": 1,
       "quip_correct": "Screen door slams, Mary's dress waves."
@@ -47,18 +106,62 @@
     {
       "id": "music_002",
       "category": "music",
-      "difficulty": "medium",
-      "prompt": "EXAMPLE — replace: which Bad Bunny album came first?",
-      "choices": ["YHLQMDLG", "X 100PRE", "Un Verano Sin Ti", "El Último Tour Del Mundo"],
-      "answer": 1
+      "difficulty": "easy",
+      "prompt": "What is the best-selling album of all time?",
+      "choices": ["Back in Black", "The Dark Side of the Moon", "Come On Over", "Thriller"],
+      "answer": 3,
+      "quip_correct": "66 million copies and climbing.",
+      "quip_wrong": "Thriller — Michael Jackson, 1982."
     },
     {
       "id": "music_003",
       "category": "music",
+      "difficulty": "medium",
+      "prompt": "Which Bad Bunny album was released first?",
+      "choices": ["YHLQMDLG", "X 100PRE", "Un Verano Sin Ti", "El Último Tour Del Mundo"],
+      "answer": 1,
+      "quip_correct": "December 24, 2018 — his debut.",
+      "quip_wrong": "X 100PRE dropped Christmas Eve 2018."
+    },
+    {
+      "id": "music_004",
+      "category": "music",
+      "difficulty": "medium",
+      "prompt": "What year did Nirvana release 'Nevermind'?",
+      "choices": ["1989", "1990", "1991", "1993"],
+      "answer": 2,
+      "quip_correct": "September 24, 1991.",
+      "quip_wrong": "1991 — it knocked Michael Jackson off the top spot."
+    },
+    {
+      "id": "music_005",
+      "category": "music",
+      "difficulty": "medium",
+      "prompt": "Springsteen's 'Nebraska' was recorded on which device?",
+      "choices": ["4-track Portastudio cassette", "Direct-to-disc vinyl lathe", "16-track studio board", "8-track reel-to-reel"],
+      "answer": 0,
+      "quip_correct": "Home demos that became the album.",
+      "quip_wrong": "A Tascam Portastudio — he handed the tape to the label."
+    },
+    {
+      "id": "music_006",
+      "category": "music",
       "difficulty": "hard",
-      "prompt": "EXAMPLE — your turn: a hard music question of your choosing.",
-      "choices": ["Option A", "Option B", "Option C", "Option D"],
-      "answer": 0
+      "prompt": "Which instrument did Miles Davis primarily play?",
+      "choices": ["Saxophone", "Piano", "Drums", "Trumpet"],
+      "answer": 3,
+      "quip_correct": "Kind of Blue. Birth of the Cool.",
+      "quip_wrong": "Trumpet — muted, breathy, unmistakable."
+    },
+    {
+      "id": "music_007",
+      "category": "music",
+      "difficulty": "hard",
+      "prompt": "What time signature is most of Dave Brubeck's 'Take Five' played in?",
+      "choices": ["3/4", "7/8", "5/4", "6/8"],
+      "answer": 2,
+      "quip_correct": "Five beats per measure — feel it.",
+      "quip_wrong": "5/4 — five beats per measure, written by Paul Desmond."
     },
 
     {
@@ -73,18 +176,52 @@
     {
       "id": "film_002",
       "category": "film",
-      "difficulty": "medium",
-      "prompt": "EXAMPLE — replace with your own film question.",
-      "choices": ["Option A", "Option B", "Option C", "Option D"],
-      "answer": 0
+      "difficulty": "easy",
+      "prompt": "In which Pixar film does the main character dream of becoming a chef?",
+      "choices": ["Cars", "Up", "Brave", "Ratatouille"],
+      "answer": 3,
+      "quip_correct": "Anyone can cook.",
+      "quip_wrong": "Ratatouille — Remy the rat, Gusteau's restaurant."
     },
     {
       "id": "film_003",
       "category": "film",
+      "difficulty": "medium",
+      "prompt": "Who directed 'Parasite' (2019)?",
+      "choices": ["Bong Joon-ho", "Park Chan-wook", "Lee Chang-dong", "Kim Jee-woon"],
+      "answer": 0,
+      "quip_correct": "First non-English film to win Best Picture.",
+      "quip_wrong": "Bong Joon-ho — four Oscars in one night."
+    },
+    {
+      "id": "film_004",
+      "category": "film",
+      "difficulty": "medium",
+      "prompt": "What was left in a character's bed as a warning in 'The Godfather'?",
+      "choices": ["A pig's head", "A dog's head", "A cow's head", "A horse's head"],
+      "answer": 3,
+      "quip_correct": "He woke up screaming.",
+      "quip_wrong": "A horse's head — Jack Woltz found it in the sheets."
+    },
+    {
+      "id": "film_005",
+      "category": "film",
       "difficulty": "hard",
-      "prompt": "EXAMPLE — your turn.",
-      "choices": ["Option A", "Option B", "Option C", "Option D"],
-      "answer": 0
+      "prompt": "What was the first film to win the Academy Award for Best Picture?",
+      "choices": ["Wings", "Sunrise: A Song of Two Humans", "All Quiet on the Western Front", "The Big Parade"],
+      "answer": 0,
+      "quip_correct": "First Academy Awards, 1929.",
+      "quip_wrong": "Wings (1927) — WWI aerial combat drama."
+    },
+    {
+      "id": "film_006",
+      "category": "film",
+      "difficulty": "hard",
+      "prompt": "What song does HAL 9000 sing as it is shut down in '2001: A Space Odyssey'?",
+      "choices": ["Happy Birthday", "Twinkle Twinkle", "Daisy Bell", "Old MacDonald"],
+      "answer": 2,
+      "quip_correct": "Daisy, Daisy, give me your answer do.",
+      "quip_wrong": "'Daisy Bell' — the first song ever sung by a computer, in 1961."
     },
 
     {
@@ -99,18 +236,62 @@
     {
       "id": "general_002",
       "category": "general",
-      "difficulty": "medium",
-      "prompt": "EXAMPLE — replace with your own.",
-      "choices": ["Option A", "Option B", "Option C", "Option D"],
-      "answer": 0
+      "difficulty": "easy",
+      "prompt": "What element has the chemical symbol 'Au'?",
+      "choices": ["Gold", "Silver", "Copper", "Aluminum"],
+      "answer": 0,
+      "quip_correct": "From the Latin aurum.",
+      "quip_wrong": "Gold — aurum in Latin, hence Au."
     },
     {
       "id": "general_003",
       "category": "general",
+      "difficulty": "easy",
+      "prompt": "How many sides does a hexagon have?",
+      "choices": ["5", "7", "8", "6"],
+      "answer": 3,
+      "quip_correct": "Bees figured this out millions of years ago.",
+      "quip_wrong": "Six — hex comes from the Greek for six."
+    },
+    {
+      "id": "general_004",
+      "category": "general",
+      "difficulty": "medium",
+      "prompt": "How many bones are in the adult human body?",
+      "choices": ["196", "216", "206", "226"],
+      "answer": 2,
+      "quip_correct": "You're born with ~270; they fuse as you grow.",
+      "quip_wrong": "206 — you fuse from ~270 at birth."
+    },
+    {
+      "id": "general_005",
+      "category": "general",
+      "difficulty": "medium",
+      "prompt": "In what year did the Berlin Wall fall?",
+      "choices": ["1987", "1989", "1991", "1993"],
+      "answer": 1,
+      "quip_correct": "November 9, 1989.",
+      "quip_wrong": "1989 — November 9th, crowds tore it down."
+    },
+    {
+      "id": "general_006",
+      "category": "general",
       "difficulty": "hard",
-      "prompt": "EXAMPLE — your turn.",
-      "choices": ["Option A", "Option B", "Option C", "Option D"],
-      "answer": 0
+      "prompt": "What is the approximate average distance from the Earth to the Moon?",
+      "choices": ["84,000 km", "240,000 km", "505,000 km", "384,000 km"],
+      "answer": 3,
+      "quip_correct": "Close enough to see with the naked eye.",
+      "quip_wrong": "About 384,000 km — it varies as the Moon's orbit is elliptical."
+    },
+    {
+      "id": "general_007",
+      "category": "general",
+      "difficulty": "hard",
+      "prompt": "Which planet in our solar system has the most moons?",
+      "choices": ["Jupiter", "Saturn", "Uranus", "Neptune"],
+      "answer": 1,
+      "quip_correct": "146 confirmed moons and counting.",
+      "quip_wrong": "Saturn — it overtook Jupiter in 2023 with confirmed new moons."
     },
 
     {
@@ -127,7 +308,7 @@
       "id": "meta_002",
       "category": "meta",
       "difficulty": "medium",
-      "prompt": "What happens to a cell's row/column/square if it contains a stone?",
+      "prompt": "What happens to a row, column, or 3x3 square that contains a stone block?",
       "choices": [
         "Nothing — stones clear normally",
         "It can never clear until the stone is removed",
