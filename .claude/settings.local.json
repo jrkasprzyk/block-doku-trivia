@@ -20,7 +20,8 @@
       "Bash(where python:*)",
       "Bash(py --version)",
       "Bash(py -m venv .venv)",
-      "Bash(py scripts/validate_trivia.py)"
+      "Bash(py scripts/validate_trivia.py)",
+      "Bash(git rm:*)"
     ]
   }
 }
