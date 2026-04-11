@@ -6,7 +6,7 @@ Place polyomino pieces on a 9×9 board. Clear full rows, columns, and 3×3 squar
 
 ## Status
 
-**Day 2.** Window opens, empty board renders, HUD shows. Piece tray below the board shows three randomly-chosen polyomino shapes each run (one may be a glowing trivia piece). No interaction yet.
+**Day 3.** Drag-and-drop placement is live. Click a piece in the tray, drag it over the board — a green/red preview snaps to the grid showing whether the placement is legal. Drop to place; release outside the board to cancel (piece returns to its slot). Clearing full rows, columns, and 3×3 squares scores points automatically. The tray refills when all three pieces are used.
 
 ## Prerequisites (Windows native)
 
@@ -48,7 +48,7 @@ cmake --build build --config Release
 .\build\Release\trivia_doku.exe
 ```
 
-You should see a dark window titled "TRIVIA-DOKU" with an empty 9×9 grid, a few stub cells for visual check, a small yellow "?" trivia block, and a score/streak HUD on the right. ESC to quit.
+You should see a dark window titled "TRIVIA-DOKU" with an empty 9×9 grid, three pieces in the tray below, and a score/streak HUD on the right. Click and drag a piece onto the board. ESC to quit.
 
 ## Project layout
 
@@ -76,7 +76,7 @@ Scoring multipliers by difficulty: easy 1.5×, medium 2×, hard 3×.
 
 - [x] **Day 1** — window + empty board + HUD
 - [x] **Day 2** — Piece definitions, piece tray, render a set of 3 offered pieces
-- [ ] **Day 3** — Drag-and-drop placement with legality checks
+- [x] **Day 3** — Drag-and-drop placement with legality checks
 - [ ] **Day 4** — Line/column/square detection and clearing
 - [ ] **Day 5** — Game over detection
 - [ ] **Day 6** — Trivia block flag + modal dialog + JSON loader

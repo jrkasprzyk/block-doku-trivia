@@ -66,7 +66,7 @@ void Renderer::drawBoard(const Board& board) const {
     }
 }
 
-void Renderer::drawTray(const std::array<Piece, 3>& tray) const {
+void Renderer::drawTray(const std::array<Piece, 3>& tray, int hiddenSlot) const {
     const int boardCell = layout_.cellPixels;
     const int ox        = layout_.boardOriginX;
     const int oy        = layout_.boardOriginY;
@@ -90,6 +90,8 @@ void Renderer::drawTray(const std::array<Piece, 3>& tray) const {
         DrawRectangleLines(slotX + 4, trayY, slotW - 8, trayH, kSlotBorder);
 
         const auto& piece = tray[i];
+        // Slot being dragged: show placeholder outline only, no piece.
+        if (i == hiddenSlot) continue;
         if (piece.shape.cells.empty()) continue;
 
         // Bounding box of the piece
@@ -132,6 +134,61 @@ void Renderer::drawHud(int score, int streak) const {
     DrawText(TextFormat("Streak: %d/3", streak), hudX, 120, 22, kTextColor);
     DrawText("ESC to quit",                      hudX, 180, 18, kGridLine);
     DrawText("? for help (soon)",                hudX, 206, 18, kGridLine);
+}
+
+void Renderer::drawDragGhost(const Piece& piece, int mouseX, int mouseY) const {
+    const int cell = layout_.cellPixels;
+
+    // Compute bounding box of the piece so we can center it on the cursor.
+    int maxR = 0, maxC = 0;
+    for (const auto& c : piece.shape.cells) {
+        maxR = std::max(maxR, c.row);
+        maxC = std::max(maxC, c.col);
+    }
+
+    // Origin: shift so the piece's bounding-box centre sits under the cursor.
+    const int originX = mouseX - (maxC + 1) * cell / 2;
+    const int originY = mouseY - (maxR + 1) * cell / 2;
+
+    // Semi-transparent fill
+    const Color base = piece.isTrivia ? kCellTrivia : kCellFilled;
+    const Color fill = { base.r, base.g, base.b, 190 };
+
+    for (const auto& c : piece.shape.cells) {
+        const int px = originX + c.col * cell;
+        const int py = originY + c.row * cell;
+        DrawRectangle(px + 1, py + 1, cell - 2, cell - 2, fill);
+
+        if (piece.isTrivia) {
+            const int fontSize = cell / 2;
+            const char* q = "?";
+            const int tw = MeasureText(q, fontSize);
+            DrawText(q, px + (cell - tw) / 2, py + (cell - fontSize) / 2,
+                     fontSize, { 40, 30, 10, 190 });
+        }
+    }
+}
+
+void Renderer::drawPlacementPreview(const Board& board, const Piece& piece,
+                                    int anchorRow, int anchorCol) const {
+    const int cell = layout_.cellPixels;
+    const int ox   = layout_.boardOriginX;
+    const int oy   = layout_.boardOriginY;
+
+    const bool legal = board.canPlace(piece.shape.cells, anchorRow, anchorCol);
+    // Green tint when legal, red when not — both semi-transparent.
+    const Color overlay = legal
+        ? Color{  80, 220, 120, 130 }
+        : Color{ 220,  70,  70, 130 };
+
+    for (const auto& c : piece.shape.cells) {
+        const int r   = anchorRow + c.row;
+        const int col = anchorCol + c.col;
+        if (r < 0 || r >= kBoardSize || col < 0 || col >= kBoardSize) continue;
+        const int px = ox + col * cell;
+        const int py = oy + r  * cell;
+        DrawRectangle(px + 1, py + 1, cell - 2, cell - 2, overlay);
+    }
 }
 
 } // namespace td
