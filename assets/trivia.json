@@ -6,14 +6,26 @@
     "The 'meta' category is for questions about the game itself — rules, mechanics, what a stone block does. These are always fair game.",
     "Add as many questions as you like. The loader shuffles at startup and tracks what's been asked this session so repeats are rare."
   ],
-  "categories": ["motorsport", "music", "film", "general", "meta", "asia"],
+  "categories": [
+    "motorsport",
+    "music",
+    "film",
+    "general",
+    "meta",
+    "asia"
+  ],
   "questions": [
     {
       "id": "motorsport_001",
       "category": "motorsport",
       "difficulty": "easy",
       "prompt": "Which series uses the Dallara IR-18 as its spec chassis?",
-      "choices": ["IndyCar", "Formula 1", "NASCAR Cup", "Formula E"],
+      "choices": [
+        "IndyCar",
+        "Formula 1",
+        "NASCAR Cup",
+        "Formula E"
+      ],
       "answer": 0,
       "quip_correct": "Spec chassis, wild racing.",
       "quip_wrong": "That's a stone for your trouble."
@@ -23,7 +35,12 @@
       "category": "motorsport",
       "difficulty": "easy",
       "prompt": "What year did the first Indianapolis 500 take place?",
-      "choices": ["1909", "1911", "1920", "1925"],
+      "choices": [
+        "1909",
+        "1911",
+        "1920",
+        "1925"
+      ],
       "answer": 1,
       "quip_correct": "Ray Harroun won it in a Marmon Wasp.",
       "quip_wrong": "May 30, 1911 — mark it down."
@@ -33,7 +50,12 @@
       "category": "motorsport",
       "difficulty": "easy",
       "prompt": "Which flag color signals that a Formula 1 race has been stopped?",
-      "choices": ["Yellow", "Blue", "White", "Red"],
+      "choices": [
+        "Yellow",
+        "Blue",
+        "White",
+        "Red"
+      ],
       "answer": 3,
       "quip_correct": "Everyone pit, party's over.",
       "quip_wrong": "Red flag — race suspended, everyone slows and pits."
@@ -43,7 +65,12 @@
       "category": "motorsport",
       "difficulty": "medium",
       "prompt": "How many laps make up the Indianapolis 500?",
-      "choices": ["100", "150", "200", "250"],
+      "choices": [
+        "100",
+        "150",
+        "200",
+        "250"
+      ],
       "answer": 2,
       "quip_correct": "500 miles at 2.5 miles per lap.",
       "quip_wrong": "200 laps around the 2.5-mile oval."
@@ -53,7 +80,12 @@
       "category": "motorsport",
       "difficulty": "medium",
       "prompt": "What does DRS stand for in Formula 1?",
-      "choices": ["Driver Rating System", "Dynamic Rear Stabilizer", "Differential Ratio Setting", "Drag Reduction System"],
+      "choices": [
+        "Driver Rating System",
+        "Dynamic Rear Stabilizer",
+        "Differential Ratio Setting",
+        "Drag Reduction System"
+      ],
       "answer": 3,
       "quip_correct": "Open the wing, close the gap.",
       "quip_wrong": "Drag Reduction System — opens the rear wing to cut drag."
@@ -63,7 +95,12 @@
       "category": "motorsport",
       "difficulty": "medium",
       "prompt": "Who was the last driver to win the Formula 1 World Championship for Ferrari?",
-      "choices": ["Michael Schumacher", "Fernando Alonso", "Kimi Räikkönen", "Sebastian Vettel"],
+      "choices": [
+        "Michael Schumacher",
+        "Fernando Alonso",
+        "Kimi Räikkönen",
+        "Sebastian Vettel"
+      ],
       "answer": 2,
       "quip_correct": "Iceman, 2007.",
       "quip_wrong": "Kimi Räikkönen, 2007 — the Iceman cometh."
@@ -73,7 +110,12 @@
       "category": "motorsport",
       "difficulty": "hard",
       "prompt": "Who holds the all-time record for most Formula 1 pole positions?",
-      "choices": ["Lewis Hamilton", "Michael Schumacher", "Sebastian Vettel", "Ayrton Senna"],
+      "choices": [
+        "Lewis Hamilton",
+        "Michael Schumacher",
+        "Sebastian Vettel",
+        "Ayrton Senna"
+      ],
       "answer": 0,
       "quip_correct": "104 poles and counting.",
       "quip_wrong": "Lewis Hamilton — 104 poles as of 2024."
@@ -93,13 +135,32 @@
       "quip_correct": "Left 3, tightens, don't cut.",
       "quip_wrong": "The co-driver reads ahead so the driver can focus on going fast."
     },
-
+    {
+      "id": "motorsport_009",
+      "category": "motorsport",
+      "difficulty": "medium",
+      "prompt": "What does it mean when tires are called \"sticker\"?",
+      "choices": [
+        "They are already used",
+        "They are softer than normal",
+        "They are harder than normal",
+        "They are new"
+      ],
+      "answer": 3,
+      "quip_correct": "You know -- they still have their sticker on them?",
+      "quip_wrong": "Sticker? Sounds like stinker..."
+    },
     {
       "id": "music_001",
       "category": "music",
       "difficulty": "easy",
       "prompt": "Which Springsteen album opens with 'Thunder Road'?",
-      "choices": ["Nebraska", "Born to Run", "The River", "Darkness on the Edge of Town"],
+      "choices": [
+        "Nebraska",
+        "Born to Run",
+        "The River",
+        "Darkness on the Edge of Town"
+      ],
       "answer": 1,
       "quip_correct": "Screen door slams, Mary's dress waves."
     },
@@ -108,7 +169,12 @@
       "category": "music",
       "difficulty": "easy",
       "prompt": "What is the best-selling album of all time?",
-      "choices": ["Back in Black", "The Dark Side of the Moon", "Come On Over", "Thriller"],
+      "choices": [
+        "Back in Black",
+        "The Dark Side of the Moon",
+        "Come On Over",
+        "Thriller"
+      ],
       "answer": 3,
       "quip_correct": "66 million copies and climbing.",
       "quip_wrong": "Thriller — Michael Jackson, 1982."
@@ -118,7 +184,12 @@
       "category": "music",
       "difficulty": "medium",
       "prompt": "Which Bad Bunny album was released first?",
-      "choices": ["YHLQMDLG", "X 100PRE", "Un Verano Sin Ti", "El Último Tour Del Mundo"],
+      "choices": [
+        "YHLQMDLG",
+        "X 100PRE",
+        "Un Verano Sin Ti",
+        "El Último Tour Del Mundo"
+      ],
       "answer": 1,
       "quip_correct": "December 24, 2018 — his debut.",
       "quip_wrong": "X 100PRE dropped Christmas Eve 2018."
@@ -128,7 +199,12 @@
       "category": "music",
       "difficulty": "medium",
       "prompt": "What year did Nirvana release 'Nevermind'?",
-      "choices": ["1989", "1990", "1991", "1993"],
+      "choices": [
+        "1989",
+        "1990",
+        "1991",
+        "1993"
+      ],
       "answer": 2,
       "quip_correct": "September 24, 1991.",
       "quip_wrong": "1991 — it knocked Michael Jackson off the top spot."
@@ -138,7 +214,12 @@
       "category": "music",
       "difficulty": "medium",
       "prompt": "Springsteen's 'Nebraska' was recorded on which device?",
-      "choices": ["4-track Portastudio cassette", "Direct-to-disc vinyl lathe", "16-track studio board", "8-track reel-to-reel"],
+      "choices": [
+        "4-track Portastudio cassette",
+        "Direct-to-disc vinyl lathe",
+        "16-track studio board",
+        "8-track reel-to-reel"
+      ],
       "answer": 0,
       "quip_correct": "Home demos that became the album.",
       "quip_wrong": "A Tascam Portastudio — he handed the tape to the label."
@@ -148,7 +229,12 @@
       "category": "music",
       "difficulty": "medium",
       "prompt": "Which instrument did Miles Davis primarily play?",
-      "choices": ["Saxophone", "Piano", "Drums", "Trumpet"],
+      "choices": [
+        "Saxophone",
+        "Piano",
+        "Drums",
+        "Trumpet"
+      ],
       "answer": 3,
       "quip_correct": "Kind of Blue. Birth of the Cool.",
       "quip_wrong": "Trumpet — muted, breathy, unmistakable."
@@ -158,7 +244,12 @@
       "category": "music",
       "difficulty": "hard",
       "prompt": "What time signature is most of Dave Brubeck's 'Take Five' played in?",
-      "choices": ["3/4", "7/8", "5/4", "6/8"],
+      "choices": [
+        "3/4",
+        "7/8",
+        "5/4",
+        "6/8"
+      ],
       "answer": 2,
       "quip_correct": "Five beats per measure — feel it.",
       "quip_wrong": "5/4 — five beats per measure, written by Paul Desmond."
@@ -168,18 +259,57 @@
       "category": "music",
       "difficulty": "hard",
       "prompt": "On which label did Joy Division release 'Unknown Pleasures' (1979)?",
-      "choices": ["Rough Trade", "4AD", "Factory Records", "Creation Records"],
+      "choices": [
+        "Rough Trade",
+        "4AD",
+        "Factory Records",
+        "Creation Records"
+      ],
       "answer": 2,
       "quip_correct": "FAC 10. Peter Saville's pulsar.",
       "quip_wrong": "Factory Records — Tony Wilson's Manchester label."
     },
-
+    {
+      "id": "music_009",
+      "category": "music",
+      "difficulty": "easy",
+      "prompt": "The son on Arrested Development is named after a singer from this 80's band.",
+      "choices": [
+        "Culture Club",
+        "Wham",
+        "Duran Duran",
+        "The Smiths"
+      ],
+      "answer": 1,
+      "quip_correct": "There's always money in the banana stand!",
+      "quip_wrong": "That's why you always leave a note..."
+    },
+    {
+      "id": "music_010",
+      "category": "music",
+      "difficulty": "hard",
+      "prompt": "The album Life in General was released by which band?",
+      "choices": [
+        "NOFX",
+        "MXPX",
+        "INXS",
+        "ABBA"
+      ],
+      "answer": 1,
+      "quip_correct": "COOL",
+      "quip_wrong": "OHNO"
+    },
     {
       "id": "film_001",
       "category": "film",
       "difficulty": "easy",
       "prompt": "Which Miyazaki film features a fish-girl who loves ham?",
-      "choices": ["Spirited Away", "Ponyo", "Totoro", "Princess Mononoke"],
+      "choices": [
+        "Spirited Away",
+        "Ponyo",
+        "Totoro",
+        "Princess Mononoke"
+      ],
       "answer": 1,
       "quip_correct": "Named a cat after her, didn't you."
     },
@@ -188,7 +318,12 @@
       "category": "film",
       "difficulty": "easy",
       "prompt": "In which Pixar film does the main character dream of becoming a chef?",
-      "choices": ["Cars", "Up", "Brave", "Ratatouille"],
+      "choices": [
+        "Cars",
+        "Up",
+        "Brave",
+        "Ratatouille"
+      ],
       "answer": 3,
       "quip_correct": "Anyone can cook.",
       "quip_wrong": "Ratatouille — Remy the rat, Gusteau's restaurant."
@@ -198,7 +333,12 @@
       "category": "film",
       "difficulty": "medium",
       "prompt": "Who directed 'Parasite' (2019)?",
-      "choices": ["Bong Joon-ho", "Park Chan-wook", "Lee Chang-dong", "Kim Jee-woon"],
+      "choices": [
+        "Bong Joon-ho",
+        "Park Chan-wook",
+        "Lee Chang-dong",
+        "Kim Jee-woon"
+      ],
       "answer": 0,
       "quip_correct": "First non-English film to win Best Picture.",
       "quip_wrong": "Bong Joon-ho — four Oscars in one night."
@@ -208,7 +348,12 @@
       "category": "film",
       "difficulty": "medium",
       "prompt": "What was left in a character's bed as a warning in 'The Godfather'?",
-      "choices": ["A pig's head", "A dog's head", "A cow's head", "A horse's head"],
+      "choices": [
+        "A pig's head",
+        "A dog's head",
+        "A cow's head",
+        "A horse's head"
+      ],
       "answer": 3,
       "quip_correct": "He woke up screaming.",
       "quip_wrong": "A horse's head — Jack Woltz found it in the sheets."
@@ -218,7 +363,12 @@
       "category": "film",
       "difficulty": "hard",
       "prompt": "What was the first film to win the Academy Award for Best Picture?",
-      "choices": ["Wings", "Sunrise: A Song of Two Humans", "All Quiet on the Western Front", "The Big Parade"],
+      "choices": [
+        "Wings",
+        "Sunrise: A Song of Two Humans",
+        "All Quiet on the Western Front",
+        "The Big Parade"
+      ],
       "answer": 0,
       "quip_correct": "First Academy Awards, 1929.",
       "quip_wrong": "Wings (1927) — WWI aerial combat drama."
@@ -228,7 +378,12 @@
       "category": "film",
       "difficulty": "hard",
       "prompt": "What song does HAL 9000 sing as it is shut down in '2001: A Space Odyssey'?",
-      "choices": ["Happy Birthday", "Twinkle Twinkle", "Daisy Bell", "Old MacDonald"],
+      "choices": [
+        "Happy Birthday",
+        "Twinkle Twinkle",
+        "Daisy Bell",
+        "Old MacDonald"
+      ],
       "answer": 2,
       "quip_correct": "Daisy, Daisy, give me your answer do.",
       "quip_wrong": "'Daisy Bell' — the first song ever sung by a computer, in 1961."
@@ -238,7 +393,12 @@
       "category": "film",
       "difficulty": "easy",
       "prompt": "In 'Home Alone,' what city is Kevin McCallister's family flying to for Christmas?",
-      "choices": ["London", "Rome", "Paris", "Madrid"],
+      "choices": [
+        "London",
+        "Rome",
+        "Paris",
+        "Madrid"
+      ],
       "answer": 2,
       "quip_correct": "Buzz, your girlfriend — woof.",
       "quip_wrong": "Paris — Kevin gets left behind at the house in Winnetka."
@@ -248,18 +408,27 @@
       "category": "film",
       "difficulty": "medium",
       "prompt": "Which director made 'Mulholland Drive,' 'Blue Velvet,' and 'Twin Peaks'?",
-      "choices": ["David Fincher", "David Lynch", "Terrence Malick", "Paul Thomas Anderson"],
+      "choices": [
+        "David Fincher",
+        "David Lynch",
+        "Terrence Malick",
+        "Paul Thomas Anderson"
+      ],
       "answer": 1,
       "quip_correct": "It's a strange world, Sandy.",
       "quip_wrong": "David Lynch — surrealism, small towns, red curtains."
     },
-
     {
       "id": "general_001",
       "category": "general",
       "difficulty": "easy",
       "prompt": "At roughly 5,400 ft elevation, water boils at approximately what temperature?",
-      "choices": ["212°F", "208°F", "202°F", "196°F"],
+      "choices": [
+        "212°F",
+        "208°F",
+        "202°F",
+        "196°F"
+      ],
       "answer": 2,
       "quip_correct": "Why your cakes need an altitude adjustment."
     },
@@ -268,7 +437,12 @@
       "category": "general",
       "difficulty": "easy",
       "prompt": "What element has the chemical symbol 'Au'?",
-      "choices": ["Gold", "Silver", "Copper", "Aluminum"],
+      "choices": [
+        "Gold",
+        "Silver",
+        "Copper",
+        "Aluminum"
+      ],
       "answer": 0,
       "quip_correct": "From the Latin aurum.",
       "quip_wrong": "Gold — aurum in Latin, hence Au."
@@ -278,7 +452,12 @@
       "category": "general",
       "difficulty": "easy",
       "prompt": "How many sides does a hexagon have?",
-      "choices": ["5", "7", "8", "6"],
+      "choices": [
+        "5",
+        "7",
+        "8",
+        "6"
+      ],
       "answer": 3,
       "quip_correct": "Bees figured this out millions of years ago.",
       "quip_wrong": "Six — hex comes from the Greek for six."
@@ -288,7 +467,12 @@
       "category": "general",
       "difficulty": "medium",
       "prompt": "How many bones are in the adult human body?",
-      "choices": ["196", "216", "206", "226"],
+      "choices": [
+        "196",
+        "216",
+        "206",
+        "226"
+      ],
       "answer": 2,
       "quip_correct": "You're born with ~270; they fuse as you grow.",
       "quip_wrong": "206 — you fuse from ~270 at birth."
@@ -298,7 +482,12 @@
       "category": "general",
       "difficulty": "medium",
       "prompt": "In what year did the Berlin Wall fall?",
-      "choices": ["1987", "1989", "1991", "1993"],
+      "choices": [
+        "1987",
+        "1989",
+        "1991",
+        "1993"
+      ],
       "answer": 1,
       "quip_correct": "November 9, 1989.",
       "quip_wrong": "1989 — November 9th, crowds tore it down."
@@ -308,7 +497,12 @@
       "category": "general",
       "difficulty": "hard",
       "prompt": "What is the approximate average distance from the Earth to the Moon?",
-      "choices": ["84,000 km", "240,000 km", "505,000 km", "384,000 km"],
+      "choices": [
+        "84,000 km",
+        "240,000 km",
+        "505,000 km",
+        "384,000 km"
+      ],
       "answer": 3,
       "quip_correct": "Close enough to see with the naked eye.",
       "quip_wrong": "About 384,000 km — it varies as the Moon's orbit is elliptical."
@@ -318,18 +512,27 @@
       "category": "general",
       "difficulty": "hard",
       "prompt": "Which planet in our solar system has the most moons?",
-      "choices": ["Jupiter", "Saturn", "Uranus", "Neptune"],
+      "choices": [
+        "Jupiter",
+        "Saturn",
+        "Uranus",
+        "Neptune"
+      ],
       "answer": 1,
       "quip_correct": "146 confirmed moons and counting.",
       "quip_wrong": "Saturn — it overtook Jupiter in 2023 with confirmed new moons."
     },
-
     {
       "id": "general_008",
       "category": "general",
       "difficulty": "easy",
       "prompt": "Who was the first person to walk on the Moon?",
-      "choices": ["Buzz Aldrin", "Yuri Gagarin", "Neil Armstrong", "John Glenn"],
+      "choices": [
+        "Buzz Aldrin",
+        "Yuri Gagarin",
+        "Neil Armstrong",
+        "John Glenn"
+      ],
       "answer": 2,
       "quip_correct": "One small step, one giant leap.",
       "quip_wrong": "Neil Armstrong — July 20, 1969."
@@ -339,7 +542,12 @@
       "category": "general",
       "difficulty": "easy",
       "prompt": "What was the name of the first artificial satellite, launched by the USSR in 1957?",
-      "choices": ["Sputnik 1", "Vostok 1", "Luna 1", "Cosmos 1"],
+      "choices": [
+        "Sputnik 1",
+        "Vostok 1",
+        "Luna 1",
+        "Cosmos 1"
+      ],
       "answer": 0,
       "quip_correct": "The beep heard around the world.",
       "quip_wrong": "Sputnik 1 — October 4, 1957, kicked off the space race."
@@ -349,7 +557,12 @@
       "category": "general",
       "difficulty": "medium",
       "prompt": "In what year did Voyager 1 launch from Earth?",
-      "choices": ["1969", "1977", "1983", "1990"],
+      "choices": [
+        "1969",
+        "1977",
+        "1983",
+        "1990"
+      ],
       "answer": 1,
       "quip_correct": "Still transmitting from interstellar space.",
       "quip_wrong": "1977 — now the farthest human-made object from Earth."
@@ -359,7 +572,12 @@
       "category": "general",
       "difficulty": "medium",
       "prompt": "What was the first space station launched by the United States?",
-      "choices": ["Mir", "Tiangong", "The ISS", "Skylab"],
+      "choices": [
+        "Mir",
+        "Tiangong",
+        "The ISS",
+        "Skylab"
+      ],
       "answer": 3,
       "quip_correct": "Launched 1973, fell back to Earth in 1979.",
       "quip_wrong": "Skylab — it orbited from 1973 to 1979."
@@ -369,18 +587,42 @@
       "category": "general",
       "difficulty": "hard",
       "prompt": "What was the name of the Apollo 11 lunar module that landed on the Moon?",
-      "choices": ["Columbia", "Intrepid", "Eagle", "Odyssey"],
+      "choices": [
+        "Columbia",
+        "Intrepid",
+        "Eagle",
+        "Odyssey"
+      ],
       "answer": 2,
       "quip_correct": "The Eagle has landed.",
       "quip_wrong": "Eagle — Columbia was the command module that stayed in orbit."
     },
-
+    {
+      "id": "general_013",
+      "category": "general",
+      "difficulty": "hard",
+      "prompt": "This is the temperature at which an air mass is fully saturated.",
+      "choices": [
+        "Dewpoint",
+        "Heat Index",
+        "Wind Chill",
+        "Curve Number"
+      ],
+      "answer": 0,
+      "quip_correct": "Do the dew",
+      "quip_wrong": "What's next? Skipping the song \"Morning Dew\" at your next Dead show?"
+    },
     {
       "id": "asia_001",
       "category": "asia",
       "difficulty": "easy",
       "prompt": "What is the capital of Japan?",
-      "choices": ["Osaka", "Tokyo", "Kyoto", "Yokohama"],
+      "choices": [
+        "Osaka",
+        "Tokyo",
+        "Kyoto",
+        "Yokohama"
+      ],
       "answer": 1,
       "quip_correct": "The game developer won a competition about this in elementary school. Easy points.",
       "quip_wrong": "Tokyo — even the dev's fifth-grade self knew that one."
@@ -390,7 +632,12 @@
       "category": "asia",
       "difficulty": "easy",
       "prompt": "What is the capital of China?",
-      "choices": ["Beijing", "Shanghai", "Hong Kong", "Guangzhou"],
+      "choices": [
+        "Beijing",
+        "Shanghai",
+        "Hong Kong",
+        "Guangzhou"
+      ],
       "answer": 0,
       "quip_correct": "Round one material at the dev's elementary school competition.",
       "quip_wrong": "Beijing — Shanghai is the biggest city, but not the capital."
@@ -400,7 +647,12 @@
       "category": "asia",
       "difficulty": "easy",
       "prompt": "What is the capital of India?",
-      "choices": ["Mumbai", "Kolkata", "Bangalore", "New Delhi"],
+      "choices": [
+        "Mumbai",
+        "Kolkata",
+        "Bangalore",
+        "New Delhi"
+      ],
       "answer": 3,
       "quip_correct": "The dev nailed this one in elementary school and never forgot it.",
       "quip_wrong": "New Delhi — Mumbai is the financial capital, not the political one."
@@ -410,7 +662,12 @@
       "category": "asia",
       "difficulty": "easy",
       "prompt": "Seoul is the capital of which country?",
-      "choices": ["North Korea", "Japan", "South Korea", "Taiwan"],
+      "choices": [
+        "North Korea",
+        "Japan",
+        "South Korea",
+        "Taiwan"
+      ],
       "answer": 2,
       "quip_correct": "The dev's elementary school competition glory started with questions like this.",
       "quip_wrong": "South Korea — Pyongyang is the North Korean capital."
@@ -420,7 +677,12 @@
       "category": "asia",
       "difficulty": "medium",
       "prompt": "What is the capital of Thailand?",
-      "choices": ["Chiang Mai", "Phuket", "Bangkok", "Pattaya"],
+      "choices": [
+        "Chiang Mai",
+        "Phuket",
+        "Bangkok",
+        "Pattaya"
+      ],
       "answer": 2,
       "quip_correct": "The dev's elementary school competition training is paying off for you.",
       "quip_wrong": "Bangkok — its ceremonial name is 168 letters long."
@@ -430,7 +692,12 @@
       "category": "asia",
       "difficulty": "medium",
       "prompt": "What is the capital of Vietnam?",
-      "choices": ["Hanoi", "Ho Chi Minh City", "Da Nang", "Hue"],
+      "choices": [
+        "Hanoi",
+        "Ho Chi Minh City",
+        "Da Nang",
+        "Hue"
+      ],
       "answer": 0,
       "quip_correct": "This was a clutch answer at the dev's elementary school competition.",
       "quip_wrong": "Hanoi — Ho Chi Minh City is larger, but Hanoi is the capital."
@@ -440,7 +707,12 @@
       "category": "asia",
       "difficulty": "medium",
       "prompt": "What is the capital of the Philippines?",
-      "choices": ["Cebu City", "Davao", "Quezon City", "Manila"],
+      "choices": [
+        "Cebu City",
+        "Davao",
+        "Quezon City",
+        "Manila"
+      ],
       "answer": 3,
       "quip_correct": "The dev's elementary school competition judges would be proud.",
       "quip_wrong": "Manila — Quezon City is actually more populous, but Manila is the capital."
@@ -450,7 +722,12 @@
       "category": "asia",
       "difficulty": "medium",
       "prompt": "What is the capital of Indonesia?",
-      "choices": ["Bali", "Jakarta", "Surabaya", "Bandung"],
+      "choices": [
+        "Bali",
+        "Jakarta",
+        "Surabaya",
+        "Bandung"
+      ],
       "answer": 1,
       "quip_correct": "The dev remembers this one from the competition. Nusantara is coming though.",
       "quip_wrong": "Jakarta — though Indonesia is building a new capital called Nusantara."
@@ -460,7 +737,12 @@
       "category": "asia",
       "difficulty": "hard",
       "prompt": "What is the capital of Myanmar?",
-      "choices": ["Yangon", "Mandalay", "Naypyidaw", "Bagan"],
+      "choices": [
+        "Yangon",
+        "Mandalay",
+        "Naypyidaw",
+        "Bagan"
+      ],
       "answer": 2,
       "quip_correct": "This one stumped half the kids at the dev's elementary school competition.",
       "quip_wrong": "Naypyidaw — moved from Yangon in 2006. A real competition curveball."
@@ -470,7 +752,12 @@
       "category": "asia",
       "difficulty": "hard",
       "prompt": "Sri Jayawardenepura Kotte is the legislative capital of which country?",
-      "choices": ["Sri Lanka", "Bangladesh", "Nepal", "Maldives"],
+      "choices": [
+        "Sri Lanka",
+        "Bangladesh",
+        "Nepal",
+        "Maldives"
+      ],
       "answer": 0,
       "quip_correct": "The dev won the elementary school competition partly by memorizing this name.",
       "quip_wrong": "Sri Lanka — Colombo is the commercial capital, but Kotte is the official one."
@@ -480,7 +767,12 @@
       "category": "asia",
       "difficulty": "hard",
       "prompt": "What is the capital of Kazakhstan?",
-      "choices": ["Almaty", "Shymkent", "Karaganda", "Astana"],
+      "choices": [
+        "Almaty",
+        "Shymkent",
+        "Karaganda",
+        "Astana"
+      ],
       "answer": 3,
       "quip_correct": "Renamed twice since 1997. The dev's competition flashcards are outdated.",
       "quip_wrong": "Astana — it was Almaty until 1997. The name has changed multiple times since."
@@ -490,18 +782,27 @@
       "category": "asia",
       "difficulty": "hard",
       "prompt": "What is the capital of Laos?",
-      "choices": ["Luang Prabang", "Vientiane", "Savannakhet", "Pakse"],
+      "choices": [
+        "Luang Prabang",
+        "Vientiane",
+        "Savannakhet",
+        "Pakse"
+      ],
       "answer": 1,
       "quip_correct": "Deep cut. The dev's elementary school competition prep finally justified.",
       "quip_wrong": "Vientiane — right on the Mekong River, bordering Thailand."
     },
-
     {
       "id": "meta_004",
       "category": "meta",
       "difficulty": "hard",
       "prompt": "What programming language is Trivia-Doku written in?",
-      "choices": ["Rust", "C", "C++", "Python"],
+      "choices": [
+        "Rust",
+        "C",
+        "C++",
+        "Python"
+      ],
       "answer": 2,
       "quip_correct": "C++17 to be precise.",
       "quip_wrong": "C++ — built with CMake and raylib."
@@ -511,7 +812,12 @@
       "category": "meta",
       "difficulty": "hard",
       "prompt": "What graphics library does the game use for all its rendering?",
-      "choices": ["SDL2", "SFML", "Dear ImGui", "raylib"],
+      "choices": [
+        "SDL2",
+        "SFML",
+        "Dear ImGui",
+        "raylib"
+      ],
       "answer": 3,
       "quip_correct": "Simple, clean, and zero drama.",
       "quip_wrong": "raylib — Renderer.h is the only file that includes it."
@@ -521,7 +827,12 @@
       "category": "meta",
       "difficulty": "hard",
       "prompt": "How many cells does the largest piece in the game's shape catalog have?",
-      "choices": ["5", "6", "8", "9"],
+      "choices": [
+        "5",
+        "6",
+        "8",
+        "9"
+      ],
       "answer": 3,
       "quip_correct": "The 3x3 square — good luck placing that one.",
       "quip_wrong": "9 — it's the 3x3 square. Hope you've got room."
@@ -531,7 +842,12 @@
       "category": "meta",
       "difficulty": "hard",
       "prompt": "Roughly what percent chance does each tray slot have of being a trivia piece?",
-      "choices": ["20%", "33%", "50%", "10%"],
+      "choices": [
+        "20%",
+        "33%",
+        "50%",
+        "10%"
+      ],
       "answer": 0,
       "quip_correct": "One in five. Enough to keep you honest.",
       "quip_wrong": "20% — each slot rolls independently."
@@ -541,18 +857,27 @@
       "category": "meta",
       "difficulty": "hard",
       "prompt": "What AI model generated the trivia questions in this game?",
-      "choices": ["GPT-4o", "Gemini Pro", "Llama 3", "Claude"],
+      "choices": [
+        "GPT-4o",
+        "Gemini Pro",
+        "Llama 3",
+        "Claude"
+      ],
       "answer": 3,
       "quip_correct": "Anthropic's finest, at your service.",
       "quip_wrong": "Claude — by Anthropic. Who else would write quips this good?"
     },
-
     {
       "id": "meta_001",
       "category": "meta",
       "difficulty": "easy",
       "prompt": "How many correct trivia answers in a row clear all stones from the board?",
-      "choices": ["2", "3", "5", "10"],
+      "choices": [
+        "2",
+        "3",
+        "5",
+        "10"
+      ],
       "answer": 1,
       "quip_correct": "Redemption arc unlocked.",
       "quip_wrong": "Read the manual! (Press ? in game.)"
