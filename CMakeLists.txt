@@ -1,9 +1,9 @@
 # Trivia-Doku — CMake build file
 #
-# Expects vcpkg to provide raylib and nlohmann-json. Configure with:
-#   cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=<path-to-vcpkg>/scripts/buildsystems/vcpkg.cmake
+# Expects vcpkg to provide raylib and nlohmann-json. Configure once with:
+#   cmake -B build -S . -G Ninja -DCMAKE_TOOLCHAIN_FILE=<path-to-vcpkg>/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Release
 # Then build with:
-#   cmake --build build --config Release
+#   cmake --build build
 
 cmake_minimum_required(VERSION 3.20)
 project(trivia_doku LANGUAGES CXX)
@@ -11,10 +11,10 @@ project(trivia_doku LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# MSVC niceties: warnings on, multi-processor compile, UTF-8 source
 if(MSVC)
-    add_compile_options(/W4 /MP /utf-8)
+    add_compile_options(/W4 /MP /utf-8 /EHsc)
 endif()
 
 find_package(raylib CONFIG REQUIRED)

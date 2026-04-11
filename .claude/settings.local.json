@@ -28,7 +28,24 @@
       "Bash(git -C /c/GitHub/block-doku-trivia add src/Renderer.h src/Renderer.cpp src/main.cpp README.md)",
       "Bash(git -C /c/GitHub/block-doku-trivia status)",
       "Bash(git -C /c/GitHub/block-doku-trivia commit -m ':*)",
-      "Bash(python3)"
+      "Bash(python3)",
+      "Bash(cmake --build build_ninja)",
+      "Bash(cmake --build build)",
+      "Bash(cmake -B build -S . -G Ninja -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Release)",
+      "Bash(cmd.exe /c \"\\\\\"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/Tools/VsDevCmd.bat\\\\\" -arch=amd64 >nul 2>&1 && cd /d c:\\\\GitHub\\\\block-doku-trivia && cmake -B build -S . -G Ninja -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Release 2>&1\")",
+      "Read(//c/Program Files/Microsoft Visual Studio/**)",
+      "Read(//c/Program Files \\(x86\\)/Microsoft Visual Studio/**)",
+      "Bash(where cl.exe)",
+      "Bash(where cc.exe)",
+      "Bash(where gcc.exe)",
+      "Bash(where g++.exe)",
+      "Bash(where clang++.exe)",
+      "Read(//c/Program Files/**)",
+      "Read(//c/Program Files \\(x86\\)/**)",
+      "Bash(cmd.exe /c \"\\\\\"C:\\\\Program Files \\(x86\\)\\\\Microsoft Visual Studio\\\\18\\\\BuildTools\\\\Common7\\\\Tools\\\\VsDevCmd.bat\\\\\" -arch=amd64 >nul 2>&1 && cd /d c:\\\\GitHub\\\\block-doku-trivia && cmake -B build -S . -G Ninja -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Release 2>&1\")",
+      "Bash(cmd.exe //c configure.bat)",
+      "Bash(cmd.exe //c \"c:\\\\\\\\GitHub\\\\\\\\block-doku-trivia\\\\\\\\configure.bat\")",
+      "Bash(cmd.exe //c \"c:\\\\\\\\GitHub\\\\\\\\block-doku-trivia\\\\\\\\configure.bat && cmake --build build\")"
     ]
   }
 }

@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include <filesystem>
 #include <memory>
+#include <vector>
 
 namespace td {
 
@@ -18,6 +19,10 @@ struct Renderer::Impl {
     std::unordered_map<std::string, Sound> sfx;
     std::unordered_map<std::string, Music> music;
     std::string currentMusicId;
+    // Playlist support: ordered list of music IDs, current index, and loop flag.
+    std::vector<std::string> playlist;
+    size_t playlistIndex = 0;
+    bool playlistLoop = true;
 };
 
 namespace fs = std::filesystem;
@@ -59,6 +64,11 @@ Renderer::~Renderer() {
     shutdownAudio();
 }
 
+// Update the renderer's layout when the window size or layout metrics change.
+void Renderer::setLayout(const Layout& layout) {
+    layout_ = layout;
+}
+
 bool Renderer::initAudio() {
     if (!impl_) impl_ = std::make_unique<Impl>();
     if (impl_->audioInitialized) return true;
@@ -82,6 +92,11 @@ void Renderer::shutdownAudio() {
         UnloadMusicStream(p.second);
     }
     impl_->music.clear();
+
+    // Clear any playlist state
+    impl_->playlist.clear();
+    impl_->playlistIndex = 0;
+    impl_->playlistLoop = true;
 
     impl_->currentMusicId.clear();
     CloseAudioDevice();
@@ -124,8 +139,47 @@ void Renderer::playMusicStream(const std::string& id) {
         if (pit != impl_->music.end()) StopMusicStream(pit->second);
     }
 
+    // Clear any playlist state: explicit single-track play overrides playlists.
+    impl_->playlist.clear();
+    impl_->playlistIndex = 0;
+    impl_->playlistLoop = false;
+
     PlayMusicStream(it->second);
     impl_->currentMusicId = id;
+}
+
+void Renderer::playMusicPlaylist(const std::vector<std::string>& ids, bool loop) {
+    if (!impl_) impl_ = std::make_unique<Impl>();
+    if (!impl_->audioInitialized) initAudio();
+    if (ids.empty()) return;
+
+    // Stop previous music if any
+    if (!impl_->currentMusicId.empty()) {
+        auto pit = impl_->music.find(impl_->currentMusicId);
+        if (pit != impl_->music.end()) StopMusicStream(pit->second);
+    }
+
+    impl_->playlist = ids;
+    impl_->playlistIndex = 0;
+    impl_->playlistLoop = loop;
+
+    // Start the first available track in the playlist (skip missing ids).
+    for (size_t i = 0; i < impl_->playlist.size(); ++i) {
+        const auto& id = impl_->playlist[impl_->playlistIndex];
+        auto it = impl_->music.find(id);
+        if (it != impl_->music.end()) {
+            PlayMusicStream(it->second);
+            impl_->currentMusicId = id;
+            return;
+        }
+        // advance index; if we wrapped, nothing was found
+        impl_->playlistIndex = (impl_->playlistIndex + 1) % impl_->playlist.size();
+        if (impl_->playlistIndex == 0) break;
+    }
+
+    // If no valid tracks were found, clear playlist state.
+    impl_->playlist.clear();
+    impl_->currentMusicId.clear();
 }
 
 void Renderer::stopMusic() {
@@ -134,13 +188,58 @@ void Renderer::stopMusic() {
     auto it = impl_->music.find(impl_->currentMusicId);
     if (it != impl_->music.end()) StopMusicStream(it->second);
     impl_->currentMusicId.clear();
+    // Clear any playlist state as playback has been stopped explicitly.
+    impl_->playlist.clear();
+    impl_->playlistIndex = 0;
+    impl_->playlistLoop = true;
 }
 
 void Renderer::updateAudio() {
     if (!impl_ || !impl_->audioInitialized) return;
     if (impl_->currentMusicId.empty()) return;
     auto it = impl_->music.find(impl_->currentMusicId);
-    if (it != impl_->music.end()) UpdateMusicStream(it->second);
+    if (it == impl_->music.end()) return;
+
+    UpdateMusicStream(it->second);
+
+    // If we're playing a playlist, auto-advance when the current track ends.
+    if (!impl_->playlist.empty()) {
+        // If the stream is still playing, nothing to do.
+        if (IsMusicStreamPlaying(it->second)) return;
+
+        // Advance to the next track in the playlist.
+        size_t nextIndex = impl_->playlistIndex + 1;
+        if (nextIndex >= impl_->playlist.size()) {
+            if (impl_->playlistLoop) nextIndex = 0;
+            else {
+                // Playlist finished — clear state.
+                impl_->currentMusicId.clear();
+                impl_->playlist.clear();
+                return;
+            }
+        }
+
+        // Find the next loaded track, wrapping if necessary.
+        bool found = false;
+        for (size_t i = 0; i < impl_->playlist.size(); ++i) {
+            size_t idx = (nextIndex + i) % impl_->playlist.size();
+            const auto& nextId = impl_->playlist[idx];
+            auto nit = impl_->music.find(nextId);
+            if (nit != impl_->music.end()) {
+                PlayMusicStream(nit->second);
+                impl_->currentMusicId = nextId;
+                impl_->playlistIndex = idx;
+                found = true;
+                break;
+            }
+            // If playlist doesn't loop and we've reached the end, stop trying.
+            if (!impl_->playlistLoop && idx + 1 == impl_->playlist.size()) break;
+        }
+        if (!found) {
+            impl_->currentMusicId.clear();
+            impl_->playlist.clear();
+        }
+    }
 }
 
 void Renderer::drawBoard(const Board& board) const {
@@ -396,39 +495,41 @@ void Renderer::drawTriviaModal(const Question& q, int selected,
     // Semi-transparent full-screen dimmer.
     DrawRectangle(0, 0, W, H, { 0, 0, 0, 185 });
 
-    // Panel geometry.
-    constexpr int kPanelW = 560;
-    constexpr int kPanelH = 390;
-    const int panelX = (W - kPanelW) / 2;
-    const int panelY = (H - kPanelH) / 2;
-    const int pad    = 20;  // horizontal text padding inside panel
+    // Panel occupies a fixed fraction of the window so it scales with any resolution.
+    const int kPanelW = W * 45 / 100;   // 45% of window width
+    const int kPanelH = H * 60 / 100;   // 60% of window height
+    // Font scale derived from panel width relative to the 560 px baseline design.
+    const float s = kPanelW / 560.0f;
+    const int panelX    = (W - kPanelW) / 2;
+    const int panelY    = (H - kPanelH) / 2;
+    const int pad       = static_cast<int>(20 * s);
 
     DrawRectangle(panelX,  panelY,  kPanelW, kPanelH, { 28,  32,  46, 250 });
     DrawRectangle(panelX,  panelY,  kPanelW,       2,  {200, 156,  50, 255 }); // gold accent
     DrawRectangleLines(panelX, panelY, kPanelW, kPanelH, { 90, 100, 120, 200 });
 
     // Category + difficulty badges (top row).
-    constexpr int kBadgeSize = 14;
-    DrawText(q.category.c_str(),   panelX + pad, panelY + 10, kBadgeSize, {200, 156, 50, 200});
+    const int kBadgeSize = std::max(10, static_cast<int>(14 * s));
+    DrawText(q.category.c_str(),   panelX + pad, panelY + static_cast<int>(10 * s), kBadgeSize, {200, 156, 50, 200});
     const char* diff = q.difficulty.c_str();
     const int dw = MeasureText(diff, kBadgeSize);
-    DrawText(diff, panelX + kPanelW - pad - dw, panelY + 10, kBadgeSize, {130, 148, 175, 200});
+    DrawText(diff, panelX + kPanelW - pad - dw, panelY + static_cast<int>(10 * s), kBadgeSize, {130, 148, 175, 200});
 
     // Question text — word-wrapped.
-    constexpr int kQSize   = 19;
-    constexpr int kQTextW  = kPanelW - pad * 2;
+    const int kQSize  = std::max(14, static_cast<int>(19 * s));
+    const int kQTextW = kPanelW - pad * 2;
     const auto lines = wrapText(q.prompt, kQTextW, kQSize);
-    int qY = panelY + 34;
+    int qY = panelY + static_cast<int>(34 * s);
     for (const auto& line : lines) {
         DrawText(line.c_str(), panelX + pad, qY, kQSize, kTextColor);
-        qY += kQSize + 4;
+        qY += kQSize + static_cast<int>(4 * s);
     }
 
     // Choice rows.
-    constexpr int kChoiceSize = 17;
-    constexpr int kChoiceH    = 34;
-    const char kLabels[]      = "ABCD";
-    int choiceY = panelY + 120;
+    const int kChoiceSize = std::max(12, static_cast<int>(17 * s));
+    const int kChoiceH    = std::max(24, static_cast<int>(34 * s));
+    const char kLabels[]  = "ABCD";
+    int choiceY = panelY + static_cast<int>(120 * s);
 
     for (int i = 0; i < 4; ++i) {
         const bool isSelected = (i == selected);
@@ -451,11 +552,11 @@ void Renderer::drawTriviaModal(const Question& q, int selected,
 
         // Label (A/B/C/D).
         const char label[3] = { kLabels[i], ' ', '\0' };
-        DrawText(label, panelX + pad + 12, choiceY + (kChoiceH - kChoiceSize) / 2,
+        DrawText(label, panelX + pad + static_cast<int>(12 * s), choiceY + (kChoiceH - kChoiceSize) / 2,
                  kChoiceSize, {170, 185, 210, 255});
 
         // Choice text.
-        DrawText(q.choices[i].c_str(), panelX + pad + 30, choiceY + (kChoiceH - kChoiceSize) / 2,
+        DrawText(q.choices[i].c_str(), panelX + pad + static_cast<int>(30 * s), choiceY + (kChoiceH - kChoiceSize) / 2,
                  kChoiceSize, kTextColor);
 
         choiceY += kChoiceH;
@@ -463,22 +564,23 @@ void Renderer::drawTriviaModal(const Question& q, int selected,
 
     // Feedback row (shown after answering).
     if (answered) {
-        const int feedY = panelY + kPanelH - 80;
+        const int feedY    = panelY + kPanelH - static_cast<int>(80 * s);
+        const int feedSize = std::max(13, static_cast<int>(18 * s));
         if (correct) {
             const std::string msg = quip.empty() ? "CORRECT!" : "CORRECT!  " + quip;
-            DrawText(msg.c_str(), panelX + pad, feedY, 18, {100, 220, 100, 255});
+            DrawText(msg.c_str(), panelX + pad, feedY, feedSize, {100, 220, 100, 255});
         } else {
             const std::string msg = quip.empty() ? "WRONG." : "WRONG.  " + quip;
-            DrawText(msg.c_str(), panelX + pad, feedY, 18, {220, 80, 80, 255});
+            DrawText(msg.c_str(), panelX + pad, feedY, feedSize, {220, 80, 80, 255});
         }
     }
 
     // Hint line at the bottom.
     const char* hint = answered ? "Press any key to continue"
                                 : "1-4 / \x18\x19 to choose   Enter to confirm";
-    constexpr int kHintSize = 14;
+    const int kHintSize = std::max(10, static_cast<int>(14 * s));
     const int hw = MeasureText(hint, kHintSize);
-    DrawText(hint, panelX + (kPanelW - hw) / 2, panelY + kPanelH - 26,
+    DrawText(hint, panelX + (kPanelW - hw) / 2, panelY + kPanelH - static_cast<int>(26 * s),
              kHintSize, {130, 148, 175, 255});
 }
 

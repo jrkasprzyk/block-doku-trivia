@@ -13,12 +13,16 @@
 #include <array>
 #include <string>
 #include <memory>
+#include <vector>
 
 namespace td {
 
 struct Layout {
-    int windowWidth  = 1200;
-    int windowHeight = 880;
+    // Default window size (bumped up — can be overridden at runtime).
+    int windowWidth  = 1600;
+    int windowHeight = 1000;
+    // Cell size and board origin are recalculated for the current window
+    // via `recalcForWindow()` so the board can scale up on larger displays.
     int cellPixels   = 72;   // size of one board cell in pixels
     int boardOriginX = 80;   // top-left of the board in window coords
     int boardOriginY = 80;
@@ -37,12 +41,42 @@ struct Layout {
         const Cell c = boardCellAt(px, py);
         return c.row != -1;
     }
+
+    // Recalculate layout metrics when the window size changes (or on startup
+    // after calling `InitWindow`). This adjusts `cellPixels` and origins so the
+    // board scales to larger windows, while leaving a reserved area for the
+    // HUD on the right and the tray below.
+    void recalcForWindow(int windowW, int windowH) {
+        windowWidth = windowW;
+        windowHeight = windowH;
+
+        // Desired margins / reserved space (heuristic values).
+        const int leftMargin = 80;
+        const int topMargin = 80;
+        const int hudReserve = 380;   // space reserved for HUD on the right
+        const int trayReserve = 160;  // space reserved below board for the tray
+
+        int maxCellW = (windowWidth - leftMargin - hudReserve) / kBoardSize;
+        if (maxCellW < 20) maxCellW = 20;
+        int maxCellH = (windowHeight - topMargin - trayReserve) / kBoardSize;
+        if (maxCellH < 20) maxCellH = 20;
+
+        // Pick the limiting dimension but clamp to a sensible minimum.
+        int cp = (maxCellW < maxCellH) ? maxCellW : maxCellH;
+        if (cp < 28) cp = 28;
+        cellPixels = cp;
+
+        boardOriginX = leftMargin;
+        boardOriginY = topMargin;
+    }
 };
 
 class Renderer {
 public:
     explicit Renderer(const Layout& layout);
     ~Renderer();
+    // Update renderer layout at runtime (e.g., after window resize/fullscreen).
+    void setLayout(const Layout& layout);
 
     // Draw the board's current state: cells, grid lines, and sub-square borders.
     void drawBoard(const Board& board) const;
@@ -90,6 +124,10 @@ public:
     void playSoundEffect(const std::string& id);
     // Start playing a previously loaded music stream. Stops any other music.
     void playMusicStream(const std::string& id);
+    // Start playing a playlist of previously loaded music IDs back-to-back.
+    // `ids` are looked up in the loaded music map; missing ids are skipped.
+    // If `loop` is true the playlist wraps when it reaches the end.
+    void playMusicPlaylist(const std::vector<std::string>& ids, bool loop = true);
     // Stop currently playing music (if any).
     void stopMusic();
     // Must be called each frame to update streaming music playback.

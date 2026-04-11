@@ -111,8 +111,12 @@ void checkGameOver(Phase& phase,
 
 int main() {
     td::Layout layout;
+    // Allow the window to be resized by the OS; initialize at the preferred size.
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(layout.windowWidth, layout.windowHeight, "Trivia-Doku");
-    SetTargetFPS(60);
+    // Recalculate layout metrics based on the actual window size (handles DPI/fullscreen).
+    layout.recalcForWindow(GetScreenWidth(), GetScreenHeight());
+    SetTargetFPS(120);
 
     td::Board    board;
     td::Renderer renderer(layout);
@@ -123,18 +127,34 @@ int main() {
     // (no-op if files don't exist). User-provided assets should live under
     // `assets/` and follow names documented in /docs/audio-assets.md.
     renderer.initAudio();
-    renderer.loadMusic("bg", "assets/hip-hop-vodka-main.ogg");
-    renderer.loadSoundEffect("place",    "assets/sfx_place.wav"); //todo
-    renderer.loadSoundEffect("clear",    "assets/healing_potion_001.wav");
-    renderer.loadSoundEffect("correct",  "assets/success_q.wav");
-    renderer.loadSoundEffect("wrong",    "assets/failure_q.wav");
-    renderer.loadSoundEffect("pickup",   "assets/sfx_pickup.wav");//todo
-    renderer.loadSoundEffect("cancel",   "assets/sfx_cancel.wav");//todo
-    renderer.loadSoundEffect("deal",     "assets/sfx_deal.wav");//todo
-    renderer.loadSoundEffect("shatter",  "assets/sfx_shatter.wav");//todo
-    renderer.loadSoundEffect("gameover", "assets/sfx_gameover.wav");//todo
-    renderer.loadSoundEffect("restart",  "assets/sfx_restart.wav");//todo
-    renderer.playMusicStream("bg");
+    // Load background playlist tracks (skip any missing files).
+    auto tryLoadMusic = [&](const std::string& id, const std::string& path){
+        if (!renderer.loadMusic(id, path)) {
+            TraceLog(LOG_WARNING, "Missing music: %s", path.c_str());
+        }
+    };
+    tryLoadMusic("bg_amapiano", "assets/bg_music/amapiano_logging_the_drum_main.ogg");
+    tryLoadMusic("bg_hiphop",    "assets/bg_music/hip-hop-vodka-main.ogg");
+    tryLoadMusic("bg_synth",     "assets/bg_music/synthwave_cybertruck_chase_main.ogg");
+    tryLoadMusic("bg_west",      "assets/bg_music/westernaftrica_kalahari_main.ogg");
+    // Helper to try loading sfx and log missing ones.
+    auto tryLoad = [&](const std::string& id, const std::string& path){
+        if (!renderer.loadSoundEffect(id, path)) {
+            TraceLog(LOG_WARNING, "Missing sound effect: %s", path.c_str());
+        }
+    };
+    tryLoad("place",    "assets/pro_memory_card_eject_insert_a.wav");
+    tryLoad("clear",    "assets/healing_potion_001.wav");
+    tryLoad("correct",  "assets/success_q.wav");
+    tryLoad("wrong",    "assets/failure_q.wav");
+    tryLoad("pickup",   "assets/handling_metal_equipment_b.wav");
+    tryLoad("cancel",   "assets/server_hum_end.wav");
+    tryLoad("deal",     "assets/stick_hit_001.wav");
+    tryLoad("shatter",  "assets/director_chair_creaking_a.wav");
+    tryLoad("gameover", "assets/jingle_win_003.wav");
+    tryLoad("restart",  "assets/bad_button_001.wav");
+    // Start the playlist (looping).
+    renderer.playMusicPlaylist({"bg_amapiano", "bg_hiphop", "bg_synth", "bg_west"}, true);
 
     auto tray = td::makeTray();
 
@@ -144,11 +164,6 @@ int main() {
     TriviaModal triviaModal;
     Phase phase = Phase::Playing;
 
-    // Tray geometry — must agree with Renderer::drawTray.
-    const int trayY = layout.boardOriginY + td::kBoardSize * layout.cellPixels + 12;
-    const int trayW = td::kBoardSize * layout.cellPixels;
-    const int slotW = trayW / 3;
-
     DragState drag;
 
     while (!WindowShouldClose()) {
@@ -156,6 +171,24 @@ int main() {
         // ── Input / Update ──────────────────────────────────────────────────
         const int mx = GetMouseX();
         const int my = GetMouseY();
+
+        // Tray geometry — recalculated each frame so it stays correct after resize/fullscreen.
+        const int trayY = layout.boardOriginY + td::kBoardSize * layout.cellPixels + 12;
+        const int trayW = td::kBoardSize * layout.cellPixels;
+        const int slotW = trayW / 3;
+        // Debug test keys: F1=clear, F2=correct, F3=wrong
+        if (IsKeyPressed(KEY_F1)) { renderer.playSoundEffect("clear"); TraceLog(LOG_INFO, "Debug: played SFX 'clear'"); }
+        if (IsKeyPressed(KEY_F2)) { renderer.playSoundEffect("correct"); TraceLog(LOG_INFO, "Debug: played SFX 'correct'"); }
+        if (IsKeyPressed(KEY_F3)) { renderer.playSoundEffect("wrong"); TraceLog(LOG_INFO, "Debug: played SFX 'wrong'"); }
+        // Handle OS-driven resize events (including the frame after ToggleFullscreen).
+        if (IsWindowResized()) {
+            layout.recalcForWindow(GetScreenWidth(), GetScreenHeight());
+            renderer.setLayout(layout);
+        }
+        // Toggle fullscreen (F11); the actual resize is caught by IsWindowResized above.
+        if (IsKeyPressed(KEY_F11)) {
+            ToggleFullscreen();
+        }
 
         // Restart from game-over screen.
         if (phase == Phase::GameOver && IsKeyPressed(KEY_R)) {
