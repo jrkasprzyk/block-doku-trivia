@@ -41,18 +41,37 @@ Mental model: this is your `pip install raylib nlohmann-json`. First run takes a
 
 ## Build
 
-From the project root:
+**Option A — Command Prompt or PowerShell (recommended):**
 
 ```powershell
-.\scripts\build.ps1
+# First time (configures CMake):
+.\configure.bat
+
+# Build:
+.\build.bat
 ```
 
-(Adjust `C:/vcpkg/...` to wherever you installed vcpkg.)
+**Option B — Git Bash / MSYS2:**
+
+```bash
+# First time:
+bash build.sh   # configure manually if needed, see configure.bat
+
+# Build:
+bash build.sh
+```
+
+**Option C — Developer Command Prompt** (vcvars64 already sourced):
+
+```powershell
+cmake -B build -S . -G Ninja -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Debug
+cmake --build build
+```
 
 ## Run
 
 ```powershell
-.\build\Release\trivia_doku.exe
+.\build\trivia_doku.exe
 ```
 
 A dark 900×700 window opens titled **TRIVIA-DOKU**. You'll see:

@@ -449,6 +449,34 @@ void Renderer::drawClearFlash(const std::vector<Cell>& cells, float t) const {
     }
 }
 
+void Renderer::drawBoardCursor(int row, int col) const {
+    if (row < 0 || row >= kBoardSize || col < 0 || col >= kBoardSize) return;
+    const int cell = layout_.cellPixels;
+    const int ox   = layout_.boardOriginX;
+    const int oy   = layout_.boardOriginY;
+    const int px   = ox + col * cell;
+    const int py   = oy + row * cell;
+    // Bright gold outline, 3 px thick.
+    DrawRectangleLinesEx({(float)px, (float)py, (float)cell, (float)cell}, 3.0f,
+                         {240, 196, 68, 220});
+}
+
+void Renderer::drawTrayHighlight(int slot) const {
+    if (slot < 0 || slot >= 3) return;
+    const int boardCell = layout_.cellPixels;
+    const int ox        = layout_.boardOriginX;
+    const int oy        = layout_.boardOriginY;
+    const int trayY     = oy + kBoardSize * boardCell + 12;
+    const int trayH     = layout_.windowHeight - trayY - 8;
+    const int trayW     = kBoardSize * boardCell;
+    const int slotW     = trayW / 3;
+    const int slotX     = ox + slot * slotW;
+    // Gold highlight border around the selected slot.
+    DrawRectangleLinesEx({(float)(slotX + 4), (float)trayY,
+                          (float)(slotW - 8), (float)trayH}, 3.0f,
+                         {240, 196, 68, 220});
+}
+
 void Renderer::drawGameOver(int finalScore) const {
     const int W = layout_.windowWidth;
     const int H = layout_.windowHeight;
@@ -480,7 +508,7 @@ void Renderer::drawGameOver(int finalScore) const {
     DrawText(scoreStr, panelX + (kPanelW - sw) / 2, panelY + 108, kScoreSize, { 230, 234, 244, 255 });
 
     // Restart prompt
-    const char* prompt = "Press  R  to play again";
+    const char* prompt = "Press R / click / A to play again";
     const int kPromptSize = std::max(12, static_cast<int>(18 * s));
     const int pw = MeasureText(prompt, kPromptSize);
     DrawText(prompt, panelX + (kPanelW - pw) / 2, panelY + 162, kPromptSize, { 130, 148, 175, 255 });
@@ -576,8 +604,8 @@ void Renderer::drawTriviaModal(const Question& q, int selected,
     }
 
     // Hint line at the bottom.
-    const char* hint = answered ? "Press any key to continue"
-                                : "1-4 / \x18\x19 to choose   Enter to confirm";
+    const char* hint = answered ? "Press any key / click to continue"
+                                : "Click / 1-4 / \x18\x19 to choose   Enter / A to confirm";
     const int kHintSize = std::max(10, static_cast<int>(14 * s));
     const int hw = MeasureText(hint, kHintSize);
     DrawText(hint, panelX + (kPanelW - hw) / 2, panelY + kPanelH - static_cast<int>(26 * s),

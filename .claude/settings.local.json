@@ -45,7 +45,24 @@
       "Bash(cmd.exe /c \"\\\\\"C:\\\\Program Files \\(x86\\)\\\\Microsoft Visual Studio\\\\18\\\\BuildTools\\\\Common7\\\\Tools\\\\VsDevCmd.bat\\\\\" -arch=amd64 >nul 2>&1 && cd /d c:\\\\GitHub\\\\block-doku-trivia && cmake -B build -S . -G Ninja -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Release 2>&1\")",
       "Bash(cmd.exe //c configure.bat)",
       "Bash(cmd.exe //c \"c:\\\\\\\\GitHub\\\\\\\\block-doku-trivia\\\\\\\\configure.bat\")",
-      "Bash(cmd.exe //c \"c:\\\\\\\\GitHub\\\\\\\\block-doku-trivia\\\\\\\\configure.bat && cmake --build build\")"
+      "Bash(cmd.exe //c \"c:\\\\\\\\GitHub\\\\\\\\block-doku-trivia\\\\\\\\configure.bat && cmake --build build\")",
+      "Bash(grep -n \"IsKeyPressed\\\\|IsMouseButton\\\\|GetMouse\\\\|gamepad\\\\|controller\\\\|joystick\" /c/GitHub/block-doku-trivia/src/*.cpp /c/GitHub/block-doku-trivia/src/*.h)",
+      "Bash(cmake --build build --config Debug)",
+      "Bash(cmake -B build -S . -G Ninja -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Debug)",
+      "Bash(\"C:\\\\PROGRA~2\\\\MICROS~2\\\\18\\\\BUILDT~1\\\\VC\\\\Tools\\\\MSVC\\\\14.50.33357\\\\bin\\\\Hostx64\\\\x64\\\\cl.exe\" /?)",
+      "Bash(\"C:/Program Files \\(x86\\)/Microsoft Visual Studio/18/BuildTools/VC/Tools/MSVC/14.50.35717/bin/Hostx64/x64/cl.exe\")",
+      "Bash(cmd //c \"\\\\\"C:/Program Files \\(x86\\)/Microsoft Visual Studio/18/BuildTools/VC/Auxiliary/Build/vcvars64.bat\\\\\" >nul 2>&1 && set INCLUDE\")",
+      "Bash(cmd //c \"call \\\\\"C:\\\\Program Files \\(x86\\)\\\\Microsoft Visual Studio\\\\18\\\\BuildTools\\\\VC\\\\Auxiliary\\\\Build\\\\vcvars64.bat\\\\\" >nul 2>&1 && echo %INCLUDE%\")",
+      "Bash(cmd.exe /c \"\\\\\"C:\\\\Program Files \\(x86\\)\\\\Microsoft Visual Studio\\\\18\\\\BuildTools\\\\VC\\\\Auxiliary\\\\Build\\\\vcvarsall.bat\\\\\" x64 >nul 2>&1 && echo %INCLUDE%\")",
+      "Bash(cmd.exe /c \"call \\\\\"C:\\\\Program Files \\(x86\\)\\\\Microsoft Visual Studio\\\\18\\\\BuildTools\\\\VC\\\\Auxiliary\\\\Build\\\\vcvarsall.bat\\\\\" x64 && echo INCLUDE=%INCLUDE%\")",
+      "Bash(cmd.exe /c \"\\\\\"C:\\\\Program Files \\(x86\\)\\\\Microsoft Visual Studio\\\\18\\\\BuildTools\\\\VC\\\\Auxiliary\\\\Build\\\\vcvarsall.bat\\\\\" x64 2>&1 && set INCLUDE\")",
+      "Bash(export INCLUDE=\"$MSVC_INC;$SDK_BASE/ucrt;$SDK_BASE/shared;$SDK_BASE/um;$SDK_BASE/winrt\")",
+      "Bash(export LIB=\"$MSVC_LIB;$SDK_LIB_BASE/ucrt/x64;$SDK_LIB_BASE/um/x64\")",
+      "Bash(export PATH=\"C:/Program Files \\(x86\\)/Microsoft Visual Studio/18/BuildTools/VC/Tools/MSVC/14.50.35717/bin/Hostx64/x64:$PATH\")",
+      "Bash(cmake -B build -S . -G Ninja -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Debug '-DCMAKE_CXX_COMPILER=C:/Program Files \\(x86\\)/Microsoft Visual Studio/18/BuildTools/VC/Tools/MSVC/14.50.35717/bin/Hostx64/x64/cl.exe')",
+      "Bash(export PATH=\"C:/Program Files \\(x86\\)/Microsoft Visual Studio/18/BuildTools/VC/Tools/MSVC/14.50.35717/bin/Hostx64/x64:$SDK_BIN:$PATH\")",
+      "Bash(cmake -B build -S . -G Ninja -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Debug '-DCMAKE_CXX_COMPILER=C:/Program Files \\(x86\\)/Microsoft Visual Studio/18/BuildTools/VC/Tools/MSVC/14.50.35717/bin/Hostx64/x64/cl.exe' '-DCMAKE_RC_COMPILER=C:/Program Files \\(x86\\)/Windows Kits/10/bin/10.0.26100.0/x64/rc.exe')",
+      "Bash(cmake -B build -S . -G Ninja -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Debug '-DCMAKE_CXX_COMPILER=C:/Program Files \\(x86\\)/Microsoft Visual Studio/18/BuildTools/VC/Tools/MSVC/14.50.35717/bin/Hostx64/x64/cl.exe' '-DCMAKE_RC_COMPILER=C:/Program Files \\(x86\\)/Windows Kits/10/bin/10.0.26100.0/x64/rc.exe' '-DCMAKE_MT=C:/Program Files \\(x86\\)/Windows Kits/10/bin/10.0.26100.0/x64/mt.exe')"
     ]
   }
 }

@@ -55,6 +55,42 @@ struct DragState {
     td::Piece piece;          // copy of the piece being dragged
 };
 
+// Gamepad cursor state for board navigation ——————————————————
+struct GpadCursor {
+    int  row      = 4;   // board cell row
+    int  col      = 4;   // board cell col
+    int  traySlot = 0;   // highlighted tray slot (0-2)
+    bool holding  = false;
+    int  heldSlot = -1;  // which tray slot was picked up
+    td::Piece piece;     // copy of held piece
+
+    // D-pad / stick repeat timing
+    float repeatX = 0.0f;
+    float repeatY = 0.0f;
+    static constexpr float kFirstDelay = 0.25f; // initial hold delay
+    static constexpr float kRepeatRate = 0.08f;  // repeat interval after first
+
+    // Returns -1, 0, or +1 for an axis with repeat logic.
+    static int axisRepeat(float& timer, bool negative, bool positive, float dt) {
+        int dir = 0;
+        if (negative) dir = -1;
+        else if (positive) dir = 1;
+
+        if (dir == 0) { timer = 0.0f; return 0; }
+
+        if (timer <= 0.0f) {
+            timer = kFirstDelay;
+            return dir;
+        }
+        timer -= dt;
+        if (timer <= 0.0f) {
+            timer = kRepeatRate;
+            return dir;
+        }
+        return 0;
+    }
+};
+
 // Trivia modal state ——————————————————————————————————————————
 struct TriviaModal {
     const td::Question*   question      = nullptr;
@@ -165,6 +201,7 @@ int main() {
     Phase phase = Phase::Playing;
 
     DragState drag;
+    GpadCursor gpad;
 
     while (!WindowShouldClose()) {
 
@@ -191,7 +228,10 @@ int main() {
         }
 
         // Restart from game-over screen.
-        if (phase == Phase::GameOver && IsKeyPressed(KEY_R)) {
+        if (phase == Phase::GameOver &&
+            (IsKeyPressed(KEY_R)
+             || IsMouseButtonPressed(MOUSE_BUTTON_LEFT)
+             || (IsGamepadAvailable(0) && IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN)))) {
             board        = td::Board{};
             tray         = td::makeTray();
             score        = 0;
@@ -199,14 +239,19 @@ int main() {
             clearAnim    = {};
             triviaModal  = {};
             drag         = {};
+            gpad         = {};
             phase        = Phase::Playing;
             renderer.playSoundEffect("restart");
         }
 
+        // Gamepad detection (use first connected gamepad).
+        const int gp = 0; // gamepad index
+        const bool gpAvail = IsGamepadAvailable(gp);
+
         // ── Trivia modal input ──────────────────────────────────────────────
         if (phase == Phase::Trivia) {
             if (!triviaModal.answered) {
-                // Navigate choices.
+                // Navigate choices — keyboard.
                 if (IsKeyPressed(KEY_UP))   triviaModal.selected = (triviaModal.selected + 3) % 4;
                 if (IsKeyPressed(KEY_DOWN)) triviaModal.selected = (triviaModal.selected + 1) % 4;
                 if (IsKeyPressed(KEY_ONE))   triviaModal.selected = 0;
@@ -214,8 +259,48 @@ int main() {
                 if (IsKeyPressed(KEY_THREE)) triviaModal.selected = 2;
                 if (IsKeyPressed(KEY_FOUR))  triviaModal.selected = 3;
 
-                // Submit answer.
-                if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_SPACE)) {
+                // Navigate choices — gamepad D-pad.
+                if (gpAvail) {
+                    if (IsGamepadButtonPressed(gp, GAMEPAD_BUTTON_LEFT_FACE_UP))
+                        triviaModal.selected = (triviaModal.selected + 3) % 4;
+                    if (IsGamepadButtonPressed(gp, GAMEPAD_BUTTON_LEFT_FACE_DOWN))
+                        triviaModal.selected = (triviaModal.selected + 1) % 4;
+                }
+
+                // Navigate choices — mouse click on choice rows.
+                // Replicate the choice row geometry from drawTriviaModal.
+                {
+                    const int W = layout.windowWidth;
+                    const int H = layout.windowHeight;
+                    const int kPanelW = W * 45 / 100;
+                    const int kPanelH = H * 60 / 100;
+                    const float s = kPanelW / 560.0f;
+                    const int panelX  = (W - kPanelW) / 2;
+                    const int panelY  = (H - kPanelH) / 2;
+                    const int pad     = static_cast<int>(20 * s);
+                    const int kChoiceH = std::max(24, static_cast<int>(34 * s));
+                    const int choiceY0 = panelY + static_cast<int>(120 * s);
+
+                    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+                        for (int i = 0; i < 4; ++i) {
+                            const int rowY = choiceY0 + i * kChoiceH;
+                            if (mx >= panelX + pad - 4 && mx < panelX + kPanelW - pad + 4 &&
+                                my >= rowY - 2 && my < rowY - 2 + kChoiceH) {
+                                if (triviaModal.selected == i) {
+                                    // Clicking an already-selected choice submits it.
+                                    goto submit_answer;
+                                }
+                                triviaModal.selected = i;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                // Submit answer — keyboard, gamepad A button, or mouse double-click (handled above).
+                if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_SPACE)
+                    || (gpAvail && IsGamepadButtonPressed(gp, GAMEPAD_BUTTON_RIGHT_FACE_DOWN))) {
+                    submit_answer:
                     triviaModal.answered = true;
                     triviaModal.correct  = (triviaModal.selected == triviaModal.question->answer);
                     triviaModal.dismissFrames = TriviaModal::kDismissDelay;
@@ -240,14 +325,20 @@ int main() {
                     }
                 }
             } else {
-                // After answer: any key skips the countdown.
+                // After answer: any key/click/button skips the countdown.
                 triviaModal.dismissFrames--;
-                bool anyKey = false;
-                // Poll a range of common keys for "any key".
+                bool anyInput = false;
                 for (int k = 32; k < 350; ++k) {
-                    if (IsKeyPressed(k)) { anyKey = true; break; }
+                    if (IsKeyPressed(k)) { anyInput = true; break; }
                 }
-                if (triviaModal.dismissFrames <= 0 || anyKey) {
+                if (!anyInput && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) anyInput = true;
+                if (!anyInput && gpAvail) {
+                    // Any gamepad button dismisses.
+                    for (int b = 0; b <= 17; ++b) {
+                        if (IsGamepadButtonPressed(gp, b)) { anyInput = true; break; }
+                    }
+                }
+                if (triviaModal.dismissFrames <= 0 || anyInput) {
                     triviaModal = {};
                     phase = Phase::Playing;
                     checkGameOver(phase, board, tray);
@@ -342,6 +433,126 @@ int main() {
             drag = {};
         }
 
+        // ── Gamepad cursor input (only when Playing, not mouse-dragging) ──
+        if (phase == Phase::Playing && !drag.active && gpAvail) {
+            const float dt = GetFrameTime();
+
+            // D-pad (pressed) for single-step moves.
+            bool dU = IsGamepadButtonDown(gp, GAMEPAD_BUTTON_LEFT_FACE_UP);
+            bool dD = IsGamepadButtonDown(gp, GAMEPAD_BUTTON_LEFT_FACE_DOWN);
+            bool dL = IsGamepadButtonDown(gp, GAMEPAD_BUTTON_LEFT_FACE_LEFT);
+            bool dR = IsGamepadButtonDown(gp, GAMEPAD_BUTTON_LEFT_FACE_RIGHT);
+
+            // Left stick with deadzone.
+            const float stickX = GetGamepadAxisMovement(gp, GAMEPAD_AXIS_LEFT_X);
+            const float stickY = GetGamepadAxisMovement(gp, GAMEPAD_AXIS_LEFT_Y);
+            constexpr float kDeadzone = 0.4f;
+            if (stickX < -kDeadzone) dL = true;
+            if (stickX >  kDeadzone) dR = true;
+            if (stickY < -kDeadzone) dU = true;
+            if (stickY >  kDeadzone) dD = true;
+
+            const int moveY = GpadCursor::axisRepeat(gpad.repeatY, dU, dD, dt);
+            const int moveX = GpadCursor::axisRepeat(gpad.repeatX, dL, dR, dt);
+
+            gpad.row = std::clamp(gpad.row + moveY, 0, td::kBoardSize - 1);
+            gpad.col = std::clamp(gpad.col + moveX, 0, td::kBoardSize - 1);
+
+            // LB / RB cycle tray slot selection.
+            if (IsGamepadButtonPressed(gp, GAMEPAD_BUTTON_LEFT_TRIGGER_1)) {
+                // Cycle backward to next non-empty slot.
+                for (int i = 0; i < 3; ++i) {
+                    gpad.traySlot = (gpad.traySlot + 2) % 3;
+                    if (!tray[gpad.traySlot].shape.cells.empty()) break;
+                }
+            }
+            if (IsGamepadButtonPressed(gp, GAMEPAD_BUTTON_RIGHT_TRIGGER_1)) {
+                for (int i = 0; i < 3; ++i) {
+                    gpad.traySlot = (gpad.traySlot + 1) % 3;
+                    if (!tray[gpad.traySlot].shape.cells.empty()) break;
+                }
+            }
+
+            // A button: pick up or place.
+            if (IsGamepadButtonPressed(gp, GAMEPAD_BUTTON_RIGHT_FACE_DOWN)) {
+                if (!gpad.holding) {
+                    // Pick up the selected tray piece.
+                    if (gpad.traySlot >= 0 && gpad.traySlot < 3 &&
+                        !tray[gpad.traySlot].shape.cells.empty()) {
+                        gpad.holding  = true;
+                        gpad.heldSlot = gpad.traySlot;
+                        gpad.piece    = tray[gpad.traySlot];
+                        tray[gpad.traySlot].shape.cells.clear();
+                        renderer.playSoundEffect("pickup");
+                    }
+                } else {
+                    // Try to place at cursor position.
+                    if (board.canPlace(gpad.piece.shape.cells, gpad.row, gpad.col)) {
+                        board.place(gpad.piece.shape.cells, gpad.row, gpad.col,
+                                    gpad.piece.isTrivia);
+                        renderer.playSoundEffect("place");
+
+                        const auto result = board.detectAndClear();
+                        score += static_cast<int>(gpad.piece.shape.cells.size());
+
+                        if (result.triggeredTrivia) {
+                            triviaModal.question     = &triviaBank.pick();
+                            triviaModal.clearedCells = result.clearedCells;
+                            triviaModal.triviaOrigin = result.triviaCells[0];
+                            triviaModal.selected     = 0;
+                            triviaModal.answered     = false;
+                            triviaModal.dismissFrames = 0;
+                            if (!result.clearedCells.empty())
+                                clearAnim.trigger(result.clearedCells);
+                            if (!result.clearedCells.empty()) renderer.playSoundEffect("clear");
+                            phase = Phase::Trivia;
+                        } else {
+                            score += static_cast<int>(result.clearedCells.size()) * 10;
+                            if (!result.clearedCells.empty()) {
+                                clearAnim.trigger(result.clearedCells);
+                                renderer.playSoundEffect("clear");
+                            }
+                        }
+
+                        gpad.holding = false;
+                        gpad.heldSlot = -1;
+
+                        // Refill tray if all empty.
+                        bool allEmpty = true;
+                        for (const auto& p : tray) {
+                            if (!p.shape.cells.empty()) { allEmpty = false; break; }
+                        }
+                        if (allEmpty) {
+                            tray = td::makeTray();
+                            renderer.playSoundEffect("deal");
+                        }
+
+                        if (phase == Phase::Playing) {
+                            checkGameOver(phase, board, tray);
+                            if (phase == Phase::GameOver) renderer.playSoundEffect("gameover");
+                        }
+                    }
+                }
+            }
+
+            // B button: cancel held piece.
+            if (gpad.holding && IsGamepadButtonPressed(gp, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT)) {
+                tray[gpad.heldSlot] = gpad.piece;
+                gpad.holding  = false;
+                gpad.heldSlot = -1;
+                renderer.playSoundEffect("cancel");
+            }
+        }
+
+        // Reset gamepad cursor hold state on game restart.
+        if (phase == Phase::Playing && gpad.holding) {
+            // If the held slot piece reappeared (restart), drop the hold.
+            if (!tray[gpad.heldSlot].shape.cells.empty()) {
+                gpad.holding = false;
+                gpad.heldSlot = -1;
+            }
+        }
+
         clearAnim.tick();
         // Keep streaming music alive.
         renderer.updateAudio();
@@ -363,8 +574,20 @@ int main() {
             if (clearAnim.active())
                 renderer.drawClearFlash(clearAnim.cells, clearAnim.t());
 
-            renderer.drawTray(tray, drag.active ? drag.traySlot : -1);
+            // Gamepad placement preview (when holding a piece).
+            if (gpAvail && gpad.holding && !drag.active && phase == Phase::Playing) {
+                renderer.drawPlacementPreview(board, gpad.piece, gpad.row, gpad.col);
+            }
+
+            renderer.drawTray(tray, drag.active ? drag.traySlot : (gpad.holding ? gpad.heldSlot : -1));
             renderer.drawHud(score, streak);
+
+            // Gamepad cursor and tray highlight.
+            if (gpAvail && phase == Phase::Playing && !drag.active) {
+                renderer.drawBoardCursor(gpad.row, gpad.col);
+                if (!gpad.holding)
+                    renderer.drawTrayHighlight(gpad.traySlot);
+            }
 
             // Ghost on top of everything so it's always readable.
             if (drag.active) {

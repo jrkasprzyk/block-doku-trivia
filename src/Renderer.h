@@ -99,6 +99,12 @@ public:
     // t is a 0→1 progress value (0 = animation done, 1 = just triggered).
     void drawClearFlash(const std::vector<Cell>& cells, float t) const;
 
+    // Draw a pulsing cursor outline on a board cell (for gamepad navigation).
+    void drawBoardCursor(int row, int col) const;
+
+    // Draw a highlight border around a tray slot (for gamepad piece selection).
+    void drawTrayHighlight(int slot) const;
+
     // Full-screen game-over overlay with final score and restart prompt.
     void drawGameOver(int finalScore) const;
 
