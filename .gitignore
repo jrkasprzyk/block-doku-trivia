@@ -4,3 +4,4 @@ build_ninja/
 .venv/
 __pycache__/
 configure.bat
+/assets/bg_wav/
