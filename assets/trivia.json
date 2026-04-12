@@ -301,22 +301,22 @@
       "quip_correct": "COOL",
       "quip_wrong": "OHNO"
     },
-	{
-		"id": "music_011",
-		"category": "music",
-		"difficulty": "easy",
-		"prompt": "Which singer needed to go back to school, according to the lyrics of the song Maggie May?",
-		"choices": [
-		  "Rod Stewart",
-		  "George Michael",
-		  "Bruce Springsteen",
-		  "Rick Springfield"
-		],
-		"answer": 0,
-		"quip_correct": "What a great hit.",
-		"quip_wrong": "You need to brush up on the works of the gravel throated Briton"
-	},
-	{
+    {
+      "id": "music_011",
+      "category": "music",
+      "difficulty": "easy",
+      "prompt": "Which singer needed to go back to school, according to the lyrics of the song Maggie May?",
+      "choices": [
+        "Rod Stewart",
+        "George Michael",
+        "Bruce Springsteen",
+        "Rick Springfield"
+      ],
+      "answer": 0,
+      "quip_correct": "What a great hit.",
+      "quip_wrong": "You need to brush up on the works of the gravel throated Briton"
+    },
+    {
       "id": "film_001",
       "category": "film-and-tv",
       "difficulty": "easy",
@@ -1287,6 +1287,51 @@
       "quip_wrong": "1984 — Orwell's word for holding two contradictory beliefs simultaneously."
     },
     {
+      "id": "books_013",
+      "category": "books",
+      "difficulty": "medium",
+      "prompt": "The Stength of the Few is a book in James Islington's ____ series.",
+      "choices": [
+        "Matriarchy",
+        "Oligarchy",
+        "Hierarchy",
+        "Monopoly"
+      ],
+      "answer": 2,
+      "quip_correct": "The highly anticipated follow-up to the Will of the Many.",
+      "quip_wrong": "I guess you're not climbing up the ladder today!"
+    },
+    {
+      "id": "books_014",
+      "category": "books",
+      "difficulty": "medium",
+      "prompt": "Who wrote the books Nightbane and Lightlark?",
+      "choices": [
+        "Alex Aster",
+        "Sarah J. Maas",
+        "Leigh Bardugo",
+        "Holly Black"
+      ],
+      "answer": 0,
+      "quip_correct": "What a mix of magic, danger, and sharp intrigue!",
+      "quip_wrong": "You're wrong, but all four authors should be enjoyable to read."
+    },
+    {
+      "id": "books_015",
+      "category": "books",
+      "difficulty": "hard",
+      "prompt": "Poppy is a young woman raised to serve a sacred purpose in From Blood and Ash, written by this author.",
+      "choices": [
+        "Jennifer L. Armentrout",
+        "Jessica M. Leggencarp",
+        "Julia A. Armencarp",
+        "Jennifer L. Leggencarp"
+      ],
+      "answer": 0,
+      "quip_correct": "All the trout that can fit in your arms!",
+      "quip_wrong": "Perhaps the other people don't actually exist, who knows."
+    },
+    {
       "id": "general_014",
       "category": "general",
       "difficulty": "medium",
@@ -1512,6 +1557,36 @@
       "quip_wrong": "Roosevelt won the Nobel Peace Prize in 1906 for negotiating the Russo-Japanese War."
     },
     {
+      "id": "general_029",
+      "category": "general",
+      "difficulty": "easy",
+      "prompt": "Which of the following ingredients raises the pH of food (i.e., makes the food more basic)?",
+      "choices": [
+        "coffee",
+        "apple cider vinegar",
+        "baking soda",
+        "lemon juice"
+      ],
+      "answer": 2,
+      "quip_correct": "One of the rare additives that isn't acidic!",
+      "quip_wrong": "Honestly you're acting pretty basic right now."
+    },
+    {
+      "id": "general_030",
+      "category": "general",
+      "difficulty": "easy",
+      "prompt": "In cooking, the browned bits stuck to the skillet after cooking meat are called?",
+      "choices": [
+        "pond",
+        "lake",
+        "fond",
+        "Shawn"
+      ],
+      "answer": 2,
+      "quip_correct": "Great for making a pan sauce!",
+      "quip_wrong": "Try making a pan sauce with the fond tonight!"
+    },
+    {
       "id": "motorsport_010",
       "category": "motorsport",
       "difficulty": "hard",
@@ -1525,6 +1600,51 @@
       "answer": 2,
       "quip_correct": "Check out Lombok's top beach club if you attend the race!",
       "quip_wrong": "Look, Indonesia is lovely this time of year, you should really go."
+    },
+    {
+      "id": "motorsport_011",
+      "category": "motorsport",
+      "difficulty": "medium",
+      "prompt": "In NASCAR, which track is known as The Paperclip?",
+      "choices": [
+        "Martinsville",
+        "Dover",
+        "Texas",
+        "Sonoma"
+      ],
+      "answer": 0,
+      "quip_correct": "Because it looks like a paperclip.",
+      "quip_wrong": "Honestly I thought it was called a stapler..."
+    },
+    {
+      "id": "motorsport_012",
+      "category": "motorsport",
+      "difficulty": "easy",
+      "prompt": "Don't be intimidated by the fact this man won 7 NASCAR championships.",
+      "choices": [
+        "Mark Martin",
+        "Ricky Rudd",
+        "Rusty Wallace",
+        "Dale Earnhardt"
+      ],
+      "answer": 3,
+      "quip_correct": "The Intimidator must have liked lucky numbers.",
+      "quip_wrong": "Such a shame that Mark Martin was never champion! (hint hint)"
+    },
+    {
+      "id": "motorsport_013",
+      "category": "motorsport",
+      "difficulty": "medium",
+      "prompt": "Which of these drivers has never won a NASCAR championship?",
+      "choices": [
+        "Joey Logano",
+        "Ryan Blaney",
+        "Mark Martin",
+        "Chase Elliott"
+      ],
+      "answer": 2,
+      "quip_correct": "Still one of the greatest...",
+      "quip_wrong": "Joke's on you. Logano won in '24 and '22; Blaney in '23; and Elliot in '20."
     },
     {
       "id": "science_and_math_001",
@@ -1675,6 +1795,36 @@
       "answer": 2,
       "quip_correct": "The mitochondrion — where ATP gets made.",
       "quip_wrong": "The mitochondrion, where cellular respiration happens."
+    },
+    {
+      "id": "science and math_001",
+      "category": "science and math",
+      "difficulty": "hard",
+      "prompt": "Which of these numbers is largest?",
+      "choices": [
+        "The number of steps that it would take to walk around earth.",
+        "100 trillion",
+        "The amount of sodium extracted in tonnes per year from earth.",
+        "52! (52 factorial)"
+      ],
+      "answer": 3,
+      "quip_correct": "About 8 times 10^67 to be exact -- an unfathomably large number.",
+      "quip_wrong": "Impress your friends by asking for 52! dollars from them and see what happens."
+    },
+    {
+      "id": "science and math_002",
+      "category": "science and math",
+      "difficulty": "medium",
+      "prompt": "In 2011, the country of Sudan split, making this country officially the largest in Africa.",
+      "choices": [
+        "Chad",
+        "Niger",
+        "Algeria",
+        "Ethiopia"
+      ],
+      "answer": 2,
+      "quip_correct": "Algeria represents 7.9% of Africa's area. Keep on trying for that last 0.1%, friends.",
+      "quip_wrong": "You don't know the area of Algeria and it really shows."
     }
   ]
 }
