@@ -10,6 +10,9 @@
 #include "Piece.h"
 #include "TriviaBank.h"
 
+#include <algorithm>
+#include <cmath>
+
 #include <array>
 #include <string>
 #include <memory>
@@ -26,6 +29,17 @@ struct Layout {
     int cellPixels   = 72;   // size of one board cell in pixels
     int boardOriginX = 80;   // top-left of the board in window coords
     int boardOriginY = 80;
+
+    // --- Layout tuning knobs (ratios of window size) ---
+    static constexpr float kMarginXRatio    = 0.05f;  // horizontal margin as % of window width
+    static constexpr float kMarginYRatio    = 0.08f;  // vertical margin as % of window height
+    static constexpr float kHudReserveRatio = 0.24f;  // HUD column width as % of window width
+    static constexpr float kTrayReserveRatio= 0.16f;  // tray height as % of window height
+    static constexpr int   kMarginXMin      = 40;     // minimum horizontal margin in px
+    static constexpr int   kMarginYMin      = 40;     // minimum vertical margin in px
+    static constexpr int   kHudReserveMin   = 260;    // minimum HUD width in px
+    static constexpr int   kTrayReserveMin  = 100;    // minimum tray height in px
+    static constexpr int   kHudGap          = 40;     // gap between board right edge and HUD text
 
     // Convert pixel position to board cell. Returns {-1,-1} if outside the board.
     Cell boardCellAt(int px, int py) const {
@@ -45,29 +59,37 @@ struct Layout {
     // Recalculate layout metrics when the window size changes (or on startup
     // after calling `InitWindow`). This adjusts `cellPixels` and origins so the
     // board scales to larger windows, while leaving a reserved area for the
-    // HUD on the right and the tray below.
+    // HUD on the right and the tray below. The layout centers the board + HUD
+    // block and the board + tray block so fullscreen and large windows feel
+    // balanced instead of pinned to a fixed offset.
     void recalcForWindow(int windowW, int windowH) {
         windowWidth = windowW;
         windowHeight = windowH;
 
-        // Desired margins / reserved space (heuristic values).
-        const int leftMargin = 80;
-        const int topMargin = 80;
-        const int hudReserve = 380;   // space reserved for HUD on the right
-        const int trayReserve = 160;  // space reserved below board for the tray
+        const int leftMargin = std::max(static_cast<int>(windowWidth * kMarginXRatio), kMarginXMin);
+        const int topMargin  = std::max(static_cast<int>(windowHeight * kMarginYRatio), kMarginYMin);
+        const int hudReserve = std::max(static_cast<int>(windowWidth * kHudReserveRatio), kHudReserveMin);
+        const int trayReserve= std::max(static_cast<int>(windowHeight * kTrayReserveRatio), kTrayReserveMin);
 
-        int maxCellW = (windowWidth - leftMargin - hudReserve) / kBoardSize;
+        int maxCellW = (windowWidth - 2 * leftMargin - hudReserve) / kBoardSize;
         if (maxCellW < 20) maxCellW = 20;
-        int maxCellH = (windowHeight - topMargin - trayReserve) / kBoardSize;
+        int maxCellH = (windowHeight - 2 * topMargin - trayReserve) / kBoardSize;
         if (maxCellH < 20) maxCellH = 20;
 
-        // Pick the limiting dimension but clamp to a sensible minimum.
-        int cp = (maxCellW < maxCellH) ? maxCellW : maxCellH;
+        int cp = std::min(maxCellW, maxCellH);
         if (cp < 28) cp = 28;
         cellPixels = cp;
 
-        boardOriginX = leftMargin;
-        boardOriginY = topMargin;
+        // Compute centered origins for the content blocks.
+        const int boardW = kBoardSize * cellPixels;
+        const int contentW = boardW + hudReserve;
+        boardOriginX = (windowWidth - contentW) / 2;
+        if (boardOriginX < leftMargin) boardOriginX = leftMargin;
+
+        const int boardH = kBoardSize * cellPixels;
+        const int contentH = boardH + trayReserve;
+        boardOriginY = (windowHeight - contentH) / 2;
+        if (boardOriginY < topMargin) boardOriginY = topMargin;
     }
 };
 

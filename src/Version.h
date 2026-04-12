@@ -4,6 +4,6 @@
 #include <string_view>
 
 namespace td {
-inline constexpr std::string_view kAppVersion = "0.1.1";
-inline constexpr std::string_view kBuildId    = "peaches";
+inline constexpr std::string_view kAppVersion = "0.1.2";
+inline constexpr std::string_view kBuildId    = "lego-set";
 } // namespace td

@@ -1,6 +1,5 @@
 # Completed
 
-
 - [x] Thriller question: needs to add an "as of" date
 
 - [x] The trivia window has a message that says "click any key to continue" after the correct or wrong question is revealed. But right now the window is disappearing automatically.
@@ -17,6 +16,15 @@
 
 - [x] Enable the playlist to update dynamically when new files are added to the background music folder
 
+- We streamlined the python helper scripts including creating an installable package. Now you can change the filenames to snake_case when converting, which has been the convention I've used so far (but I was changing the filenames myself, the horror!)
+
+- bg music plays in a random order now, using a bagged random number generator that also ensures that a song doesn't play twice in a row when a new bag is ready
+
+- New trivia questions added throughout
+
+- Add executable icon (see exe-icon.md). https://game-icons.net/1x1/lorc/uncertainty.html#download Uncertainty icon by Lorc under CC BY 3.0
+
+- We fixed the scaling behavior, so that the game looks nice when it is fullscreen
 
 ## Claude suggestions about overall workflow
 - [ ] Commit a little CONTRIBUTING.md or docs/trivia-style-guide.md to the repo that captures the rules in human-readable form. Future-you (and any collaborators, including any future Claude session that needs to understand the project) will benefit from having the style explicit and version-controlled rather than living only inside a Claude Code skill file. The skill enforces it; the doc explains why. The "as of 2024" rule deserves a footnote explaining that it exists because of an Academy Awards Trivial Pursuit incident in (year), and that Lauren was right. Note: I have added new material to the audit-trivia.md file (and will add more as new ideas surface)
@@ -35,7 +43,7 @@
 
 ## Feature enhancements
 
-- [ ] Grab asset for executable icon (see exe-icon.md)
+
 
 - [ ] Global leaderboard that defaults to local one with no internet connection. I have the logic built out in another Javascript game I made, and I have a Supabase database that can be used to store scores
 

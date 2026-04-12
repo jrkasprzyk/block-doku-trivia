@@ -26,6 +26,7 @@ add_executable(trivia_doku
     src/Piece.cpp
     src/Renderer.cpp
     src/TriviaBank.cpp
+    resources/app.rc # Windows resource, supplies .exe icon and metadata. Ignored on other platforms.
 )
 
 target_include_directories(trivia_doku PRIVATE src)

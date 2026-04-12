@@ -1,67 +1,48 @@
-Audio assets — how to add them to Trivia-Doku
+Audio assets — developer guide
 
-This document explains where to put music and sound effects and the filenames that the game will try to load automatically. It also shows how to load and play custom files from code using the `Renderer` API.
+This file documents the current on-disk layout and the code paths that load audio so developers can add, replace, or re-map audio assets.
 
-Where to place files
+Where to put files
 
-- Put all audio files inside the existing `assets/` directory in the project root.
-- The game will try to load a few conventional names on startup (no-op if a file is missing):
-  - `assets/music.ogg` — background music (streamed)
-  - `assets/sfx_place.wav` — short placement sound effect
-  - `assets/sfx_clear.wav` — clear/line-clear sound
-  - `assets/sfx_correct.wav` — trivia correct
-  - `assets/sfx_wrong.wav` — trivia incorrect
-  - `assets/sfx_pickup.wav` — piece pickup (tray -> drag)
-  - `assets/sfx_cancel.wav` — placement cancelled / drop returned
-  - `assets/sfx_deal.wav` — new tray dealt
-  - `assets/sfx_shatter.wav` — stones shatter (3-in-a-row redemption)
-  - `assets/sfx_gameover.wav` — game over
-  - `assets/sfx_restart.wav` — restart (press R)
+- `assets/bg_music/` — background music files (use `.ogg` when possible). The program scans this directory at startup for supported audio files and loads them into the music map. Each file's stem is converted into an ID prefixed with `bg_` (non-alphanumeric characters become underscores) and the resulting IDs are used to build a playlist that the renderer shuffles and plays in random order. Add or remove files here and restart the game — no code changes required.
 
-Supported formats and recommendations
+- `assets/sfx/` — short sound effects (WAV/OGG recommended). Filenames in this folder do not have to match in-game action names: the mapping from action → filename is defined in code (see "Sound effect mapping" below).
 
-- Short sound effects: WAV or OGG are good. Use uncompressed WAV for lowest latency.
-- Background music: OGG is preferred (streamed). MP3 may work depending on how raylib was built.
-- Keep SFX under a few seconds. Music can be longer — streaming reduces memory use.
+Supported extensions
 
-How the code loads assets
+- `.ogg` (preferred for music), `.mp3`, `.wav`, `.flac`, `.m4a` for music and SFX. For lowest latency use uncompressed WAV for short SFX.
 
-- At startup the renderer calls `initAudio()` and attempts to load the conventional filenames above. Loading is guarded with a file-exists check, so missing files are ignored (no crash).
-- The renderer exposes a small API (declared in `src/Renderer.h`):
-  - `initAudio()` — initialize the audio subsystem
-  - `shutdownAudio()` — unload audio and close the device
-  - `loadSoundEffect(id, path)` — load a short SFX and register it under `id`
-  - `loadMusic(id, path)` — load a streaming music file and register it under `id`
-  - `playSoundEffect(id)` — play a previously loaded SFX (no-op if missing)
-  - `playMusicStream(id)` — start playing a previously loaded music stream
-  - `stopMusic()` — stop currently playing music
-  - `updateAudio()` — must be called each frame to keep streaming music alive
+How the game loads audio (developer notes)
 
-Example: add your own files
+- At startup `main.cpp` calls `renderer.initAudio()`, scans `assets/bg_music/` and loads supported music files. Discovered files are loaded with IDs of the form `bg_<stem>` and collected into `playlistIds`, which is then passed to `renderer.playMusicPlaylist(playlistIds, true)` so tracks play back-to-back in a randomized (shuffled) order. See the directory-scan and playlist startup logic in [src/main.cpp](src/main.cpp#L248-L292).
 
-1. Copy your files into `assets/`, e.g. `assets/my-click.wav` and `assets/ambient.ogg`.
-2. In code (for example in `main.cpp`, after creating the `Renderer`):
+- If `assets/bg_music/` is missing or empty the code falls back to a small hard-coded list; you can update that fallback in the same file.
+
+- Sound effects are loaded explicitly by mapping an in-game ID to a file path at startup. The current mappings are created in `main.cpp` (example range): [src/main.cpp](src/main.cpp#L299-L308). The IDs used by the gameplay code are:
+  - `place`, `clear`, `correct`, `wrong`, `pickup`, `cancel`, `deal`, `shatter`, `gameover`, `restart`
+
+Changing or overriding mappings
+
+- To change which file is played for an action, edit the mappings in `src/main.cpp` (the `tryLoad`/`loadSoundEffect` calls) or add your own `renderer.loadSoundEffect(...)` calls after `renderer.initAudio()`.
+
+Example (developer-focused):
 
 ```cpp
-renderer.initAudio();
-renderer.loadSoundEffect("click", "assets/my-click.wav");
-renderer.loadMusic("ambient", "assets/ambient.ogg");
-renderer.playMusicStream("ambient");
+// after renderer.initAudio();
+renderer.loadSoundEffect("place", "assets/sfx/my-place.wav"); // override the 'place' SFX
+renderer.loadMusic("bg_custom", "assets/bg_music/mytrack.ogg");     // manual music load
+renderer.playMusicPlaylist({"bg_custom", "bg_hiphop", "bg_synth"}, true);
 ```
 
-3. Play the SFX when appropriate:
+Runtime requirements
 
-```cpp
-renderer.playSoundEffect("click");
-```
+- `Renderer::updateAudio()` must be called each frame to keep streaming music playing correctly. The main loop already calls this (see `Renderer::updateAudio()` in [src/Renderer.h](src/Renderer.h#L139)).
 
 Notes and troubleshooting
 
-- If your builds of raylib do not include particular decoders (rare when using the vcpkg-provided raylib), some formats may fail to load. In that case you can either convert your files to WAV/OGG or install the missing decoder packages used by your raylib build (e.g. `libsndfile`, `libvorbis`, `libmpg123`) and rebuild raylib.
-- The renderer will not add or modify asset files — you are expected to add your own audio files to `assets/`.
-- The code uses `std::filesystem::exists()` to check for files before attempting to load them, so no special runtime flags are required.
+- If your build of raylib lacks particular decoders some file formats will fail to load. Convert to WAV/OGG or install the needed decoders (for example `libsndfile`, `libvorbis`, `libmpg123`) and rebuild raylib.
+- The renderer uses `std::filesystem::exists()` before loading files, so missing files are ignored and will not crash the game — they will generate a warning in the log instead.
 
-I've wired common events in code: pickup, cancel, deal, shatter, game-over, and restart.
-If you'd like more events wired (UI clicks, button hover, help overlay), tell me which ones.
+If you want me to wire additional UI events (hover/click sounds, menu UI, etc.) into the startup mapping, tell me which action IDs you'd like and I can add the load-and-log lines in `main.cpp`.
 
 

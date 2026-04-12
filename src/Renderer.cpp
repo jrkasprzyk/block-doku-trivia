@@ -419,13 +419,14 @@ void Renderer::drawTray(const std::array<Piece, 3>& tray, int hiddenSlot,
     const int ox        = layout_.boardOriginX;
     const int oy        = layout_.boardOriginY;
 
-    // Tray sits 12 px below the bottom edge of the board.
-    const int trayY  = oy + kBoardSize * boardCell + 12;
+    // Scale the vertical gap between the board and the tray so it adapts to cell scale.
+    const float s = layout_.cellPixels / 56.0f;
+    const int gap = std::max(6, static_cast<int>(12 * s));
+    const int trayY  = oy + kBoardSize * boardCell + gap;
     const int trayH  = layout_.windowHeight - trayY - 8;
     const int trayW  = kBoardSize * boardCell;          // same width as the board
     const int slotW  = trayW / 3;
-    const float s     = layout_.cellPixels / 56.0f;
-    const int prev    = std::max(12, static_cast<int>(20 * s)); // preview cell size scaled
+    const int prev   = std::max(12, static_cast<int>(20 * s)); // preview cell size scaled
 
     // Colours reused from the board (defined in the anonymous namespace above).
     constexpr Color kSlotBg     = { 32,  38,  50, 255 };
@@ -482,14 +483,29 @@ void Renderer::drawHud(int score, int streak) const {
     const int titleSize = std::max(16, static_cast<int>(28 * s));
     const int lineSize  = std::max(12, static_cast<int>(22 * s));
     const int smallSize = std::max(10, static_cast<int>(18 * s));
+    const int gapY = std::max(8, static_cast<int>(12 * s));
 
-    DrawText("TRIVIA-DOKU", layout_.boardOriginX, 16, titleSize, kTextColor);
+    // Title positioned above the board instead of using an absolute Y.
+    int titleY = layout_.boardOriginY - titleSize - gapY;
+    if (titleY < 8) titleY = 8;
+    DrawText("TRIVIA-DOKU", layout_.boardOriginX, titleY, titleSize, kTextColor);
 
-    const int hudX = layout_.boardOriginX + kBoardSize * layout_.cellPixels + 40;
-    DrawText(TextFormat("Score:  %d", score),    hudX, 80,  lineSize, kTextColor);
-    DrawText(TextFormat("Streak: %d/3", streak), hudX, 120, lineSize, kTextColor);
-    DrawText("ESC to quit",                      hudX, 180, smallSize, kGridLine);
-    DrawText("? for help (soon)",                hudX, 206, smallSize, kGridLine);
+    // HUD column to the right of the board; keep the existing HUD gap constant.
+    const int hudX = layout_.boardOriginX + kBoardSize * layout_.cellPixels + Layout::kHudGap;
+
+    int y = layout_.boardOriginY;
+    DrawText(TextFormat("Score:  %d", score),    hudX, y, lineSize, kTextColor);
+    y += lineSize + std::max(6, static_cast<int>(8 * s));
+    DrawText(TextFormat("Streak: %d/3", streak), hudX, y, lineSize, kTextColor);
+    y += lineSize + std::max(8, static_cast<int>(10 * s));
+    DrawText("ESC to quit",                      hudX, y, smallSize, kGridLine);
+    y += smallSize + std::max(4, static_cast<int>(6 * s));
+    DrawText("? for help (soon)",                hudX, y, smallSize, kGridLine);
+    y += smallSize + std::max(4, static_cast<int>(6 * s));
+
+    // Hint about fullscreen behavior shown under the other HUD help lines.
+    const char* fsHint = "F11: Toggle fullscreen. Maximize enters true fullscreen.";
+    DrawText(fsHint, hudX, y, smallSize, kGridLine);
 
     // Version/build overlay in the lower-right corner.
     {
@@ -596,7 +612,9 @@ void Renderer::drawTrayHighlight(int slot) const {
     const int boardCell = layout_.cellPixels;
     const int ox        = layout_.boardOriginX;
     const int oy        = layout_.boardOriginY;
-    const int trayY     = oy + kBoardSize * boardCell + 12;
+    const float s = layout_.cellPixels / 56.0f;
+    const int gap = std::max(6, static_cast<int>(12 * s));
+    const int trayY     = oy + kBoardSize * boardCell + gap;
     const int trayH     = layout_.windowHeight - trayY - 8;
     const int trayW     = kBoardSize * boardCell;
     const int slotW     = trayW / 3;
@@ -614,34 +632,35 @@ void Renderer::drawGameOver(int finalScore) const {
     // Semi-transparent full-screen dimmer.
     DrawRectangle(0, 0, W, H, { 0, 0, 0, 175 });
 
-    // Panel
-    constexpr int kPanelW = 360;
-    constexpr int kPanelH = 210;
+    // Panel sized as a percentage of the window so it scales like the trivia modal.
+    const int kPanelW = W * 45 / 100;   // 45% of window width
+    const int kPanelH = H * 60 / 100;   // 60% of window height
     const int panelX = (W - kPanelW) / 2;
     const int panelY = (H - kPanelH) / 2;
+    const float s = kPanelW / 560.0f;
+    const int pad = static_cast<int>(20 * s);
 
     DrawRectangle(panelX,     panelY,     kPanelW,     kPanelH,     { 28,  32,  46, 248 });
     DrawRectangle(panelX,     panelY,     kPanelW,       2,          { 200, 156,  50, 255 }); // top accent bar
     DrawRectangleLines(panelX, panelY,    kPanelW,     kPanelH,     {  90, 100, 120, 200 });
 
-    // Title (scaled to match board cell size)
-    const float s = layout_.cellPixels / 56.0f;
+    // Title (scaled to panel width baseline)
     const char* title = "GAME OVER";
     const int kTitleSize = std::max(20, static_cast<int>(44 * s));
     const int tw = MeasureText(title, kTitleSize);
-    DrawText(title, panelX + (kPanelW - tw) / 2, panelY + 22, kTitleSize, { 240, 196, 68, 255 });
+    DrawText(title, panelX + (kPanelW - tw) / 2, panelY + pad, kTitleSize, { 240, 196, 68, 255 });
 
     // Score
     const char* scoreStr = TextFormat("Final score:  %d", finalScore);
     const int kScoreSize = std::max(14, static_cast<int>(24 * s));
     const int sw = MeasureText(scoreStr, kScoreSize);
-    DrawText(scoreStr, panelX + (kPanelW - sw) / 2, panelY + 108, kScoreSize, { 230, 234, 244, 255 });
+    DrawText(scoreStr, panelX + (kPanelW - sw) / 2, panelY + pad + kTitleSize + pad/2, kScoreSize, { 230, 234, 244, 255 });
 
-    // Restart prompt
+    // Restart prompt at the lower area of the panel
     const char* prompt = "Press R / click / A to play again";
     const int kPromptSize = std::max(12, static_cast<int>(18 * s));
     const int pw = MeasureText(prompt, kPromptSize);
-    DrawText(prompt, panelX + (kPanelW - pw) / 2, panelY + 162, kPromptSize, { 130, 148, 175, 255 });
+    DrawText(prompt, panelX + (kPanelW - pw) / 2, panelY + kPanelH - pad - kPromptSize, kPromptSize, { 130, 148, 175, 255 });
 }
 
 void Renderer::drawTriviaModal(const Question& q, int selected,

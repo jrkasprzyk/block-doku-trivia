@@ -310,6 +310,13 @@ int main() {
 
     auto tray = td::makeTray();
 
+    // Track borderless/fullscreen state so we can auto-enter true fullscreen
+    // when the user maximizes the window via the OS. We avoid fighting the
+    // user's explicit F11 toggle by remembering whether we auto-entered.
+    bool isBorderless = false;
+    bool autoEnterFromMaximize = false;
+    bool prevMaximized = IsWindowMaximized();
+
     int score  = 0;
     int streak = 0;
     ClearAnim  clearAnim;
@@ -326,21 +333,44 @@ int main() {
         const int my = GetMouseY();
 
         // Tray geometry — recalculated each frame so it stays correct after resize/fullscreen.
-        const int trayY = layout.boardOriginY + td::kBoardSize * layout.cellPixels + 12;
+        const float s = layout.cellPixels / 56.0f;
+        const int gap = std::max(6, static_cast<int>(12 * s));
+        const int trayY = layout.boardOriginY + td::kBoardSize * layout.cellPixels + gap;
         const int trayW = td::kBoardSize * layout.cellPixels;
         const int slotW = trayW / 3;
         // Debug test keys: F1=clear, F2=correct, F3=wrong
         if (IsKeyPressed(KEY_F1)) { renderer.playSoundEffect("clear"); TraceLog(LOG_INFO, "Debug: played SFX 'clear'"); }
         if (IsKeyPressed(KEY_F2)) { renderer.playSoundEffect("correct"); TraceLog(LOG_INFO, "Debug: played SFX 'correct'"); }
         if (IsKeyPressed(KEY_F3)) { renderer.playSoundEffect("wrong"); TraceLog(LOG_INFO, "Debug: played SFX 'wrong'"); }
-        // Handle OS-driven resize events (including the frame after ToggleFullscreen).
+        // Handle OS-driven resize events (including the frame after ToggleBorderlessWindowed).
         if (IsWindowResized()) {
             layout.recalcForWindow(GetScreenWidth(), GetScreenHeight());
             renderer.setLayout(layout);
+
+            // If the user hit the window manager's maximize button, enter
+            // borderless fullscreen automatically. If we auto-entered on
+            // maximize, restore when un-maximizing.
+            bool newMaximized = IsWindowMaximized();
+            if (newMaximized != prevMaximized) {
+                if (newMaximized && !isBorderless) {
+                    ToggleBorderlessWindowed();
+                    isBorderless = true;
+                    autoEnterFromMaximize = true;
+                } else if (!newMaximized && autoEnterFromMaximize && isBorderless) {
+                    ToggleBorderlessWindowed();
+                    isBorderless = false;
+                    autoEnterFromMaximize = false;
+                }
+                prevMaximized = newMaximized;
+            }
         }
+
         // Toggle fullscreen (F11); the actual resize is caught by IsWindowResized above.
         if (IsKeyPressed(KEY_F11)) {
-            ToggleFullscreen();
+            ToggleBorderlessWindowed();
+            isBorderless = !isBorderless;
+            autoEnterFromMaximize = false; // user-requested toggle overrides auto state
+            prevMaximized = IsWindowMaximized();
         }
 
         // Restart from game-over screen.
@@ -390,12 +420,12 @@ int main() {
                     const int H = layout.windowHeight;
                     const int kPanelW = W * 45 / 100;
                     const int kPanelH = H * 60 / 100;
-                    const float s = kPanelW / 560.0f;
+                    const float panelScale = kPanelW / 560.0f;
                     const int panelX  = (W - kPanelW) / 2;
                     const int panelY  = (H - kPanelH) / 2;
-                    const int pad     = static_cast<int>(20 * s);
-                    const int kChoiceH = std::max(24, static_cast<int>(34 * s));
-                    const int choiceY0 = panelY + static_cast<int>(120 * s);
+                    const int pad     = static_cast<int>(20 * panelScale);
+                    const int kChoiceH = std::max(24, static_cast<int>(34 * panelScale));
+                    const int choiceY0 = panelY + static_cast<int>(120 * panelScale);
 
                     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
                         for (int i = 0; i < 4; ++i) {
