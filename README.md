@@ -129,3 +129,116 @@ Scoring multipliers by difficulty: easy 1.5×, medium 2×, hard 3×.
 ## Credits
 
 Joseph Kasprzyk, with Claude as co-conspirator. Inspired by Block-Doku and Balatro, with a trivia twist.
+
+## Developer: scripts package and editable install
+
+The repository includes a small `scripts/` package that provides command-line helpers and utilities
+for working with the trivia JSON (`assets/trivia.json`). To make the `scripts` package importable
+and to install convenient console entry points, install the project into your Python virtual
+environment in editable mode:
+
+```powershell
+# from the project root, using the repo's venv
+& .venv\Scripts\Activate.ps1
+pip install -e .
+```
+
+After installation you'll have console scripts available in the venv:
+
+### Usage examples (console scripts and module run)
+
+Examples below show both the installed console-script names (dashed and underscored aliases are available) and how to run the same tools directly with the venv Python using `-m` (no install required).
+
+Activate the repo venv (Windows PowerShell):
+
+```powershell
+& .venv\Scripts\Activate.ps1
+```
+
+Add a question interactively (installed console script or module):
+
+```powershell
+add-trivia                 # dash-name
+add_trivia                 # underscore alias
+# or run the module directly with the venv Python:
+& .venv\Scripts\python.exe -m scripts.add_trivia assets/trivia.json
+```
+
+Extract trivia examples (see available flags below):
+
+```powershell
+# list categories
+extract-trivia --list-categories
+
+# show prompt+answer fields from 'music', limit 5
+extract-trivia -c music -F prompt,answer -n 5
+
+# interactive picker
+extract-trivia -i
+
+# module form (no install)
+& .venv\Scripts\python.exe -m scripts.extract_trivia --list-categories
+```
+
+Validate trivia JSON:
+
+```powershell
+validate-trivia             # uses assets/trivia.json by default
+validate_trivia assets/trivia.json
+```
+
+Convert audio examples:
+
+```powershell
+# dry-run convert WAV -> OGG under assets
+convert-audio --from-ext wav --to-ext ogg --dry-run
+
+# convert a single file and overwrite destination
+convert-audio --file assets/bg_wav/intro.wav --to-ext ogg --overwrite
+
+# explicitly specify ffmpeg executable
+convert-audio --file assets/bg_wav/intro.wav --to-ext ogg --ffmpeg C:\ffmpeg\bin\ffmpeg.exe
+```
+
+Quick CLI reference (major flags)
+
+- `add-trivia [path]` — interactive authoring; optional path to trivia JSON (default: `assets/trivia.json`).
+- `extract-trivia`:
+   - `--file/-f PATH` — path to trivia JSON (default: `assets/trivia.json`)
+   - `--list-categories` — list categories and counts
+   - `--category/-c NAME` — category name or index
+   - `--fields/-F F1,F2` — comma-separated fields to print
+   - `--list-fields` — list available fields for the selected category
+   - `--count` — print counts for selected category
+   - `--limit/-n N` — limit results
+   - `--json-lines` — output items as JSON Lines
+   - `-i/--interactive` — interactive picker
+- `validate-trivia [path]` — validate schema and content; optional path (default `assets/trivia.json`).
+- `convert-audio`:
+   - `--file` — convert a single file
+   - `--src` — source directory to scan (default: `assets`)
+   - `--from-ext` — source extension (default: `wav`)
+   - `--to-ext` — destination extension (default: `ogg`)
+   - `--quality` — Vorbis quality (0-10, default 5)
+   - `--bitrate` — bitrate for MP3 (default `192k`)
+   - `--overwrite`, `--dry-run`, `--ffmpeg` — overwrite existing, dry-run commands, explicit ffmpeg path
+
+Notes:
+- Console script names are registered with both dashed and underscored variants (e.g. `add-trivia` and `add_trivia`) so you can use whichever feels natural in your shell.
+- For reproducible verification and CI use the venv Python: `& .venv\Scripts\python.exe -m scripts.<name>` (Windows PowerShell).
+
+- `add-trivia` — interactive question authoring (maps to `scripts.add_trivia:main`)
+- `extract-trivia` — extract/list trivia fields (maps to `scripts.extract_trivia:main`)
+- `validate-trivia` — validate the trivia JSON (maps to `scripts.validate_trivia:main`)
+- `convert-audio` — audio conversion helpers (maps to `scripts.convert_audio:main`)
+
+Within Python code you can now import the shared helpers directly:
+
+```python
+from scripts.cli_helpers import load, save, pick, confirm
+```
+
+This repo previously included fallback imports to support running the scripts from the
+repository without installation; those have been removed in favor of the package-style
+imports above. Installing editable (`pip install -e .`) is the recommended workflow for
+development.

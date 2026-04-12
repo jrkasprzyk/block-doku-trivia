@@ -1,0 +1,14 @@
+README.md
+pyproject.toml
+setup.cfg
+block_doku_trivia.egg-info/PKG-INFO
+block_doku_trivia.egg-info/SOURCES.txt
+block_doku_trivia.egg-info/dependency_links.txt
+block_doku_trivia.egg-info/entry_points.txt
+block_doku_trivia.egg-info/top_level.txt
+scripts/__init__.py
+scripts/add_trivia.py
+scripts/cli_helpers.py
+scripts/convert_audio.py
+scripts/extract_trivia.py
+scripts/validate_trivia.py

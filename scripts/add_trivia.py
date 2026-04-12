@@ -1,28 +1,18 @@
 #!/usr/bin/env python3
 """Interactively add a trivia question to assets/trivia.json."""
 
-import json
 import sys
 from pathlib import Path
+
+from scripts.cli_helpers import load, save, pick, confirm
 
 TRIVIA_PATH = Path(__file__).resolve().parent.parent / "assets" / "trivia.json"
 DIFFICULTIES = ["easy", "medium", "hard"]
 
 
 # ---------------------------------------------------------------------------
-# Helpers
+# Helpers (shared helpers imported from cli_helpers)
 # ---------------------------------------------------------------------------
-
-def load(path: Path) -> dict:
-    with open(path, encoding="utf-8") as f:
-        return json.load(f)
-
-
-def save(path: Path, data: dict) -> None:
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
-        f.write("\n")
-
 
 def prompt(label: str, *, default: str = "") -> str:
     """Read a non-empty string from stdin."""
@@ -34,18 +24,6 @@ def prompt(label: str, *, default: str = "") -> str:
         if value:
             return value
         print("    (required — please enter a value)")
-
-
-def pick(label: str, options: list[str]) -> str:
-    """Show a numbered menu and return the chosen option."""
-    print(f"\n  {label}")
-    for i, opt in enumerate(options, 1):
-        print(f"    {i}) {opt}")
-    while True:
-        raw = input("  Choice: ").strip()
-        if raw.isdigit() and 1 <= int(raw) <= len(options):
-            return options[int(raw) - 1]
-        print(f"    Please enter a number between 1 and {len(options)}.")
 
 
 def next_id(questions: list[dict], category: str) -> str:
@@ -144,13 +122,7 @@ def collect_question(categories: list[str], questions: list[dict]) -> dict:
     return q
 
 
-def confirm(msg: str) -> bool:
-    while True:
-        raw = input(f"  {msg} [y/n]: ").strip().lower()
-        if raw in ("y", "yes"):
-            return True
-        if raw in ("n", "no"):
-            return False
+# `confirm` is provided by `cli_helpers` and imported above.
 
 
 # ---------------------------------------------------------------------------

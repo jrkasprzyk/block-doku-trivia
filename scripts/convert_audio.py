@@ -18,6 +18,7 @@ import shutil
 import subprocess
 import sys
 import os
+import re
 
 
 def find_ffmpeg(explicit_path: str = None):
@@ -125,6 +126,18 @@ def convert_file(ffmpeg, src: Path, dst: Path, to_ext: str, quality: int, bitrat
         return False, str(e)
 
 
+def to_snake_case(name: str) -> str:
+    """Convert a filename (without extension) to snake_case."""
+    # Insert underscores for camelCase/PascalCase boundaries, replace non-alphanum
+    # with underscores, collapse repeats, and lower-case the result.
+    s = re.sub(r'([a-z0-9])([A-Z])', r'\1_\2', name)
+    s = re.sub(r'([A-Z]+)([A-Z][a-z])', r'\1_\2', s)
+    s = re.sub(r'[^0-9a-zA-Z]+', '_', s)
+    s = s.lower()
+    s = re.sub(r'_+', '_', s).strip('_')
+    return s
+
+
 def scan_files(src_dir: Path, from_ext: str):
     ext = from_ext.lower().lstrip('.')
     return [p for p in src_dir.rglob("*") if p.is_file() and p.suffix.lower().lstrip('.') == ext]
@@ -140,9 +153,17 @@ def main():
     parser.add_argument("--to-ext", default="ogg", help="destination extension: ogg|mp3|wav (default: ogg)")
     parser.add_argument("--quality", type=int, default=5, help="Vorbis quality for OGG (0-10, default 5)")
     parser.add_argument("--bitrate", default="192k", help="bitrate for MP3 (default 192k)")
-    parser.add_argument("--overwrite", action="store_true", help="overwrite existing destination files")
+    parser.add_argument("--overwrite", default=False, action="store_true", help="overwrite existing destination files")
     parser.add_argument("--dry-run", action="store_true", help="print ffmpeg commands without running them")
     parser.add_argument("--ffmpeg", help="explicit path to ffmpeg executable (optional)")
+
+    parser.add_argument("--convert-filenames", action="store_true", help="convert output filenames to snake_case")
+
+    # Show help and exit if no arguments were provided (safer than running with
+    # implicit defaults that may perform large batches).
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit(0)
 
     args = parser.parse_args()
 
@@ -174,7 +195,11 @@ def main():
     failed = 0
 
     for src in targets:
-        dst = src.with_suffix('.' + args.to_ext)
+        if args.convert_filenames:
+            new_stem = to_snake_case(src.stem)
+            dst = src.parent / (new_stem + '.' + args.to_ext)
+        else:
+            dst = src.with_suffix('.' + args.to_ext)
         if dst.exists() and not args.overwrite:
             print("Skipping (exists):", src, "->", dst)
             skipped += 1
