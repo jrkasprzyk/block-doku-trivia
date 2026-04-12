@@ -5,6 +5,7 @@
 #include <raylib.h>
 
 #include <algorithm>
+#include <random>
 #include <sstream>
 #include <unordered_map>
 #include <filesystem>
@@ -20,6 +21,10 @@ struct Renderer::Impl {
     std::unordered_map<std::string, Music> music;
     std::string currentMusicId;
     // Playlist support: ordered list of music IDs, current index, and loop flag.
+    // `playlistSource` holds the source list passed in by the caller so we can
+    // reshuffle from the same set when the bag is refilled. `playlist` is the
+    // current shuffled play order (the bag) that we consume without replacement.
+    std::vector<std::string> playlistSource;
     std::vector<std::string> playlist;
     size_t playlistIndex = 0;
     bool playlistLoop = true;
@@ -58,6 +63,16 @@ std::vector<std::string> wrapText(const std::string& text, int maxWidth, int fon
     }
     if (!current.empty()) lines.push_back(current);
     return lines;
+}
+
+// Stop any playing music streams in `music`. If `exceptId` is non-empty,
+// leave that track running (do not stop it).
+void StopAllPlayingStreams(const std::unordered_map<std::string, Music>& music,
+                           const std::string& exceptId = "") {
+    for (const auto& kv : music) {
+        if (!exceptId.empty() && kv.first == exceptId) continue;
+        if (IsMusicStreamPlaying(kv.second)) StopMusicStream(kv.second);
+    }
 }
 } // namespace
 
@@ -98,6 +113,7 @@ void Renderer::shutdownAudio() {
 
     // Clear any playlist state
     impl_->playlist.clear();
+    impl_->playlistSource.clear();
     impl_->playlistIndex = 0;
     impl_->playlistLoop = true;
 
@@ -137,16 +153,16 @@ void Renderer::playMusicStream(const std::string& id) {
     const auto it = impl_->music.find(id);
     if (it == impl_->music.end()) return;
 
-    // Stop previous music if any
-    if (!impl_->currentMusicId.empty()) {
-        auto pit = impl_->music.find(impl_->currentMusicId);
-        if (pit != impl_->music.end()) StopMusicStream(pit->second);
-    }
+    // Ensure no other music streams are left playing before we start.
+    StopAllPlayingStreams(impl_->music, id);
 
     // Clear any playlist state: explicit single-track play overrides playlists.
     impl_->playlist.clear();
+    impl_->playlistSource.clear();
     impl_->playlistIndex = 0;
     impl_->playlistLoop = false;
+
+    impl_->lastMusicNorm = 0.0f;
 
     PlayMusicStream(it->second);
     impl_->currentMusicId = id;
@@ -157,51 +173,98 @@ void Renderer::playMusicPlaylist(const std::vector<std::string>& ids, bool loop)
     if (!impl_->audioInitialized) initAudio();
     if (ids.empty()) return;
 
-    // Stop previous music if any
-    if (!impl_->currentMusicId.empty()) {
-        auto pit = impl_->music.find(impl_->currentMusicId);
-        if (pit != impl_->music.end()) StopMusicStream(pit->second);
+    // Ensure no other music streams are left playing before we start a playlist.
+    StopAllPlayingStreams(impl_->music);
+
+    // Remember the caller's source list so we can reshuffle the same set
+    // after a full cycle (bag without replacement).
+    impl_->playlistSource = ids;
+
+    // Build the initial bag from the source, including only tracks that are
+    // actually loaded into `impl_->music`.
+    std::vector<std::string> bag;
+    bag.reserve(impl_->playlistSource.size());
+    for (const auto& id : impl_->playlistSource) {
+        if (impl_->music.find(id) != impl_->music.end()) bag.push_back(id);
     }
 
-    impl_->playlist = ids;
+    if (bag.empty()) {
+        // No loaded tracks found in the requested source.
+        impl_->playlist.clear();
+        impl_->currentMusicId.clear();
+        impl_->playlistIndex = 0;
+        impl_->playlistLoop = loop;
+        return;
+    }
+
+    // Shuffle the bag to implement "without replacement" play order.
+    std::random_device rd;
+    std::mt19937 g(rd());
+    std::shuffle(bag.begin(), bag.end(), g);
+
+    // Avoid immediate repeat: if we have a previous current track and more
+    // than one candidate, ensure the first shuffled item is not the same as
+    // the just-played track by swapping with another item.
+    if (!impl_->currentMusicId.empty() && bag.size() > 1) {
+        if (bag[0] == impl_->currentMusicId) {
+            for (size_t j = 1; j < bag.size(); ++j) {
+                if (bag[j] != impl_->currentMusicId) {
+                    std::swap(bag[0], bag[j]);
+                    break;
+                }
+            }
+        }
+    }
+
+    impl_->playlist = std::move(bag);
     impl_->playlistIndex = 0;
     impl_->playlistLoop = loop;
 
-    // Start the first available track in the playlist (skip missing ids).
-    // Use a local scan index and only write back the selected index so we
-    // don't accidentally lose the playlist position during the search.
-    bool found = false;
-    size_t scanIdx = impl_->playlistIndex;
-    for (size_t i = 0; i < impl_->playlist.size(); ++i) {
-        const auto& id = impl_->playlist[scanIdx];
-        auto it = impl_->music.find(id);
-        if (it != impl_->music.end()) {
-            PlayMusicStream(it->second);
-            impl_->currentMusicId = id;
-            impl_->playlistIndex = scanIdx; // persist the index of the started track
-            impl_->lastMusicNorm = 0.0f;
-            TraceLog(LOG_INFO, "playMusicPlaylist: started '%s' (idx=%zu)", id.c_str(), impl_->playlistIndex);
-            found = true;
-            break;
+    // Start the first track in the shuffled bag.
+    auto pit = impl_->music.find(impl_->playlist[impl_->playlistIndex]);
+    if (pit != impl_->music.end()) {
+        // Ensure no other streams are playing (excluding the one we're about
+        // to start) to avoid overlapping audio.
+        StopAllPlayingStreams(impl_->music, impl_->playlist[impl_->playlistIndex]);
+        PlayMusicStream(pit->second);
+        impl_->currentMusicId = impl_->playlist[impl_->playlistIndex];
+        impl_->lastMusicNorm = 0.0f;
+        TraceLog(LOG_INFO, "playMusicPlaylist: started '%s' (idx=%zu)", impl_->currentMusicId.c_str(), impl_->playlistIndex);
+    } else {
+        // Fallback: scan for the first available track (shouldn't normally happen)
+        bool found = false;
+        size_t scanIdx = impl_->playlistIndex;
+        for (size_t i = 0; i < impl_->playlist.size(); ++i) {
+            const auto& id = impl_->playlist[scanIdx];
+            auto it = impl_->music.find(id);
+            if (it != impl_->music.end()) {
+                        StopAllPlayingStreams(impl_->music, id);
+                        PlayMusicStream(it->second);
+                impl_->currentMusicId = id;
+                impl_->playlistIndex = scanIdx;
+                impl_->lastMusicNorm = 0.0f;
+                TraceLog(LOG_INFO, "playMusicPlaylist: started '%s' (idx=%zu)", id.c_str(), impl_->playlistIndex);
+                found = true;
+                break;
+            }
+            scanIdx = (scanIdx + 1) % impl_->playlist.size();
         }
-        scanIdx = (scanIdx + 1) % impl_->playlist.size();
-    }
-
-    if (!found) {
-        // If no valid tracks were found, clear playlist state.
-        impl_->playlist.clear();
-        impl_->currentMusicId.clear();
+        if (!found) {
+            impl_->playlist.clear();
+            impl_->currentMusicId.clear();
+        }
     }
 }
 
 void Renderer::stopMusic() {
     if (!impl_ || !impl_->audioInitialized) return;
     if (impl_->currentMusicId.empty()) return;
-    auto it = impl_->music.find(impl_->currentMusicId);
-    if (it != impl_->music.end()) StopMusicStream(it->second);
+    // Stop any playing streams to ensure playback is fully stopped.
+    StopAllPlayingStreams(impl_->music);
     impl_->currentMusicId.clear();
     // Clear any playlist state as playback has been stopped explicitly.
     impl_->playlist.clear();
+    impl_->playlistSource.clear();
     impl_->playlistIndex = 0;
     impl_->playlistLoop = true;
     impl_->lastMusicNorm = 0.0f;
@@ -231,8 +294,44 @@ void Renderer::updateAudio() {
         // Advance to the next track in the playlist.
         size_t nextIndex = impl_->playlistIndex + 1;
         if (nextIndex >= impl_->playlist.size()) {
-            if (impl_->playlistLoop) nextIndex = 0;
-            else {
+            if (impl_->playlistLoop) {
+                // We've exhausted the current bag. Refill (reshuffle) from the
+                // original source so we get another random order without
+                // replacement during the new cycle. If no source was provided
+                // just wrap to index 0.
+                if (!impl_->playlistSource.empty()) {
+                    std::vector<std::string> bag;
+                    bag.reserve(impl_->playlistSource.size());
+                    for (const auto& id : impl_->playlistSource) {
+                        if (impl_->music.find(id) != impl_->music.end()) bag.push_back(id);
+                    }
+                    if (bag.empty()) {
+                        // No available tracks any more.
+                        impl_->currentMusicId.clear();
+                        impl_->playlist.clear();
+                        return;
+                    }
+                    std::random_device rd;
+                    std::mt19937 g(rd());
+                    std::shuffle(bag.begin(), bag.end(), g);
+                    // Avoid immediate repeat when starting the new shuffled bag.
+                    if (!impl_->currentMusicId.empty() && bag.size() > 1) {
+                        if (bag[0] == impl_->currentMusicId) {
+                            for (size_t j = 1; j < bag.size(); ++j) {
+                                if (bag[j] != impl_->currentMusicId) {
+                                    std::swap(bag[0], bag[j]);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    impl_->playlist = std::move(bag);
+                    nextIndex = 0;
+                    TraceLog(LOG_INFO, "updateAudio: reshuffled playlist for next cycle");
+                } else {
+                    nextIndex = 0;
+                }
+            } else {
                 // Playlist finished — clear state.
                 impl_->currentMusicId.clear();
                 impl_->playlist.clear();
@@ -249,11 +348,13 @@ void Renderer::updateAudio() {
             if (nit != impl_->music.end()) {
                 TraceLog(LOG_INFO, "updateAudio: advancing playlist from '%s' (idx=%zu) to '%s' (idx=%zu)",
                          impl_->currentMusicId.c_str(), impl_->playlistIndex, nextId.c_str(), idx);
-                // Ensure previous stream is stopped before starting the next one.
-                if (it != nit) StopMusicStream(it->second);
+                // Ensure no other streams remain playing (exclude the new
+                // track so we can start it), then start the next track.
+                StopAllPlayingStreams(impl_->music, nextId);
                 PlayMusicStream(nit->second);
                 impl_->currentMusicId = nextId;
                 impl_->playlistIndex = idx;
+                impl_->lastMusicNorm = 0.0f;
                 TraceLog(LOG_INFO, "updateAudio: now playing '%s' (idx=%zu)", nextId.c_str(), impl_->playlistIndex);
                 found = true;
                 break;

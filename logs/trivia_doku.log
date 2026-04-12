@@ -112,3 +112,136 @@
 [2026-04-11 14:45:03] [INFO] SHADER: [ID 3] Default shader unloaded successfully
 [2026-04-11 14:45:03] [INFO] TEXTURE: [ID 1] Default texture unloaded successfully
 [2026-04-11 14:45:03] [INFO] Window closed successfully
+[2026-04-12 14:29:41] [INFO] Initializing raylib 5.5
+[2026-04-12 14:29:41] [INFO] Platform backend: DESKTOP (GLFW)
+[2026-04-12 14:29:41] [INFO] Supported raylib modules:
+[2026-04-12 14:29:41] [INFO]     > rcore:..... loaded (mandatory)
+[2026-04-12 14:29:41] [INFO]     > rlgl:...... loaded (mandatory)
+[2026-04-12 14:29:41] [INFO]     > rshapes:... loaded (optional)
+[2026-04-12 14:29:41] [INFO]     > rtextures:. loaded (optional)
+[2026-04-12 14:29:41] [INFO]     > rtext:..... loaded (optional)
+[2026-04-12 14:29:41] [INFO]     > rmodels:... loaded (optional)
+[2026-04-12 14:29:41] [INFO]     > raudio:.... loaded (optional)
+[2026-04-12 14:29:41] [INFO] DISPLAY: Device initialized successfully
+[2026-04-12 14:29:41] [INFO]     > Display size: 3840 x 2160
+[2026-04-12 14:29:41] [INFO]     > Screen size:  1600 x 1000
+[2026-04-12 14:29:41] [INFO]     > Render size:  1600 x 1000
+[2026-04-12 14:29:41] [INFO]     > Viewport offsets: 0, 0
+[2026-04-12 14:29:41] [INFO] GLAD: OpenGL extensions loaded successfully
+[2026-04-12 14:29:41] [INFO] GL: Supported extensions count: 403
+[2026-04-12 14:29:41] [INFO] GL: OpenGL device information:
+[2026-04-12 14:29:41] [INFO]     > Vendor:   NVIDIA Corporation
+[2026-04-12 14:29:41] [INFO]     > Renderer: NVIDIA GeForce RTX 5060 Laptop GPU/PCIe/SSE2
+[2026-04-12 14:29:41] [INFO]     > Version:  3.3.0 NVIDIA 595.97
+[2026-04-12 14:29:41] [INFO]     > GLSL:     3.30 NVIDIA via Cg compiler
+[2026-04-12 14:29:41] [INFO] GL: VAO extension detected, VAO functions loaded successfully
+[2026-04-12 14:29:41] [INFO] GL: NPOT textures extension detected, full NPOT textures supported
+[2026-04-12 14:29:41] [INFO] GL: DXT compressed textures supported
+[2026-04-12 14:29:41] [INFO] GL: ETC2/EAC compressed textures supported
+[2026-04-12 14:29:41] [INFO] PLATFORM: DESKTOP (GLFW - Win32): Initialized successfully
+[2026-04-12 14:29:41] [INFO] TEXTURE: [ID 1] Texture loaded successfully (1x1 | R8G8B8A8 | 1 mipmaps)
+[2026-04-12 14:29:41] [INFO] TEXTURE: [ID 1] Default texture loaded successfully
+[2026-04-12 14:29:41] [INFO] SHADER: [ID 1] Vertex shader compiled successfully
+[2026-04-12 14:29:41] [INFO] SHADER: [ID 2] Fragment shader compiled successfully
+[2026-04-12 14:29:41] [INFO] SHADER: [ID 3] Program shader loaded successfully
+[2026-04-12 14:29:41] [INFO] SHADER: [ID 3] Default shader loaded successfully
+[2026-04-12 14:29:41] [INFO] RLGL: Render batch vertex buffers loaded successfully in RAM (CPU)
+[2026-04-12 14:29:41] [INFO] RLGL: Render batch vertex buffers loaded successfully in VRAM (GPU)
+[2026-04-12 14:29:41] [INFO] RLGL: Default OpenGL state initialized successfully
+[2026-04-12 14:29:41] [INFO] TEXTURE: [ID 2] Texture loaded successfully (128x128 | GRAY_ALPHA | 1 mipmaps)
+[2026-04-12 14:29:41] [INFO] FONT: Default font loaded successfully (224 glyphs)
+[2026-04-12 14:29:41] [INFO] SYSTEM: Working Directory: C:\GitHub\block-doku-trivia
+[2026-04-12 14:29:41] [INFO] TIMER: Target time per frame: 8.333 milliseconds
+[2026-04-12 14:29:41] [INFO] AUDIO: Device initialized successfully
+[2026-04-12 14:29:41] [INFO]     > Backend:       miniaudio | WASAPI
+[2026-04-12 14:29:41] [INFO]     > Format:        32-bit IEEE Floating Point -> 32-bit IEEE Floating Point
+[2026-04-12 14:29:41] [INFO]     > Channels:      2 -> 2
+[2026-04-12 14:29:41] [INFO]     > Sample rate:   48000 -> 48000
+[2026-04-12 14:29:41] [INFO]     > Periods size:  1440
+[2026-04-12 14:29:41] [INFO] STREAM: Initialized successfully (48000 Hz, 16 bit, Stereo)
+[2026-04-12 14:29:41] [INFO] FILEIO: [assets/bg_music\amapiano_logging_the_drum_main.ogg] Music file loaded successfully
+[2026-04-12 14:29:41] [INFO]     > Sample rate:   48000 Hz
+[2026-04-12 14:29:41] [INFO]     > Sample size:   16 bits
+[2026-04-12 14:29:41] [INFO]     > Channels:      2 (Stereo)
+[2026-04-12 14:29:41] [INFO]     > Total frames:  4399228
+[2026-04-12 14:29:41] [INFO] STREAM: Initialized successfully (48000 Hz, 16 bit, Stereo)
+[2026-04-12 14:29:41] [INFO] FILEIO: [assets/bg_music\ambient_water_cut_30.ogg] Music file loaded successfully
+[2026-04-12 14:29:41] [INFO]     > Sample rate:   48000 Hz
+[2026-04-12 14:29:41] [INFO]     > Sample size:   16 bits
+[2026-04-12 14:29:41] [INFO]     > Channels:      2 (Stereo)
+[2026-04-12 14:29:41] [INFO]     > Total frames:  1957119
+[2026-04-12 14:29:41] [INFO] STREAM: Initialized successfully (48000 Hz, 16 bit, Stereo)
+[2026-04-12 14:29:41] [INFO] FILEIO: [assets/bg_music\heroes_right_move_main.ogg] Music file loaded successfully
+[2026-04-12 14:29:41] [INFO]     > Sample rate:   48000 Hz
+[2026-04-12 14:29:41] [INFO]     > Sample size:   16 bits
+[2026-04-12 14:29:41] [INFO]     > Channels:      2 (Stereo)
+[2026-04-12 14:29:41] [INFO]     > Total frames:  4608212
+[2026-04-12 14:29:41] [INFO] STREAM: Initialized successfully (48000 Hz, 16 bit, Stereo)
+[2026-04-12 14:29:41] [INFO] FILEIO: [assets/bg_music\hip-hop-vodka-main.ogg] Music file loaded successfully
+[2026-04-12 14:29:41] [INFO]     > Sample rate:   48000 Hz
+[2026-04-12 14:29:41] [INFO]     > Sample size:   16 bits
+[2026-04-12 14:29:41] [INFO]     > Channels:      2 (Stereo)
+[2026-04-12 14:29:41] [INFO]     > Total frames:  4603920
+[2026-04-12 14:29:41] [INFO] STREAM: Initialized successfully (48000 Hz, 16 bit, Stereo)
+[2026-04-12 14:29:41] [INFO] FILEIO: [assets/bg_music\japanv3_shadow-and-light-main.ogg] Music file loaded successfully
+[2026-04-12 14:29:41] [INFO]     > Sample rate:   48000 Hz
+[2026-04-12 14:29:41] [INFO]     > Sample size:   16 bits
+[2026-04-12 14:29:41] [INFO]     > Channels:      2 (Stereo)
+[2026-04-12 14:29:41] [INFO]     > Total frames:  4464000
+[2026-04-12 14:29:41] [INFO] STREAM: Initialized successfully (48000 Hz, 16 bit, Stereo)
+[2026-04-12 14:29:41] [INFO] FILEIO: [assets/bg_music\japanv3_tense-sparring-main.ogg] Music file loaded successfully
+[2026-04-12 14:29:41] [INFO]     > Sample rate:   48000 Hz
+[2026-04-12 14:29:41] [INFO]     > Sample size:   16 bits
+[2026-04-12 14:29:41] [INFO]     > Channels:      2 (Stereo)
+[2026-04-12 14:29:41] [INFO]     > Total frames:  4503882
+[2026-04-12 14:29:41] [INFO] STREAM: Initialized successfully (48000 Hz, 16 bit, Stereo)
+[2026-04-12 14:29:41] [INFO] FILEIO: [assets/bg_music\mixtape_vol4_hyperpop_future_future_cut_60.ogg] Music file loaded successfully
+[2026-04-12 14:29:41] [INFO]     > Sample rate:   48000 Hz
+[2026-04-12 14:29:41] [INFO]     > Sample size:   16 bits
+[2026-04-12 14:29:41] [INFO]     > Channels:      2 (Stereo)
+[2026-04-12 14:29:41] [INFO]     > Total frames:  3224720
+[2026-04-12 14:29:41] [INFO] STREAM: Initialized successfully (48000 Hz, 16 bit, Stereo)
+[2026-04-12 14:29:41] [INFO] FILEIO: [assets/bg_music\mixtape_vol_4_funk_groove_walk_main.ogg] Music file loaded successfully
+[2026-04-12 14:29:41] [INFO]     > Sample rate:   48000 Hz
+[2026-04-12 14:29:41] [INFO]     > Sample size:   16 bits
+[2026-04-12 14:29:41] [INFO]     > Channels:      2 (Stereo)
+[2026-04-12 14:29:41] [INFO]     > Total frames:  4548026
+[2026-04-12 14:29:41] [INFO] STREAM: Initialized successfully (48000 Hz, 16 bit, Stereo)
+[2026-04-12 14:29:41] [INFO] FILEIO: [assets/bg_music\synthwave_cybertruck_chase_main.ogg] Music file loaded successfully
+[2026-04-12 14:29:41] [INFO]     > Sample rate:   48000 Hz
+[2026-04-12 14:29:41] [INFO]     > Sample size:   16 bits
+[2026-04-12 14:29:41] [INFO]     > Channels:      2 (Stereo)
+[2026-04-12 14:29:41] [INFO]     > Total frames:  4544834
+[2026-04-12 14:29:41] [INFO] STREAM: Initialized successfully (48000 Hz, 16 bit, Stereo)
+[2026-04-12 14:29:41] [INFO] FILEIO: [assets/bg_music\westernaftrica_kalahari_main.ogg] Music file loaded successfully
+[2026-04-12 14:29:41] [INFO]     > Sample rate:   48000 Hz
+[2026-04-12 14:29:41] [INFO]     > Sample size:   16 bits
+[2026-04-12 14:29:41] [INFO]     > Channels:      2 (Stereo)
+[2026-04-12 14:29:41] [INFO]     > Total frames:  4258588
+[2026-04-12 14:29:41] [INFO] playMusicPlaylist: started 'bg_heroes_right_move_main' (idx=0)
+[2026-04-12 14:29:41] [INFO] FILEIO: [assets/sfx/pro_memory_card_eject_insert_a.wav] File loaded successfully
+[2026-04-12 14:29:41] [INFO] WAVE: Data loaded successfully (44100 Hz, 16 bit, 2 channels)
+[2026-04-12 14:29:41] [INFO] FILEIO: [assets/sfx/healing_potion_001.wav] File loaded successfully
+[2026-04-12 14:29:41] [INFO] WAVE: Data loaded successfully (44100 Hz, 16 bit, 2 channels)
+[2026-04-12 14:29:41] [INFO] FILEIO: [assets/sfx/success_q.wav] File loaded successfully
+[2026-04-12 14:29:41] [INFO] WAVE: Data loaded successfully (44100 Hz, 16 bit, 2 channels)
+[2026-04-12 14:29:41] [INFO] FILEIO: [assets/sfx/failure_q.wav] File loaded successfully
+[2026-04-12 14:29:41] [INFO] WAVE: Data loaded successfully (44100 Hz, 16 bit, 2 channels)
+[2026-04-12 14:29:41] [INFO] FILEIO: [assets/sfx/handling_metal_equipment_b.wav] File loaded successfully
+[2026-04-12 14:29:41] [INFO] WAVE: Data loaded successfully (44100 Hz, 16 bit, 2 channels)
+[2026-04-12 14:29:41] [INFO] FILEIO: [assets/sfx/server_hum_end.wav] File loaded successfully
+[2026-04-12 14:29:41] [INFO] WAVE: Data loaded successfully (44100 Hz, 16 bit, 2 channels)
+[2026-04-12 14:29:41] [INFO] FILEIO: [assets/sfx/stick_hit_001.wav] File loaded successfully
+[2026-04-12 14:29:41] [INFO] WAVE: Data loaded successfully (44100 Hz, 16 bit, 2 channels)
+[2026-04-12 14:29:41] [INFO] FILEIO: [assets/sfx/director_chair_creaking_a.wav] File loaded successfully
+[2026-04-12 14:29:41] [INFO] WAVE: Data loaded successfully (44100 Hz, 16 bit, 2 channels)
+[2026-04-12 14:29:41] [INFO] FILEIO: [assets/sfx/jingle_win_003.wav] File loaded successfully
+[2026-04-12 14:29:41] [INFO] WAVE: Data loaded successfully (44100 Hz, 16 bit, 2 channels)
+[2026-04-12 14:29:41] [INFO] FILEIO: [assets/sfx/bad_button_001.wav] File loaded successfully
+[2026-04-12 14:29:41] [INFO] WAVE: Data loaded successfully (44100 Hz, 16 bit, 2 channels)
+[2026-04-12 14:31:17] [INFO] updateAudio: advancing playlist from 'bg_heroes_right_move_main' (idx=0) to 'bg_japanv3_tense_sparring_main' (idx=1)
+[2026-04-12 14:31:17] [INFO] updateAudio: now playing 'bg_japanv3_tense_sparring_main' (idx=1)
+[2026-04-12 14:32:51] [INFO] updateAudio: advancing playlist from 'bg_japanv3_tense_sparring_main' (idx=1) to 'bg_amapiano_logging_the_drum_main' (idx=2)
+[2026-04-12 14:32:51] [INFO] updateAudio: now playing 'bg_amapiano_logging_the_drum_main' (idx=2)
+[2026-04-12 14:34:23] [INFO] updateAudio: advancing playlist from 'bg_amapiano_logging_the_drum_main' (idx=2) to 'bg_mixtape_vol4_hyperpop_future_future_cut_60' (idx=3)
+[2026-04-12 14:34:23] [INFO] updateAudio: now playing 'bg_mixtape_vol4_hyperpop_future_future_cut_60' (idx=3)
