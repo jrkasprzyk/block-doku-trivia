@@ -138,4 +138,12 @@ bool Board::anyPlacementPossible(const std::vector<std::vector<Cell>>& shapes) c
     return false;
 }
 
+bool Board::canPlaceAnywhere(const std::vector<Cell>& cells) const {
+    if (cells.empty()) return false;
+    for (int r = 0; r < kBoardSize; ++r)
+        for (int c = 0; c < kBoardSize; ++c)
+            if (canPlace(cells, r, c)) return true;
+    return false;
+}
+
 } // namespace td

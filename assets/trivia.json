@@ -170,7 +170,7 @@
       "id": "music_002",
       "category": "music",
       "difficulty": "easy",
-      "prompt": "Which album holds the 2021 Guinness World Record for best-selling album of all time?",
+      "prompt": "As of 2021, which album held the Guinness World Record for best-selling album of all time?",
       "choices": [
         "Back in Black",
         "The Dark Side of the Moon",
@@ -284,7 +284,7 @@
       ],
       "answer": 1,
       "quip_correct": "There's always money in the banana stand!",
-      "quip_wrong": "That's why you always leave a note..."
+      "quip_wrong": "The sound of you getting the wrong answer sounds like Wham!"
     },
     {
       "id": "music_010",
@@ -301,7 +301,22 @@
       "quip_correct": "COOL",
       "quip_wrong": "OHNO"
     },
-    {
+	{
+		"id": "music_011",
+		"category": "music",
+		"difficulty": "easy",
+		"prompt": "Which singer needed to go back to school, according to the lyrics of the song Maggie May?",
+		"choices": [
+		  "Rod Stewart",
+		  "George Michael",
+		  "Bruce Springsteen",
+		  "Rick Springfield"
+		],
+		"answer": 0,
+		"quip_correct": "What a great hit.",
+		"quip_wrong": "You need to brush up on the works of the gravel throated Briton"
+	},
+	{
       "id": "film_001",
       "category": "film-and-tv",
       "difficulty": "easy",

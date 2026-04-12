@@ -312,7 +312,8 @@ void Renderer::drawBoard(const Board& board) const {
     }
 }
 
-void Renderer::drawTray(const std::array<Piece, 3>& tray, int hiddenSlot) const {
+void Renderer::drawTray(const std::array<Piece, 3>& tray, int hiddenSlot,
+                        const std::array<bool, 3>& placeable) const {
     const int boardCell = layout_.cellPixels;
     const int ox        = layout_.boardOriginX;
     const int oy        = layout_.boardOriginY;
@@ -354,7 +355,9 @@ void Renderer::drawTray(const std::array<Piece, 3>& tray, int hiddenSlot) const 
         const int startX = slotX + (slotW - pieceW) / 2;
         const int startY = trayY + (trayH - pieceH) / 2;
 
-        const Color fill = piece.isTrivia ? kCellTrivia : kCellFilled;
+        const Color fill = !placeable[i]
+            ? Color{ 220, 70, 70, 255 }
+            : (piece.isTrivia ? kCellTrivia : kCellFilled);
 
         for (const auto& c : piece.shape.cells) {
             const int px = startX + c.col * prev;

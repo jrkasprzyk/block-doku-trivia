@@ -83,7 +83,10 @@ public:
 
     // Draw the three offered pieces in the tray area below the board.
     // hiddenSlot (0-2) is grayed out when that piece is being dragged; pass -1 for none.
-    void drawTray(const std::array<Piece, 3>& tray, int hiddenSlot = -1) const;
+    // placeable[i] = true iff tray[i] can be placed somewhere on the board;
+    // if false, the piece renders in red to signal it's unplayable.
+    void drawTray(const std::array<Piece, 3>& tray, int hiddenSlot,
+                  const std::array<bool, 3>& placeable) const;
 
     // Score and streak panel on the right side of the window.
     void drawHud(int score, int streak) const;

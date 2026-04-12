@@ -136,8 +136,16 @@ td::Cell snapAnchorFromMouse(const td::Piece& piece, int mouseX, int mouseY, con
     const float originX = mouseX - widthPx / 2.0f;
     const float originY = mouseY - heightPx / 2.0f;
 
-    const int anchorCol = static_cast<int>(std::round((originX - ox) / static_cast<float>(cell)));
-    const int anchorRow = static_cast<int>(std::round((originY - oy) / static_cast<float>(cell)));
+    int anchorCol = static_cast<int>(std::round((originX - ox) / static_cast<float>(cell)));
+    int anchorRow = static_cast<int>(std::round((originY - oy) / static_cast<float>(cell)));
+
+    // When the mouse is within the board area, clamp the anchor so the entire
+    // piece fits on the board. This prevents the ghost and preview from
+    // disagreeing and stops pieces from hanging off the edge.
+    if (layout.isOverBoard(mouseX, mouseY)) {
+        anchorCol = std::clamp(anchorCol, 0, td::kBoardSize - 1 - maxC);
+        anchorRow = std::clamp(anchorRow, 0, td::kBoardSize - 1 - maxR);
+    }
     return { anchorRow, anchorCol };
 }
 
@@ -621,6 +629,7 @@ int main() {
                             }
                         }
 
+                        int justPlacedSlot = gpad.heldSlot;
                         gpad.holding = false;
                         gpad.heldSlot = -1;
 
@@ -632,6 +641,16 @@ int main() {
                         if (allEmpty) {
                             tray = td::makeTray();
                             renderer.playSoundEffect("deal");
+                            gpad.traySlot = 0;  // fresh tray — start at slot 0
+                        } else {
+                            // Advance to next non-empty slot after the one just placed.
+                            for (int i = 1; i <= 3; ++i) {
+                                int candidate = (justPlacedSlot + i) % 3;
+                                if (!tray[candidate].shape.cells.empty()) {
+                                    gpad.traySlot = candidate;
+                                    break;
+                                }
+                            }
                         }
 
                         if (phase == Phase::Playing) {
@@ -686,7 +705,13 @@ int main() {
                 renderer.drawPlacementPreview(board, gpad.piece, gpad.row, gpad.col);
             }
 
-            renderer.drawTray(tray, drag.active ? drag.traySlot : (gpad.holding ? gpad.heldSlot : -1));
+            std::array<bool, 3> trayPlaceable;
+            for (int i = 0; i < 3; ++i)
+                trayPlaceable[i] = board.canPlaceAnywhere(tray[i].shape.cells);
+
+            renderer.drawTray(tray,
+                              drag.active ? drag.traySlot : (gpad.holding ? gpad.heldSlot : -1),
+                              trayPlaceable);
             renderer.drawHud(score, streak);
 
             // Gamepad cursor and tray highlight.

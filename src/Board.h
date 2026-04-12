@@ -78,6 +78,10 @@ public:
     // Used by Game to end the round when the current tray is unplayable.
     bool anyPlacementPossible(const std::vector<std::vector<Cell>>& shapes) const;
 
+    // Per-piece variant: true iff the given shape can be placed at any valid
+    // anchor on the 9x9 board. Used to tint unplayable tray pieces red.
+    bool canPlaceAnywhere(const std::vector<Cell>& cells) const;
+
 private:
     std::array<std::array<CellState, kBoardSize>, kBoardSize> grid_{};
 
