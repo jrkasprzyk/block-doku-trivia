@@ -14,7 +14,9 @@
     "meta",
     "asia",
     "books",
-    "science and math"
+    "science and math",
+    "linguistics",
+    "pop"
   ],
   "questions": [
     {
@@ -315,6 +317,21 @@
       "answer": 0,
       "quip_correct": "What a great hit.",
       "quip_wrong": "You need to brush up on the works of the gravel throated Briton"
+    },
+    {
+      "id": "music_012",
+      "category": "music",
+      "difficulty": "easy",
+      "prompt": "Once upon a time wrote Beethoven the ___ Sonata.",
+      "choices": [
+        "Spaceflight",
+        "Keep Tight",
+        "Moonlight",
+        "Moonstruck"
+      ],
+      "answer": 2,
+      "quip_correct": "Wait for that third act though.",
+      "quip_wrong": "It's no Claire de Lune, sure..."
     },
     {
       "id": "film_001",
@@ -1587,6 +1604,36 @@
       "quip_wrong": "Try making a pan sauce with the fond tonight!"
     },
     {
+      "id": "general_031",
+      "category": "general",
+      "difficulty": "easy",
+      "prompt": "A man named Donald __ Trump was once the US president",
+      "choices": [
+        "Jebidah",
+        "Jerome",
+        "John",
+        "Jacob"
+      ],
+      "answer": 2,
+      "quip_correct": "I'm sorry you know that.",
+      "quip_wrong": "I'm sorry you don't know that."
+    },
+    {
+      "id": "general_032",
+      "category": "general",
+      "difficulty": "easy",
+      "prompt": "Before it was the WWE it was the:",
+      "choices": [
+        "MMA",
+        "TLC",
+        "WWF",
+        "WWW"
+      ],
+      "answer": 2,
+      "quip_correct": "THE WORLD WRESTLING FEDERATION",
+      "quip_wrong": "THE WORLD WRESRTLING FOerAtionn"
+    },
+    {
       "id": "motorsport_010",
       "category": "motorsport",
       "difficulty": "hard",
@@ -1645,6 +1692,21 @@
       "answer": 2,
       "quip_correct": "Still one of the greatest...",
       "quip_wrong": "Joke's on you. Logano won in '24 and '22; Blaney in '23; and Elliot in '20."
+    },
+    {
+      "id": "motorsport_014",
+      "category": "motorsport",
+      "difficulty": "hard",
+      "prompt": "This televison host raced a small sportscar event at Circuit of the Americas and took a selfie with the devs.",
+      "choices": [
+        "Rutledge Wood",
+        "Woodledge Rut",
+        "Rutty Woodledge",
+        "Rusty Wallace"
+      ],
+      "answer": 0,
+      "quip_correct": "This guy's big on TLC.",
+      "quip_wrong": "Don't you watch TLC: The Learning Channel?"
     },
     {
       "id": "science_and_math_001",
@@ -1825,6 +1887,1161 @@
       "answer": 2,
       "quip_correct": "Algeria represents 7.9% of Africa's area. Keep on trying for that last 0.1%, friends.",
       "quip_wrong": "You don't know the area of Algeria and it really shows."
+    },
+    {
+      "id": "general_033",
+      "category": "general",
+      "difficulty": "hard",
+      "prompt": "In C++, which header do you include to use std::vector?",
+      "choices": [
+        "<array>",
+        "<list>",
+        "<vector>",
+        "<container>"
+      ],
+      "answer": 2,
+      "quip_correct": "The workhorse of C++ containers.",
+      "quip_wrong": "It's just <vector> — straightforward for once."
+    },
+    {
+      "id": "general_034",
+      "category": "general",
+      "difficulty": "hard",
+      "prompt": "What does std::move do in C++?",
+      "choices": [
+        "Physically moves data between memory locations",
+        "Casts its argument to an rvalue reference, enabling move semantics",
+        "Deletes the original object after copying",
+        "Swaps two variables in place"
+      ],
+      "answer": 1,
+      "quip_correct": "It's a cast, not a move — the name lies!",
+      "quip_wrong": "std::move doesn't move anything — it just enables the move constructor to be called."
+    },
+    {
+      "id": "general_035",
+      "category": "general",
+      "difficulty": "hard",
+      "prompt": "In C++, what is a dangling pointer?",
+      "choices": [
+        "A pointer that points to null",
+        "A pointer that was never initialized",
+        "A pointer that points to memory that has already been freed",
+        "A pointer stored in a global variable"
+      ],
+      "answer": 2,
+      "quip_correct": "The source of countless bugs.",
+      "quip_wrong": "It's a pointer to memory that's been freed — accessing it is undefined behavior."
+    },
+    {
+      "id": "general_036",
+      "category": "general",
+      "difficulty": "hard",
+      "prompt": "What does the 'self' parameter represent in a Python class method?",
+      "choices": [
+        "The class itself",
+        "The current instance of the class",
+        "The parent class",
+        "A required keyword for all functions"
+      ],
+      "answer": 1,
+      "quip_correct": "The instance always comes first.",
+      "quip_wrong": "self refers to the specific instance calling the method."
+    },
+    {
+      "id": "general_037",
+      "category": "general",
+      "difficulty": "hard",
+      "prompt": "What is the output of [x**2 for x in range(4)] in Python?",
+      "choices": [
+        "[1, 4, 9, 16]",
+        "[0, 1, 4, 9]",
+        "[0, 2, 4, 6]",
+        "[1, 2, 3, 4]"
+      ],
+      "answer": 1,
+      "quip_correct": "List comprehensions are beautiful.",
+      "quip_wrong": "range(4) starts at 0, so you get 0², 1², 2², 3²."
+    },
+    {
+      "id": "general_038",
+      "category": "general",
+      "difficulty": "hard",
+      "prompt": "In Python, what does a decorator (the @ syntax above a function) do?",
+      "choices": [
+        "Marks a function as private",
+        "Wraps a function with another function, modifying its behavior",
+        "Compiles the function to C for speed",
+        "Adds type checking to the function's arguments"
+      ],
+      "answer": 1,
+      "quip_correct": "Functions wrapping functions — it's elegant.",
+      "quip_wrong": "A decorator takes a function and returns a modified version of it."
+    },
+    {
+      "id": "general_039",
+      "category": "general",
+      "difficulty": "hard",
+      "prompt": "In JavaScript, what is the difference between == and ===?",
+      "choices": [
+        "There is no difference",
+        "=== checks both value and type; == allows type coercion",
+        "== is for strings, === is for numbers",
+        "=== is slower but more accurate"
+      ],
+      "answer": 1,
+      "quip_correct": "Strict equality saves you from weird bugs.",
+      "quip_wrong": "== coerces types before comparing — that's why '0' == false is true."
+    },
+    {
+      "id": "general_040",
+      "category": "general",
+      "difficulty": "hard",
+      "prompt": "What does Array.prototype.map() return in JavaScript?",
+      "choices": [
+        "The original array, modified in place",
+        "A new array with the results of calling a function on every element",
+        "A single accumulated value",
+        "The first element that matches a condition"
+      ],
+      "answer": 1,
+      "quip_correct": "Map, don't mutate!",
+      "quip_wrong": "map() returns a brand new array — reduce() accumulates, find() returns one match."
+    },
+    {
+      "id": "general_041",
+      "category": "general",
+      "difficulty": "hard",
+      "prompt": "In JavaScript, what does async/await simplify?",
+      "choices": [
+        "DOM manipulation",
+        "Looping over arrays",
+        "Working with Promises and asynchronous code",
+        "Importing modules"
+      ],
+      "answer": 2,
+      "quip_correct": "No more .then().then().then() chains.",
+      "quip_wrong": "async/await is syntactic sugar over Promises — same thing, cleaner syntax."
+    },
+    {
+      "id": "general_042",
+      "category": "general",
+      "difficulty": "hard",
+      "prompt": "In R, what does the %>% (pipe) operator do?",
+      "choices": [
+        "Performs integer division",
+        "Passes the result of the left side as the first argument to the right side",
+        "Checks if a value is contained in a vector",
+        "Creates a regular expression match"
+      ],
+      "answer": 1,
+      "quip_correct": "Piping makes R code read like a sentence.",
+      "quip_wrong": "The pipe sends output forward — x %>% f() is the same as f(x)."
+    },
+    {
+      "id": "general_043",
+      "category": "general",
+      "difficulty": "hard",
+      "prompt": "What is the primary purpose of R's apply() family of functions?",
+      "choices": [
+        "Installing packages from CRAN",
+        "Connecting to a SQL database",
+        "Applying CSS styles to R Shiny apps",
+        "Applying a function over the rows or columns of a matrix or elements of a list"
+      ],
+      "answer": 3,
+      "quip_correct": "Vectorized thinking at its finest.",
+      "quip_wrong": "apply, lapply, sapply — they all let you run a function across data without explicit loops."
+    },
+    {
+      "id": "general_044",
+      "category": "general",
+      "difficulty": "hard",
+      "prompt": "In R, what does NA represent?",
+      "choices": [
+        "Zero",
+        "An empty string",
+        "Negative infinity",
+        "A missing or undefined value"
+      ],
+      "answer": 3,
+      "quip_correct": "The bane of every data cleaning script.",
+      "quip_wrong": "NA means 'not available' — it's R's way of representing missing data."
+    },
+    {
+      "id": "linguistics_001",
+      "category": "linguistics",
+      "difficulty": "easy",
+      "prompt": "What is the most widely spoken native language in the world by number of speakers?",
+      "choices": [
+        "English",
+        "Hindi",
+        "Spanish",
+        "Mandarin Chinese"
+      ],
+      "answer": 3,
+      "quip_correct": "Nearly a billion native speakers!",
+      "quip_wrong": "Mandarin has roughly 920 million native speakers — nothing else comes close."
+    },
+    {
+      "id": "linguistics_002",
+      "category": "linguistics",
+      "difficulty": "easy",
+      "prompt": "Which of these languages is NOT a Romance language (descended from Latin)?",
+      "choices": [
+        "German",
+        "French",
+        "Spanish",
+        "Romanian"
+      ],
+      "answer": 0,
+      "quip_correct": "German is Germanic, not Romantic.",
+      "quip_wrong": "German comes from the Germanic branch — French, Spanish, and Romanian all descend from Latin."
+    },
+    {
+      "id": "linguistics_003",
+      "category": "linguistics",
+      "difficulty": "easy",
+      "prompt": "What does the Latin phrase 'carpe diem' mean?",
+      "choices": [
+        "Rest in peace",
+        "Seize the day",
+        "In good faith",
+        "Beware the dog"
+      ],
+      "answer": 1,
+      "quip_correct": "Now go seize it.",
+      "quip_wrong": "Carpe diem — seize the day. Horace would want you to remember."
+    },
+    {
+      "id": "linguistics_004",
+      "category": "linguistics",
+      "difficulty": "easy",
+      "prompt": "In Spanish, what does 'biblioteca' mean?",
+      "choices": [
+        "Bible",
+        "Bicycle",
+        "Library",
+        "Biology class"
+      ],
+      "answer": 2,
+      "quip_correct": "Donde está la biblioteca!",
+      "quip_wrong": "Biblioteca means library — it comes from the Greek word for 'book container.'"
+    },
+    {
+      "id": "linguistics_005",
+      "category": "linguistics",
+      "difficulty": "easy",
+      "prompt": "How many grammatical cases does German have?",
+      "choices": [
+        "Four",
+        "Two",
+        "Six",
+        "None — German doesn't use cases"
+      ],
+      "answer": 0,
+      "quip_correct": "Nominative, accusative, dative, genitive!",
+      "quip_wrong": "German has four cases: nominative, accusative, dative, and genitive."
+    },
+    {
+      "id": "linguistics_006",
+      "category": "linguistics",
+      "difficulty": "medium",
+      "prompt": "The Greek alphabet starts with Alpha and Beta. What is the LAST letter?",
+      "choices": [
+        "Zeta",
+        "Psi",
+        "Omega",
+        "Upsilon"
+      ],
+      "answer": 2,
+      "quip_correct": "The end — literally. Omega means 'great O.'",
+      "quip_wrong": "Omega is the last letter, and its name literally means 'the great O.'"
+    },
+    {
+      "id": "linguistics_007",
+      "category": "linguistics",
+      "difficulty": "medium",
+      "prompt": "In linguistics, what is a 'cognate'?",
+      "choices": [
+        "A word borrowed from another language",
+        "A word that shares a common ancestor with a word in another language",
+        "A word that sounds like what it describes",
+        "A word with two opposite meanings"
+      ],
+      "answer": 1,
+      "quip_correct": "Like 'night' (English) and 'Nacht' (German) — same root!",
+      "quip_wrong": "Cognates share a common etymological origin — like 'mother' and 'Mutter.'"
+    },
+    {
+      "id": "linguistics_008",
+      "category": "linguistics",
+      "difficulty": "medium",
+      "prompt": "Romanian is a Romance language surrounded by Slavic-speaking countries. Which feature did it uniquely develop among Romance languages?",
+      "choices": [
+        "It lost all Latin vocabulary",
+        "It places the definite article at the end of the noun",
+        "It dropped grammatical gender entirely",
+        "It adopted the Cyrillic alphabet permanently"
+      ],
+      "answer": 1,
+      "quip_correct": "Lupul — 'the wolf' — with the article stuck on the end!",
+      "quip_wrong": "Romanian is the only major Romance language with a postposed (suffixed) definite article."
+    },
+    {
+      "id": "linguistics_009",
+      "category": "linguistics",
+      "difficulty": "medium",
+      "prompt": "The English word 'salary' derives from the Latin word 'salarium,' which is related to what substance?",
+      "choices": [
+        "Salt",
+        "Silver",
+        "Sand",
+        "Silk"
+      ],
+      "answer": 0,
+      "quip_correct": "Roman soldiers were worth their salt.",
+      "quip_wrong": "Salarium relates to 'sal' (salt) — Roman soldiers may have been paid in it."
+    },
+    {
+      "id": "linguistics_010",
+      "category": "linguistics",
+      "difficulty": "medium",
+      "prompt": "In French, what is the subjunctive mood primarily used to express?",
+      "choices": [
+        "Past tense actions",
+        "Direct commands",
+        "Doubt, desire, or emotion",
+        "Future certainty"
+      ],
+      "answer": 2,
+      "quip_correct": "Il faut que tu le saches!",
+      "quip_wrong": "The subjunctive expresses uncertainty, wishes, and feelings — que + subjunctive is the classic pattern."
+    },
+    {
+      "id": "pop_001",
+      "category": "pop",
+      "difficulty": "easy",
+      "prompt": "In the TV show 'The Wonder Years,' what is the main character's name?",
+      "choices": [
+        "Kevin Arnold",
+        "Danny Tanner",
+        "Cory Matthews",
+        "Zack Morris"
+      ],
+      "answer": 0,
+      "quip_correct": "What would you do without Winnie Cooper?",
+      "quip_wrong": "Kevin Arnold — the kid who narrated his way through the '60s and '70s."
+    },
+    {
+      "id": "pop_002",
+      "category": "pop",
+      "difficulty": "easy",
+      "prompt": "What decade is the original 'The Wonder Years' TV show set in?",
+      "choices": [
+        "The 1950s",
+        "The 1980s",
+        "The 1970s",
+        "The late 1960s and early 1970s"
+      ],
+      "answer": 3,
+      "quip_correct": "Peace, love, and suburban angst.",
+      "quip_wrong": "The show is set from 1968 to 1973 — Vietnam era suburbia."
+    },
+    {
+      "id": "pop_003",
+      "category": "pop",
+      "difficulty": "easy",
+      "prompt": "In the TV show 'Suits,' what career does Mike Ross pretend to have qualifications for?",
+      "choices": [
+        "Doctor",
+        "Accountant",
+        "Lawyer",
+        "Architect"
+      ],
+      "answer": 2,
+      "quip_correct": "Fake it till you make it — literally.",
+      "quip_wrong": "Mike never went to law school but practiced law at Pearson Hardman."
+    },
+    {
+      "id": "pop_004",
+      "category": "pop",
+      "difficulty": "easy",
+      "prompt": "Meghan Markle married into which royal family?",
+      "choices": [
+        "The Spanish Royal Family",
+        "The British Royal Family",
+        "The Swedish Royal Family",
+        "The Dutch Royal Family"
+      ],
+      "answer": 1,
+      "quip_correct": "From Suits to the Palace.",
+      "quip_wrong": "She married Prince Harry and became the Duchess of Sussex."
+    },
+    {
+      "id": "pop_005",
+      "category": "pop",
+      "difficulty": "easy",
+      "prompt": "Jeff Bezos founded which major company?",
+      "choices": [
+        "Amazon",
+        "Google",
+        "Facebook",
+        "Tesla"
+      ],
+      "answer": 0,
+      "quip_correct": "It started with books in a garage.",
+      "quip_wrong": "Amazon — founded in 1994, originally as an online bookstore."
+    },
+    {
+      "id": "pop_006",
+      "category": "pop",
+      "difficulty": "easy",
+      "prompt": "What was Amazon originally designed to sell when Jeff Bezos founded it?",
+      "choices": [
+        "Electronics",
+        "Clothing",
+        "Groceries",
+        "Books"
+      ],
+      "answer": 3,
+      "quip_correct": "From books to... everything.",
+      "quip_wrong": "Bezos started Amazon as an online bookstore in his garage."
+    },
+    {
+      "id": "pop_007",
+      "category": "pop",
+      "difficulty": "easy",
+      "prompt": "What title did Meghan Markle receive upon marrying Prince Harry?",
+      "choices": [
+        "Princess of Wales",
+        "Countess of Sussex",
+        "Duchess of Sussex",
+        "Lady Markle"
+      ],
+      "answer": 2,
+      "quip_correct": "Your Grace!",
+      "quip_wrong": "She became the Duchess of Sussex."
+    },
+    {
+      "id": "pop_008",
+      "category": "pop",
+      "difficulty": "medium",
+      "prompt": "Who narrates the original 'The Wonder Years' as the adult version of Kevin Arnold?",
+      "choices": [
+        "Fred Savage",
+        "Daniel Stern",
+        "Jason Hervey",
+        "Bob Saget"
+      ],
+      "answer": 1,
+      "quip_correct": "That voice defined a generation of nostalgia.",
+      "quip_wrong": "Daniel Stern provided the iconic voiceover narration."
+    },
+    {
+      "id": "pop_009",
+      "category": "pop",
+      "difficulty": "medium",
+      "prompt": "In 'Suits,' what is the name of Harvey Specter's law firm at the start of the series?",
+      "choices": [
+        "Zane & Associates",
+        "Pearson Hardman",
+        "Specter Litt",
+        "Rand & Associates"
+      ],
+      "answer": 1,
+      "quip_correct": "Before all the name changes began.",
+      "quip_wrong": "It started as Pearson Hardman — the firm name changed many times over the series."
+    },
+    {
+      "id": "pop_010",
+      "category": "pop",
+      "difficulty": "medium",
+      "prompt": "What role did Meghan Markle play on 'Suits'?",
+      "choices": [
+        "Rachel Zane",
+        "Jessica Pearson",
+        "Donna Paulsen",
+        "Katrina Bennett"
+      ],
+      "answer": 0,
+      "quip_correct": "Rachel Zane, paralegal turned lawyer.",
+      "quip_wrong": "She played Rachel Zane for seven seasons."
+    },
+    {
+      "id": "pop_011",
+      "category": "pop",
+      "difficulty": "medium",
+      "prompt": "Jeff Bezos's space company is called what?",
+      "choices": [
+        "SpaceX",
+        "Virgin Galactic",
+        "Blue Origin",
+        "Orbital Sciences"
+      ],
+      "answer": 2,
+      "quip_correct": "Gradatim ferociter — step by step, ferociously.",
+      "quip_wrong": "Blue Origin — founded in 2000, years before SpaceX."
+    },
+    {
+      "id": "pop_012",
+      "category": "pop",
+      "difficulty": "medium",
+      "prompt": "In the original 'The Wonder Years,' who is Kevin Arnold's love interest throughout the series?",
+      "choices": [
+        "Becky Slater",
+        "Madeline Adams",
+        "Winnie Cooper",
+        "Karen Arnold"
+      ],
+      "answer": 2,
+      "quip_correct": "The girl next door — literally.",
+      "quip_wrong": "Winnie Cooper, played by Danica McKellar, who later became a mathematician."
+    },
+    {
+      "id": "pop_013",
+      "category": "pop",
+      "difficulty": "medium",
+      "prompt": "What famous phrase is associated with Harvey Specter's attitude in 'Suits'?",
+      "choices": [
+        "I'm not a lawyer, I'm a closer",
+        "Winners don't make excuses",
+        "That's what I do — I drink and I know things",
+        "I don't have dreams, I have goals"
+      ],
+      "answer": 3,
+      "quip_correct": "Goals, not dreams — very Harvey.",
+      "quip_wrong": "Harvey's famous line was 'I don't have dreams, I have goals.'"
+    },
+    {
+      "id": "pop_014",
+      "category": "pop",
+      "difficulty": "medium",
+      "prompt": "What is the name of Jeff Bezos's philanthropic initiative focused on climate change, launched in 2020?",
+      "choices": [
+        "The Gates Foundation",
+        "The Bezos Earth Fund",
+        "The Amazon Climate Pledge",
+        "Blue Planet Initiative"
+      ],
+      "answer": 1,
+      "quip_correct": "Ten billion dollars for the planet.",
+      "quip_wrong": "The Bezos Earth Fund — a $10 billion commitment to fight climate change."
+    },
+    {
+      "id": "pop_015",
+      "category": "pop",
+      "difficulty": "hard",
+      "prompt": "The original 'Wonder Years' pilot aired right after the Super Bowl in 1988. What song plays during the iconic first kiss scene?",
+      "choices": [
+        "When a Man Loves a Woman by Percy Sledge",
+        "A Whiter Shade of Pale by Procol Harum",
+        "What a Wonderful World by Louis Armstrong",
+        "There's a Kind of Hush by Herman's Hermits"
+      ],
+      "answer": 3,
+      "quip_correct": "One of the most memorable TV moments of the '80s.",
+      "quip_wrong": "Herman's Hermits played during that unforgettable moment."
+    },
+    {
+      "id": "pop_016",
+      "category": "pop",
+      "difficulty": "hard",
+      "prompt": "Before 'Suits,' Meghan Markle had a recurring role on which game show, holding briefcases?",
+      "choices": [
+        "Wheel of Fortune",
+        "Deal or No Deal",
+        "The Price Is Right",
+        "Who Wants to Be a Millionaire"
+      ],
+      "answer": 1,
+      "quip_correct": "Briefcase #24, if you were wondering.",
+      "quip_wrong": "She was a briefcase model on Deal or No Deal before her acting career took off."
+    },
+    {
+      "id": "pop_017",
+      "category": "pop",
+      "difficulty": "hard",
+      "prompt": "What was Jeff Bezos's profession before founding Amazon?",
+      "choices": [
+        "Software engineer at Microsoft",
+        "Management consultant at McKinsey",
+        "Vice President at a Wall Street hedge fund",
+        "Professor of computer science at Princeton"
+      ],
+      "answer": 2,
+      "quip_correct": "He left a cushy Wall Street gig to sell books online.",
+      "quip_wrong": "Bezos was a VP at D.E. Shaw, a quantitative hedge fund, before starting Amazon."
+    },
+    {
+      "id": "pop_018",
+      "category": "pop",
+      "difficulty": "hard",
+      "prompt": "In 'Suits,' Mike Ross has an extraordinary ability. What is it?",
+      "choices": [
+        "He can speak seven languages fluently",
+        "He has an eidetic (photographic) memory",
+        "He can solve any math problem in seconds",
+        "He can detect when someone is lying"
+      ],
+      "answer": 1,
+      "quip_correct": "Once read, never forgotten.",
+      "quip_wrong": "Mike's photographic memory is what allowed him to fake his way through law."
+    },
+    {
+      "id": "pop_019",
+      "category": "pop",
+      "difficulty": "hard",
+      "prompt": "What is the name of the newspaper Jeff Bezos purchased in 2013?",
+      "choices": [
+        "The New York Times",
+        "The Wall Street Journal",
+        "The Washington Post",
+        "The Los Angeles Times"
+      ],
+      "answer": 2,
+      "quip_correct": "Democracy dies in darkness — and Bezos brought cash.",
+      "quip_wrong": "He bought The Washington Post for $250 million."
+    },
+    {
+      "id": "pop_020",
+      "category": "pop",
+      "difficulty": "hard",
+      "prompt": "In the 2021 reboot of 'The Wonder Years,' the show shifts focus to a Black middle-class family in which Southern city?",
+      "choices": [
+        "Atlanta, Georgia",
+        "Montgomery, Alabama",
+        "Nashville, Tennessee",
+        "Charlotte, North Carolina"
+      ],
+      "answer": 1,
+      "quip_correct": "Same wonder, new perspective.",
+      "quip_wrong": "The reboot is set in Montgomery, Alabama in the late 1960s."
+    },
+    {
+      "id": "pop_021",
+      "category": "pop",
+      "difficulty": "easy",
+      "prompt": "The advertising slogan 'Can you see why kids love the taste of ___?' belongs to which cereal?",
+      "choices": [
+        "Cinnamon Toast Crunch",
+        "Lucky Charms",
+        "Frosted Flakes",
+        "Cocoa Puffs"
+      ],
+      "answer": 0,
+      "quip_correct": "It's the cinnamon sugar swirls in every bite!",
+      "quip_wrong": "Cinnamon Toast Crunch — the cereal that sees you back."
+    },
+    {
+      "id": "pop_022",
+      "category": "pop",
+      "difficulty": "easy",
+      "prompt": "Bad Bunny, one of the most-streamed artists in the world, is from which country?",
+      "choices": [
+        "Mexico",
+        "Colombia",
+        "Dominican Republic",
+        "Puerto Rico"
+      ],
+      "answer": 3,
+      "quip_correct": "Straight from Vega Baja!",
+      "quip_wrong": "Bad Bunny was born and raised in Puerto Rico."
+    },
+    {
+      "id": "pop_023",
+      "category": "pop",
+      "difficulty": "easy",
+      "prompt": "What color is Grover on Sesame Street?",
+      "choices": [
+        "Red",
+        "Green",
+        "Blue",
+        "Orange"
+      ],
+      "answer": 2,
+      "quip_correct": "Cute, furry, and very blue.",
+      "quip_wrong": "Grover is blue — and he'd like you to know he is also adorable and lovable."
+    },
+    {
+      "id": "pop_024",
+      "category": "pop",
+      "difficulty": "easy",
+      "prompt": "Which U.S. president was assassinated at Ford's Theatre in 1865?",
+      "choices": [
+        "Abraham Lincoln",
+        "James Garfield",
+        "William McKinley",
+        "Andrew Johnson"
+      ],
+      "answer": 0,
+      "quip_correct": "Sic semper tyrannis — too soon?",
+      "quip_wrong": "Abraham Lincoln was shot by John Wilkes Booth at Ford's Theatre."
+    },
+    {
+      "id": "pop_025",
+      "category": "pop",
+      "difficulty": "easy",
+      "prompt": "'The American Pageant' is a widely used textbook for which Advanced Placement exam?",
+      "choices": [
+        "AP World History",
+        "AP U.S. History",
+        "AP Government",
+        "AP European History"
+      ],
+      "answer": 1,
+      "quip_correct": "The brick that launched a thousand APUSH scores.",
+      "quip_wrong": "The American Pageant is THE classic AP U.S. History textbook."
+    },
+    {
+      "id": "pop_026",
+      "category": "pop",
+      "difficulty": "easy",
+      "prompt": "The band Rancid is most associated with which music genre?",
+      "choices": [
+        "Grunge",
+        "Heavy metal",
+        "Country",
+        "Punk rock"
+      ],
+      "answer": 3,
+      "quip_correct": "East Bay punk at its finest.",
+      "quip_wrong": "Rancid is punk rock through and through — straight out of the Berkeley scene."
+    },
+    {
+      "id": "pop_027",
+      "category": "pop",
+      "difficulty": "easy",
+      "prompt": "In the United States, mass-produced frozen fish sticks are most commonly made from which fish?",
+      "choices": [
+        "Salmon",
+        "Tilapia",
+        "Tuna",
+        "Alaska pollock"
+      ],
+      "answer": 3,
+      "quip_correct": "Now you'll never look at a fish stick the same way.",
+      "quip_wrong": "Alaska pollock — cheap, mild, and perfect for breading."
+    },
+    {
+      "id": "pop_028",
+      "category": "pop",
+      "difficulty": "medium",
+      "prompt": "Before the cinnamon squares became the mascots of Cinnamon Toast Crunch, the cereal featured three animated bakers. What was the name of the last remaining baker?",
+      "choices": [
+        "Wendell",
+        "Bob",
+        "Quello",
+        "Chester"
+      ],
+      "answer": 0,
+      "quip_correct": "Wendell held on as long as he could.",
+      "quip_wrong": "Wendell was the last baker standing — Bob and Quello were phased out first."
+    },
+    {
+      "id": "pop_029",
+      "category": "pop",
+      "difficulty": "medium",
+      "prompt": "The emo band Modern Baseball formed in which U.S. city?",
+      "choices": [
+        "Chicago",
+        "Brooklyn",
+        "Philadelphia",
+        "Baltimore"
+      ],
+      "answer": 2,
+      "quip_correct": "Philly emo at its most heartfelt.",
+      "quip_wrong": "Modern Baseball formed in Philadelphia — Brendan Lukens and Jake Ewald met at college there."
+    },
+    {
+      "id": "pop_030",
+      "category": "pop",
+      "difficulty": "medium",
+      "prompt": "Epitaph Records, a major independent punk label, was founded by a guitarist from which band?",
+      "choices": [
+        "The Offspring",
+        "NOFX",
+        "Rancid",
+        "Bad Religion"
+      ],
+      "answer": 3,
+      "quip_correct": "Brett Gurewitz built an empire.",
+      "quip_wrong": "Brett Gurewitz of Bad Religion founded Epitaph Records in 1981."
+    },
+    {
+      "id": "pop_031",
+      "category": "pop",
+      "difficulty": "medium",
+      "prompt": "What is Bad Bunny's real name?",
+      "choices": [
+        "Luis Fonsi",
+        "Benito Antonio Martínez Ocasio",
+        "Ramón Ayala",
+        "Juan Carlos Ozuna"
+      ],
+      "answer": 1,
+      "quip_correct": "Benito — but you can call him Bad Bunny.",
+      "quip_wrong": "His real name is Benito Antonio Martínez Ocasio."
+    },
+    {
+      "id": "pop_032",
+      "category": "pop",
+      "difficulty": "medium",
+      "prompt": "What makes Grover Cleveland unique among all U.S. presidents?",
+      "choices": [
+        "He is the only president to serve two non-consecutive terms",
+        "He was the tallest president in history",
+        "He served as both a senator and president simultaneously",
+        "He was the only president from the Whig Party"
+      ],
+      "answer": 0,
+      "quip_correct": "22nd AND 24th — the comeback kid.",
+      "quip_wrong": "Cleveland is the only president to serve two non-consecutive terms: 1885–1889 and 1893–1897."
+    },
+    {
+      "id": "pop_033",
+      "category": "pop",
+      "difficulty": "medium",
+      "prompt": "The assassination of Archduke Franz Ferdinand in 1914 directly triggered which global conflict?",
+      "choices": [
+        "The Franco-Prussian War",
+        "World War I",
+        "The Crimean War",
+        "World War II"
+      ],
+      "answer": 1,
+      "quip_correct": "One bullet, millions of lives.",
+      "quip_wrong": "His assassination in Sarajevo set off the chain of alliances that started World War I."
+    },
+    {
+      "id": "pop_034",
+      "category": "pop",
+      "difficulty": "medium",
+      "prompt": "Comedian Tim Dillon hosts a popular comedy podcast called what?",
+      "choices": [
+        "The Tim Dillon Show",
+        "The Comedy Store Podcast",
+        "Whiskey Ginger",
+        "Kill Tony"
+      ],
+      "answer": 0,
+      "quip_correct": "Fake business is real business.",
+      "quip_wrong": "The Tim Dillon Show — where real estate, conspiracy, and comedy collide."
+    },
+    {
+      "id": "pop_035",
+      "category": "pop",
+      "difficulty": "hard",
+      "prompt": "Bad Religion's lead singer Greg Graffin holds a PhD from Cornell in which field?",
+      "choices": [
+        "Philosophy",
+        "English Literature",
+        "Political Science",
+        "Zoology"
+      ],
+      "answer": 3,
+      "quip_correct": "Punk rocker by night, evolutionary biologist by day.",
+      "quip_wrong": "Greg Graffin earned his PhD in zoology — he's literally Dr. Graffin."
+    },
+    {
+      "id": "pop_036",
+      "category": "pop",
+      "difficulty": "hard",
+      "prompt": "The 2015 book 'Modern Romance' was co-authored by comedian Aziz Ansari and which sociologist?",
+      "choices": [
+        "Malcolm Gladwell",
+        "Eric Klinenberg",
+        "Steven Levitt",
+        "Brené Brown"
+      ],
+      "answer": 1,
+      "quip_correct": "Comedy meets sociology — a surprisingly great combo.",
+      "quip_wrong": "Eric Klinenberg, an NYU sociologist, co-wrote the book with Ansari."
+    },
+    {
+      "id": "pop_037",
+      "category": "pop",
+      "difficulty": "hard",
+      "prompt": "What is the name of Rancid's critically acclaimed 1995 album featuring the hit 'Time Bomb'?",
+      "choices": [
+        "...And Out Come the Wolves",
+        "Let's Go",
+        "Life Won't Wait",
+        "Indestructible"
+      ],
+      "answer": 0,
+      "quip_correct": "One of the greatest punk albums ever made.",
+      "quip_wrong": "...And Out Come the Wolves — Rancid's masterpiece and a punk rock landmark."
+    },
+    {
+      "id": "pop_038",
+      "category": "pop",
+      "difficulty": "hard",
+      "prompt": "Who was the original puppeteer who performed Grover on Sesame Street?",
+      "choices": [
+        "Jim Henson",
+        "Jerry Nelson",
+        "Frank Oz",
+        "Caroll Spinney"
+      ],
+      "answer": 2,
+      "quip_correct": "The same genius behind Yoda and Miss Piggy!",
+      "quip_wrong": "Frank Oz originated Grover — he also performed Cookie Monster, Bert, and Fozzie Bear."
+    },
+    {
+      "id": "pop_039",
+      "category": "pop",
+      "difficulty": "hard",
+      "prompt": "In 2009, which U.S. First Lady appeared on Sesame Street to promote healthy eating for children?",
+      "choices": [
+        "Laura Bush",
+        "Hillary Clinton",
+        "Michelle Obama",
+        "Jill Biden"
+      ],
+      "answer": 2,
+      "quip_correct": "Let's Move — to Sesame Street!",
+      "quip_wrong": "Michelle Obama appeared as part of her Let's Move! initiative promoting kids' nutrition."
+    },
+    {
+      "id": "pop_040",
+      "category": "pop",
+      "difficulty": "hard",
+      "prompt": "What is the name of Bad Religion's iconic logo — a cross with a red prohibition sign over it?",
+      "choices": [
+        "The Cross-Out",
+        "The Anti-Cross",
+        "The No-God",
+        "The Crossbuster"
+      ],
+      "answer": 3,
+      "quip_correct": "The most recognizable symbol in punk.",
+      "quip_wrong": "The Crossbuster — designed in the early '80s and still on every album."
+    },
+    {
+      "id": "music_013",
+      "category": "music",
+      "difficulty": "easy",
+      "prompt": "Which Radiohead song, released in 1992, became their breakthrough hit despite the band later expressing frustration with it?",
+      "choices": [
+        "Karma Police",
+        "Paranoid Android",
+        "Creep",
+        "No Surprises"
+      ],
+      "answer": 2,
+      "quip_correct": "Even Thom Yorke can't escape it.",
+      "quip_wrong": "Creep — the song that made them famous and the one they wish hadn't."
+    },
+    {
+      "id": "music_014",
+      "category": "music",
+      "difficulty": "medium",
+      "prompt": "Which Radiohead album, released in 2000, marked a dramatic shift toward electronic and experimental music?",
+      "choices": [
+        "The Bends",
+        "Amnesiac",
+        "Hail to the Thief",
+        "Kid A"
+      ],
+      "answer": 3,
+      "quip_correct": "Everything in its right place.",
+      "quip_wrong": "Kid A polarized fans but is now considered a masterpiece of electronic-rock reinvention."
+    },
+    {
+      "id": "music_015",
+      "category": "music",
+      "difficulty": "hard",
+      "prompt": "In 1977, Elvis Costello was banned from Saturday Night Live after he stopped mid-song and switched to playing which unauthorized track?",
+      "choices": [
+        "Radio Radio",
+        "Alison",
+        "Watching the Detectives",
+        "Pump It Up"
+      ],
+      "answer": 0,
+      "quip_correct": "The most punk thing to ever happen on live TV.",
+      "quip_wrong": "He was supposed to play 'Less Than Zero' but switched to 'Radio Radio' — and was banned for over a decade."
+    },
+    {
+      "id": "music_016",
+      "category": "music",
+      "difficulty": "medium",
+      "prompt": "Elvis Presley's 1969 hit 'In the Ghetto' opens with the line 'As the snow flies, on a cold and gray ___ mornin'.' Which city?",
+      "choices": [
+        "Memphis",
+        "Detroit",
+        "New York",
+        "Chicago"
+      ],
+      "answer": 3,
+      "quip_correct": "A cold and gray Chicago mornin' indeed.",
+      "quip_wrong": "The song is set in Chicago — written by Mac Davis."
+    },
+    {
+      "id": "general_045",
+      "category": "general",
+      "difficulty": "easy",
+      "prompt": "Potato bread gets its distinctively soft and moist texture from which ingredient added to the dough?",
+      "choices": [
+        "Cornstarch",
+        "Rice flour",
+        "Mashed potatoes or potato flour",
+        "Tapioca starch"
+      ],
+      "answer": 2,
+      "quip_correct": "The humble potato makes everything better.",
+      "quip_wrong": "Potato starch or mashed potatoes give the bread that pillowy softness."
+    },
+    {
+      "id": "general_046",
+      "category": "general",
+      "difficulty": "medium",
+      "prompt": "The Irish Potato Famine (1845–1852) was caused by a devastating potato blight. What type of organism caused it?",
+      "choices": [
+        "A bacterium",
+        "A virus",
+        "An insect parasite",
+        "A fungus-like water mold"
+      ],
+      "answer": 3,
+      "quip_correct": "Phytophthora infestans — the oomycete that changed history.",
+      "quip_wrong": "It was caused by Phytophthora infestans, a water mold — technically not a true fungus."
+    },
+    {
+      "id": "general_047",
+      "category": "general",
+      "difficulty": "medium",
+      "prompt": "During the Irish Potato Famine, approximately how many people were lost to Ireland through death and emigration combined?",
+      "choices": [
+        "About 500,000",
+        "About 2 million",
+        "About 5 million",
+        "About 10 million"
+      ],
+      "answer": 1,
+      "quip_correct": "Ireland's population still hasn't recovered.",
+      "quip_wrong": "Roughly 1 million died and over 1 million emigrated — Ireland's population dropped by about 25%."
+    },
+    {
+      "id": "film-and-tv_019",
+      "category": "film-and-tv",
+      "difficulty": "easy",
+      "prompt": "Who created the animated TV show 'Family Guy'?",
+      "choices": [
+        "Matt Groening",
+        "Seth MacFarlane",
+        "Trey Parker",
+        "Mike Judge"
+      ],
+      "answer": 1,
+      "quip_correct": "The man of a thousand voices.",
+      "quip_wrong": "Seth MacFarlane created, produces, and voices multiple characters on Family Guy."
+    },
+    {
+      "id": "film-and-tv_020",
+      "category": "film-and-tv",
+      "difficulty": "easy",
+      "prompt": "What is the name of the Griffin family's talking dog on 'Family Guy'?",
+      "choices": [
+        "Rex",
+        "Buddy",
+        "Brian",
+        "Max"
+      ],
+      "answer": 2,
+      "quip_correct": "The most pretentious Labrador in Quahog.",
+      "quip_wrong": "Brian Griffin — martini-drinking, novel-writing, Prius-driving dog."
+    },
+    {
+      "id": "film-and-tv_021",
+      "category": "film-and-tv",
+      "difficulty": "medium",
+      "prompt": "Which NBC sitcom, set in a Boston bar, used the theme song 'Where Everybody Knows Your Name'?",
+      "choices": [
+        "Cheers",
+        "Frasier",
+        "The Office",
+        "Friends"
+      ],
+      "answer": 0,
+      "quip_correct": "Making your way in the world today takes everything you've got.",
+      "quip_wrong": "Cheers — the bar where everybody knows your name. Ran for 11 seasons."
+    },
+    {
+      "id": "film-and-tv_022",
+      "category": "film-and-tv",
+      "difficulty": "medium",
+      "prompt": "'Seinfeld' was famously pitched to NBC executives as 'a show about ___.'",
+      "choices": [
+        "New York",
+        "Friendship",
+        "Comedy",
+        "Nothing"
+      ],
+      "answer": 3,
+      "quip_correct": "And somehow nothing became everything.",
+      "quip_wrong": "'A show about nothing' — the pitch that almost didn't make it."
+    },
+    {
+      "id": "film-and-tv_023",
+      "category": "film-and-tv",
+      "difficulty": "medium",
+      "prompt": "In the NBC sitcom 'Mad About You,' what is Paul Buchman's profession?",
+      "choices": [
+        "Architect",
+        "Documentary filmmaker",
+        "Lawyer",
+        "Advertising executive"
+      ],
+      "answer": 1,
+      "quip_correct": "Paul Reiser filming life one documentary at a time.",
+      "quip_wrong": "Paul Buchman was a documentary filmmaker living in Manhattan with his wife Jamie."
+    },
+    {
+      "id": "film-and-tv_024",
+      "category": "film-and-tv",
+      "difficulty": "medium",
+      "prompt": "In 'As Good As It Gets,' Jack Nicholson's character Melvin Udall suffers from which condition?",
+      "choices": [
+        "Obsessive-compulsive disorder",
+        "Bipolar disorder",
+        "Agoraphobia",
+        "Tourette syndrome"
+      ],
+      "answer": 0,
+      "quip_correct": "Lock, lock, lock, lock, lock.",
+      "quip_wrong": "Melvin has OCD — the lock-checking and crack-avoiding won Nicholson his third Oscar."
+    },
+    {
+      "id": "film-and-tv_025",
+      "category": "film-and-tv",
+      "difficulty": "hard",
+      "prompt": "Who plays the tyrannical Nurse Ratched in the 1975 film 'One Flew Over the Cuckoo's Nest'?",
+      "choices": [
+        "Faye Dunaway",
+        "Ellen Burstyn",
+        "Louise Fletcher",
+        "Sissy Spacek"
+      ],
+      "answer": 2,
+      "quip_correct": "One of cinema's greatest villains.",
+      "quip_wrong": "Louise Fletcher — her Oscar acceptance speech in sign language for her deaf parents is legendary."
+    },
+    {
+      "id": "film-and-tv_026",
+      "category": "film-and-tv",
+      "difficulty": "hard",
+      "prompt": "'One Flew Over the Cuckoo's Nest' (1975) swept all five major Oscar categories. As of 2026, how many films in total have achieved this feat?",
+      "choices": [
+        "Two",
+        "Three",
+        "Five",
+        "Seven"
+      ],
+      "answer": 1,
+      "quip_correct": "An exclusive club of three.",
+      "quip_wrong": "Only three films ever: It Happened One Night (1934), Cuckoo's Nest (1975), and Silence of the Lambs (1991)."
     }
   ]
 }
