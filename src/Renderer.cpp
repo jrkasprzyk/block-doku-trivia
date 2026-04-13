@@ -11,6 +11,7 @@
 #include <filesystem>
 #include <memory>
 #include <vector>
+#include <functional>
 
 namespace td {
 
@@ -36,16 +37,80 @@ struct Renderer::Impl {
 namespace fs = std::filesystem;
 
 namespace {
-// Palette. Kept private to this translation unit so they don't leak into headers
-// (which would force every file that includes Renderer.h to also see raylib).
-constexpr Color kBgColor       = { 24,  28,  38, 255 };
-constexpr Color kGridLine      = { 60,  68,  84, 255 };
-constexpr Color kSubBorder     = {120, 134, 160, 255 };
-constexpr Color kCellEmpty     = { 38,  44,  58, 255 };
-constexpr Color kCellFilled    = { 92, 170, 230, 255 };
-constexpr Color kCellTrivia    = {240, 196,  68, 255 }; // glowing question mark color
-constexpr Color kCellStone     = { 90,  90,  95, 255 };
-constexpr Color kTextColor     = {230, 234, 244, 255 };
+// Palette support: allow switching UI colors at runtime when music changes.
+struct Palette {
+    Color bg;
+    Color gridLine;
+    Color subBorder;
+    Color cellEmpty;
+    Color cellFilled;
+    Color cellTrivia;
+    Color cellStone;
+    Color text;
+};
+
+// Default palette (keeps the original look).
+const Palette kDefaultPalette = {
+    { 24,  28,  38, 255 }, // bg
+    { 60,  68,  84, 255 }, // gridLine
+    {120, 134, 160, 255 }, // subBorder
+    { 38,  44,  58, 255 }, // cellEmpty
+    { 92, 170, 230, 255 }, // cellFilled
+    {240, 196,  68, 255 }, // cellTrivia
+    { 90,  90,  95, 255 }, // cellStone
+    {230, 234, 244, 255 }  // text
+};
+
+// A small palette bank to pick from when music changes. These are tuned
+// to remain readable against dark backgrounds.
+const std::vector<Palette> kPalettes = {
+    kDefaultPalette,
+    // Warm
+    {{40,24,20,255},{70,50,44,255},{180,120,90,255},{48,36,30,255},{230,110,70,255},{240,200,100,255},{100,90,85,255},{245,240,230,255}},
+    // Teal
+    {{18,30,32,255},{58,75,78,255},{90,165,155,255},{28,36,38,255},{88,200,170,255},{240,150,70,255},{80,86,90,255},{230,240,238,255}},
+    // Purple
+    {{22,18,32,255},{60,52,80,255},{140,120,180,255},{34,28,42,255},{160,120,230,255},{240,196,68,255},{90,90,95,255},{230,234,244,255}},
+    // Retro
+    {{34,34,20,255},{80,70,50,255},{150,130,80,255},{46,46,30,255},{220,180,70,255},{200,230,120,255},{100,100,90,255},{245,243,230,255}},
+    // Mono
+    {{22,22,26,255},{54,54,60,255},{110,110,120,255},{36,36,40,255},{150,150,150,255},{200,200,200,255},{88,88,88,255},{240,240,240,255}}
+};
+
+// Mutable current palette values used by draw routines.
+Color kBgColor       = kDefaultPalette.bg;
+Color kGridLine      = kDefaultPalette.gridLine;
+Color kSubBorder     = kDefaultPalette.subBorder;
+Color kCellEmpty     = kDefaultPalette.cellEmpty;
+Color kCellFilled    = kDefaultPalette.cellFilled;
+Color kCellTrivia    = kDefaultPalette.cellTrivia; // glowing question mark color
+Color kCellStone     = kDefaultPalette.cellStone;
+Color kTextColor     = kDefaultPalette.text;
+
+// Apply a palette to the current UI colors.
+void applyPalette(const Palette& p) {
+    kBgColor = p.bg;
+    kGridLine = p.gridLine;
+    kSubBorder = p.subBorder;
+    kCellEmpty = p.cellEmpty;
+    kCellFilled = p.cellFilled;
+    kCellTrivia = p.cellTrivia;
+    kCellStone = p.cellStone;
+    kTextColor = p.text;
+}
+
+// Choose and apply a palette for a given music id.
+void applyPaletteForMusic(const std::string& id) {
+    if (kPalettes.empty()) return;
+    const size_t idx = static_cast<size_t>(std::hash<std::string>{}(id)) % kPalettes.size();
+    applyPalette(kPalettes[idx]);
+    TraceLog(LOG_INFO, "applyPaletteForMusic: applied palette %zu for '%s'", idx, id.c_str());
+}
+
+// Reset to the default palette.
+void resetPalette() {
+    applyPalette(kDefaultPalette);
+}
 
 // Greedy word-wrap: split `text` into lines that fit within `maxWidth` px at `fontSize`.
 std::vector<std::string> wrapText(const std::string& text, int maxWidth, int fontSize) {
@@ -119,6 +184,7 @@ void Renderer::shutdownAudio() {
 
     impl_->currentMusicId.clear();
     impl_->lastMusicNorm = 0.0f;
+    resetPalette();
     CloseAudioDevice();
     impl_->audioInitialized = false;
 }
@@ -166,6 +232,7 @@ void Renderer::playMusicStream(const std::string& id) {
 
     PlayMusicStream(it->second);
     impl_->currentMusicId = id;
+    applyPaletteForMusic(id);
 }
 
 void Renderer::playMusicPlaylist(const std::vector<std::string>& ids, bool loop) {
@@ -228,6 +295,7 @@ void Renderer::playMusicPlaylist(const std::vector<std::string>& ids, bool loop)
         StopAllPlayingStreams(impl_->music, impl_->playlist[impl_->playlistIndex]);
         PlayMusicStream(pit->second);
         impl_->currentMusicId = impl_->playlist[impl_->playlistIndex];
+        applyPaletteForMusic(impl_->currentMusicId);
         impl_->lastMusicNorm = 0.0f;
         TraceLog(LOG_INFO, "playMusicPlaylist: started '%s' (idx=%zu)", impl_->currentMusicId.c_str(), impl_->playlistIndex);
     } else {
@@ -241,6 +309,7 @@ void Renderer::playMusicPlaylist(const std::vector<std::string>& ids, bool loop)
                         StopAllPlayingStreams(impl_->music, id);
                         PlayMusicStream(it->second);
                 impl_->currentMusicId = id;
+                        applyPaletteForMusic(id);
                 impl_->playlistIndex = scanIdx;
                 impl_->lastMusicNorm = 0.0f;
                 TraceLog(LOG_INFO, "playMusicPlaylist: started '%s' (idx=%zu)", id.c_str(), impl_->playlistIndex);
@@ -268,6 +337,7 @@ void Renderer::stopMusic() {
     impl_->playlistIndex = 0;
     impl_->playlistLoop = true;
     impl_->lastMusicNorm = 0.0f;
+    resetPalette();
 }
 
 void Renderer::updateAudio() {
@@ -355,6 +425,7 @@ void Renderer::updateAudio() {
                 impl_->currentMusicId = nextId;
                 impl_->playlistIndex = idx;
                 impl_->lastMusicNorm = 0.0f;
+                applyPaletteForMusic(nextId);
                 TraceLog(LOG_INFO, "updateAudio: now playing '%s' (idx=%zu)", nextId.c_str(), impl_->playlistIndex);
                 found = true;
                 break;
