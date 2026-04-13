@@ -73,7 +73,15 @@
       "Bash(./build.sh)",
       "Bash(cmd /c configure.bat)",
       "Bash(dir \"C:\\\\Program Files \\(x86\\)\\\\Microsoft Visual Studio\\\\\" 2>/dev/null | grep -E \"^[0-9]\" || echo \"No BuildTools found at expected path\")",
-      "Bash(python -c \"import json; d=json.load\\(open\\('assets/trivia.json'\\)\\); [print\\(f\\\\\"{c}: max={max\\(int\\(q['id'].split\\('_'\\)[-1]\\) for q in d['questions'] if q['id'].startswith\\(c\\)\\)}, n={sum\\(1 for q in d['questions'] if q['id'].startswith\\(c\\)\\)}\\\\\"\\) for c in ['music','pop','general','film-and-tv']]\")"
+      "Bash(python -c \"import json; d=json.load\\(open\\('assets/trivia.json'\\)\\); [print\\(f\\\\\"{c}: max={max\\(int\\(q['id'].split\\('_'\\)[-1]\\) for q in d['questions'] if q['id'].startswith\\(c\\)\\)}, n={sum\\(1 for q in d['questions'] if q['id'].startswith\\(c\\)\\)}\\\\\"\\) for c in ['music','pop','general','film-and-tv']]\")",
+      "Bash(python c:/GitHub/block-doku-trivia/scripts/validate_trivia.py)",
+      "Bash(./venv/Scripts/python.exe scripts/add_batch.py)",
+      "Bash(.venv/Scripts/python.exe scripts/add_batch.py)",
+      "Bash(.venv/Scripts/python.exe scripts/validate_trivia.py)",
+      "Bash(rm scripts/add_batch.py)",
+      "Bash(.venv/Scripts/python.exe -c ':*)",
+      "Bash(python scripts/add_windows_trivia.py)",
+      "Bash(python scripts/validate_trivia.py)"
     ]
   }
 }
