@@ -1934,6 +1934,81 @@
       "quip_wrong": "You don't know the area of Algeria and it really shows."
     },
     {
+      "id": "science and math_003",
+      "category": "science and math",
+      "difficulty": "easy",
+      "prompt": "You're seeing red if you know the capital of Louisiana, which is:",
+      "choices": [
+        "New Orleans",
+        "Baton Rouge",
+        "St. Roja",
+        "La Croix"
+      ],
+      "answer": 1,
+      "quip_correct": "Good enough for Garth Brooks...",
+      "quip_wrong": "Too bad because St. Roja is so nice this time of year"
+    },
+    {
+      "id": "science and math_004",
+      "category": "science and math",
+      "difficulty": "hard",
+      "prompt": "DMDU stands for:",
+      "choices": [
+        "Decision Making Under Deep Uncertainty",
+        "Deep Machines Using Decision Unions",
+        "Decision Making Using Deep Unions",
+        "Deep Machines Under Deep Uncertainty"
+      ],
+      "answer": 0,
+      "quip_correct": "State-of-the-art decision science",
+      "quip_wrong": "Don't overthink it, it's not too deep!"
+    },
+    {
+      "id": "science and math_005",
+      "category": "science and math",
+      "difficulty": "hard",
+      "prompt": "In a Python virtual environment (venv), the copy of python that lives in the .venv folder is:",
+      "choices": [
+        "A full copy of python",
+        "A redirect sign to the base python used to create it",
+        "Hey, there's no python.exe in a venv folder!",
+        "A copy of Python from one version ago"
+      ],
+      "answer": 1,
+      "quip_correct": "As Claude says, venvs are cheap. Treat them as cattle, not pets",
+      "quip_wrong": "It's a common misconception (that the dev had until recently) that the python inside venv is a full python! It's not."
+    },
+    {
+      "id": "science and math_006",
+      "category": "science and math",
+      "difficulty": "hard",
+      "prompt": "Which of the following statements about Python virtual environments is FALSE?",
+      "choices": [
+        "Venvs are cheap and disposable, with a size of approximately 15 megabytes",
+        "If you upgrade or uninstall base Python, every venv built on it dies.",
+        "You can move a venv to another machine with no problems.",
+        "A conda environment DOES contain a full python, hence it is larger in size."
+      ],
+      "answer": 2,
+      "quip_correct": "You're a Python whiz!",
+      "quip_wrong": "You can't move a venv to another machine, or even another folder on the same machine, because the paths and the shim are absolute."
+    },
+    {
+      "id": "science and math_007",
+      "category": "science and math",
+      "difficulty": "hard",
+      "prompt": "When you activate a Python virtual environment and run the command 'python', what is actually being executed?",
+      "choices": [
+        "A complete standalone copy of the interpreter stored inside the venv",
+        "A small shim (size 100 kb) that forwards to the base Python installation",
+        "A symbolic link to the system's default Python interpreter",
+        "A Docker-style container isolating a full Python runtime"
+      ],
+      "answer": 1,
+      "quip_correct": "Correct, it's like a forwarding address, not a new house.",
+      "quip_wrong": "It's a shim! Sounds like a sham to me... The pyvenv.cfg stores the home path as the forwarding address."
+    },
+    {
       "id": "general_033",
       "category": "general",
       "difficulty": "hard",
@@ -3942,6 +4017,21 @@
       "answer": 3,
       "quip_correct": "Android apps! Via the Windows Subsystem for Android, though Microsoft later discontinued it.",
       "quip_wrong": "It was Android apps, through the Windows Subsystem for Android. It was later discontinued."
+    },
+    {
+      "id": "general_084",
+      "category": "general",
+      "difficulty": "easy",
+      "prompt": "A conference designed to last from 8 am to 3 pm or so is called a:",
+      "choices": [
+        "Drive-in",
+        "Fly-by",
+        "Pop-over",
+        "Pop-tart"
+      ],
+      "answer": 0,
+      "quip_correct": "Don't ask the dev to get up at 5 am for this!",
+      "quip_wrong": "Who wants to drive back and forth 2 hours in a day?"
     }
   ]
 }

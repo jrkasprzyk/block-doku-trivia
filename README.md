@@ -164,6 +164,18 @@ add_trivia                 # underscore alias
 & .venv\Scripts\python.exe -m scripts.add_trivia assets/trivia.json
 ```
 
+Quick run (no venv activation)
+
+If you prefer not to activate the venv, two small wrappers live in the repository root:
+
+- Windows batch: [add_trivia.bat](add_trivia.bat) — double-click or run from PowerShell/CMD: `.\add_trivia.bat`
+- PowerShell: [add_trivia.ps1](add_trivia.ps1) — run in PowerShell: `.\add_trivia.ps1`
+
+Both wrappers prefer the repository `.venv` Python when present and fall back to the system `python`. They forward any arguments to the script, for example:
+
+`.\add_trivia.bat assets/trivia.json`
+
+
 Extract trivia examples (see available flags below):
 
 ```powershell
