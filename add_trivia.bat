@@ -1,4 +1,4 @@
-@echo off
+REM @echo off
 REM add_trivia runner — prefer repository .venv Python if present
 setlocal
 set "ROOT=%~dp0"
@@ -10,5 +10,5 @@ if exist "%VENV_PY%" (
 ) else (
   python "%PY_SCRIPT%" %*
 )
-rem pause
+pause
 endlocal
