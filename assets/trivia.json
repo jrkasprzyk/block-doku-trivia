@@ -3479,6 +3479,21 @@
       "quip_wrong": "Don't overthink things, my friend."
     },
     {
+      "id": "music_022",
+      "category": "music",
+      "difficulty": "easy",
+      "prompt": "If you were OMC, a New Zealander writing a 90s infectious pop hit, when something strange happened you might exclaim:",
+      "choices": [
+        "How Strange",
+        "How Bizarre",
+        "How Queer",
+        "How Extraordinary"
+      ],
+      "answer": 1,
+      "quip_correct": "Oooh baby, you're makin me crazy",
+      "quip_wrong": "Brush up on your 90s hits, son"
+    },
+    {
       "id": "books_019",
       "category": "books",
       "difficulty": "easy",

@@ -112,21 +112,168 @@ void resetPalette() {
     applyPalette(kDefaultPalette);
 }
 
+// Replace Unicode characters with ASCII-friendly equivalents so the default
+// bitmap font renders sensibly instead of showing replacement glyphs.
+// Decodes the full Unicode code point and dispatches on its value so that
+// every accented Latin letter and common symbol is covered, not just a handful
+// of hard-coded byte sequences.
+std::string sanitizeText(const std::string &s) {
+    std::string out;
+    out.reserve(s.size());
+    for (size_t i = 0; i < s.size();) {
+        unsigned char c = static_cast<unsigned char>(s[i]);
+
+        // Plain ASCII: pass through unchanged.
+        if (c < 0x80) {
+            out.push_back(static_cast<char>(c));
+            ++i;
+            continue;
+        }
+
+        // Decode the Unicode code point from its UTF-8 encoding.
+        uint32_t cp = 0;
+        int seq = 1;
+        if ((c & 0xE0) == 0xC0 && i + 1 < s.size()) {
+            unsigned char c2 = static_cast<unsigned char>(s[i + 1]);
+            if ((c2 & 0xC0) == 0x80) { cp = ((c & 0x1Fu) << 6) | (c2 & 0x3Fu); seq = 2; }
+        } else if ((c & 0xF0) == 0xE0 && i + 2 < s.size()) {
+            unsigned char c2 = static_cast<unsigned char>(s[i + 1]);
+            unsigned char c3 = static_cast<unsigned char>(s[i + 2]);
+            if ((c2 & 0xC0) == 0x80 && (c3 & 0xC0) == 0x80) {
+                cp = ((c & 0x0Fu) << 12) | ((c2 & 0x3Fu) << 6) | (c3 & 0x3Fu); seq = 3;
+            }
+        } else if ((c & 0xF8) == 0xF0 && i + 3 < s.size()) {
+            unsigned char c2 = static_cast<unsigned char>(s[i + 1]);
+            unsigned char c3 = static_cast<unsigned char>(s[i + 2]);
+            unsigned char c4 = static_cast<unsigned char>(s[i + 3]);
+            if ((c2 & 0xC0) == 0x80 && (c3 & 0xC0) == 0x80 && (c4 & 0xC0) == 0x80) {
+                cp = ((c & 0x07u) << 18) | ((c2 & 0x3Fu) << 12) | ((c3 & 0x3Fu) << 6) | (c4 & 0x3Fu);
+                seq = 4;
+            }
+        }
+
+        if (seq == 1) {
+            // Malformed or lone continuation byte — skip it.
+            out.push_back('?');
+            ++i;
+            continue;
+        }
+
+        // Map the decoded code point to an ASCII-printable replacement.
+        // Common punctuation and symbols.
+        if      (cp == 0x00A0) { out.push_back(' ');    }  // non-breaking space
+        else if (cp == 0x00A1) { out.push_back('!');    }  // ¡
+        else if (cp == 0x00A9) { out.append("(c)");     }  // ©
+        else if (cp == 0x00AD) { /* soft hyphen: skip */}
+        else if (cp == 0x00AE) { out.append("(R)");     }  // ®
+        else if (cp == 0x00B0) { out.append(" deg");    }  // °
+        else if (cp == 0x00B1) { out.append("+/-");     }  // ±
+        else if (cp == 0x00B2) { out.push_back('2');    }  // ²
+        else if (cp == 0x00B3) { out.push_back('3');    }  // ³
+        else if (cp == 0x00B9) { out.push_back('1');    }  // ¹
+        else if (cp == 0x00BC) { out.append("1/4");     }  // ¼
+        else if (cp == 0x00BD) { out.append("1/2");     }  // ½
+        else if (cp == 0x00BE) { out.append("3/4");     }  // ¾
+        else if (cp == 0x00D7) { out.push_back('x');    }  // × multiplication
+        else if (cp == 0x00F7) { out.push_back('/');    }  // ÷
+        // Uppercase accented Latin (U+00C0–U+00D6, U+00D8–U+00DE)
+        else if (cp >= 0x00C0 && cp <= 0x00C5) { out.push_back('A'); }  // À-Å
+        else if (cp == 0x00C6)                 { out.append("AE");   }  // Æ
+        else if (cp == 0x00C7)                 { out.push_back('C'); }  // Ç
+        else if (cp >= 0x00C8 && cp <= 0x00CB) { out.push_back('E'); }  // È-Ë
+        else if (cp >= 0x00CC && cp <= 0x00CF) { out.push_back('I'); }  // Ì-Ï
+        else if (cp == 0x00D0)                 { out.push_back('D'); }  // Ð
+        else if (cp == 0x00D1)                 { out.push_back('N'); }  // Ñ
+        else if (cp >= 0x00D2 && cp <= 0x00D6) { out.push_back('O'); }  // Ò-Ö
+        else if (cp == 0x00D8)                 { out.push_back('O'); }  // Ø
+        else if (cp >= 0x00D9 && cp <= 0x00DC) { out.push_back('U'); }  // Ù-Ü
+        else if (cp == 0x00DD)                 { out.push_back('Y'); }  // Ý
+        else if (cp == 0x00DE)                 { out.append("Th");   }  // Þ
+        else if (cp == 0x00DF)                 { out.append("ss");   }  // ß
+        // Lowercase accented Latin (U+00E0–U+00FE)
+        else if (cp >= 0x00E0 && cp <= 0x00E5) { out.push_back('a'); }  // à-å
+        else if (cp == 0x00E6)                 { out.append("ae");   }  // æ
+        else if (cp == 0x00E7)                 { out.push_back('c'); }  // ç
+        else if (cp >= 0x00E8 && cp <= 0x00EB) { out.push_back('e'); }  // è-ë
+        else if (cp >= 0x00EC && cp <= 0x00EF) { out.push_back('i'); }  // ì-ï
+        else if (cp == 0x00F0)                 { out.push_back('d'); }  // ð
+        else if (cp == 0x00F1)                 { out.push_back('n'); }  // ñ
+        else if (cp >= 0x00F2 && cp <= 0x00F6) { out.push_back('o'); }  // ò-ö
+        else if (cp == 0x00F8)                 { out.push_back('o'); }  // ø
+        else if (cp >= 0x00F9 && cp <= 0x00FC) { out.push_back('u'); }  // ù-ü
+        else if (cp == 0x00FD || cp == 0x00FF) { out.push_back('y'); }  // ý, ÿ
+        else if (cp == 0x00FE)                 { out.append("th");   }  // þ
+        // Latin Extended-A (select common ones)
+        else if (cp == 0x0131)                 { out.push_back('i'); }  // ı dotless i
+        else if (cp == 0x0152)                 { out.append("OE");   }  // Œ
+        else if (cp == 0x0153)                 { out.append("oe");   }  // œ
+        else if (cp == 0x0160 || cp == 0x0161) { out.push_back('s'); }  // Š, š
+        else if (cp == 0x017D || cp == 0x017E) { out.push_back('z'); }  // Ž, ž
+        // Typographic punctuation and symbols (U+2000–U+206F block)
+        else if (cp == 0x2013) { out.push_back('-');   }  // en dash –
+        else if (cp == 0x2014) { out.push_back('-');   }  // em dash —
+        else if (cp == 0x2018) { out.push_back('\'');  }  // left single quote '
+        else if (cp == 0x2019) { out.push_back('\'');  }  // right single quote '
+        else if (cp == 0x201A) { out.push_back(',');   }  // single low-9 quote ‚
+        else if (cp == 0x201C) { out.push_back('"');   }  // left double quote "
+        else if (cp == 0x201D) { out.push_back('"');   }  // right double quote "
+        else if (cp == 0x201E) { out.push_back('"');   }  // double low-9 quote „
+        else if (cp == 0x2022) { out.push_back('-');   }  // bullet •
+        else if (cp == 0x2026) { out.append("...");    }  // ellipsis …
+        else if (cp == 0x2122) { out.append("TM");     }  // trademark ™
+        else if (cp == 0x2212) { out.push_back('-');   }  // minus sign −
+        // Anything else: render a placeholder.
+        else { out.push_back('?'); }
+
+        i += static_cast<size_t>(seq);
+    }
+    return out;
+}
+
 // Greedy word-wrap: split `text` into lines that fit within `maxWidth` px at `fontSize`.
 std::vector<std::string> wrapText(const std::string& text, int maxWidth, int fontSize) {
+    const std::string safe = sanitizeText(text);
+
     std::vector<std::string> lines;
-    std::istringstream stream(text);
-    std::string word, current;
-    while (stream >> word) {
-        std::string candidate = current.empty() ? word : current + " " + word;
-        if (MeasureText(candidate.c_str(), fontSize) <= maxWidth) {
-            current = candidate;
-        } else {
-            if (!current.empty()) lines.push_back(current);
-            current = word;
+    // Wrap per-paragraph (respect explicit newlines)
+    std::istringstream paraStream(safe);
+    std::string paragraph;
+    const Font font = GetFontDefault();
+    const float spacing = 0.0f;
+    while (std::getline(paraStream, paragraph)) {
+        std::istringstream stream(paragraph);
+        std::string word, current;
+        while (stream >> word) {
+            std::string candidate = current.empty() ? word : current + " " + word;
+            if (MeasureTextEx(font, candidate.c_str(), static_cast<float>(fontSize), spacing).x <= (float)maxWidth) {
+                current = candidate;
+            } else {
+                if (!current.empty()) lines.push_back(current);
+                // If single word is too long, break it into chunks
+                if (MeasureTextEx(font, word.c_str(), static_cast<float>(fontSize), spacing).x <= (float)maxWidth) {
+                    current = word;
+                } else {
+                    // break long word
+                    std::string piece;
+                    for (size_t i = 0; i < word.size();) {
+                        // append one byte at a time (sanitized text should be mostly ASCII)
+                        piece.push_back(word[i]);
+                        ++i;
+                        if (MeasureTextEx(font, piece.c_str(), static_cast<float>(fontSize), spacing).x > (float)maxWidth) {
+                            // remove last char and push
+                            piece.pop_back();
+                            if (!piece.empty()) lines.push_back(piece);
+                            piece.clear();
+                        }
+                    }
+                    if (!piece.empty()) current = piece; else current.clear();
+                }
+            }
         }
+        if (!current.empty()) lines.push_back(current);
+        // preserve a paragraph break as an empty line
+        if (!paragraph.empty() && !paraStream.eof()) lines.push_back(std::string());
     }
-    if (!current.empty()) lines.push_back(current);
     return lines;
 }
 
@@ -758,17 +905,18 @@ void Renderer::drawTriviaModal(const Question& q, int selected,
 
     // Category + difficulty badges (top row).
     const int kBadgeSize = std::max(10, static_cast<int>(14 * s));
-    DrawText(q.category.c_str(),   panelX + pad, panelY + static_cast<int>(10 * s), kBadgeSize, {200, 156, 50, 200});
-    const char* diff = q.difficulty.c_str();
-    const int dw = MeasureText(diff, kBadgeSize);
-    DrawText(diff, panelX + kPanelW - pad - dw, panelY + static_cast<int>(10 * s), kBadgeSize, {130, 148, 175, 200});
+    const std::string catSan = sanitizeText(q.category);
+    DrawText(catSan.c_str(),   panelX + pad, panelY + static_cast<int>(10 * s), kBadgeSize, {200, 156, 50, 200});
+    const std::string diffSan = sanitizeText(q.difficulty);
+    const int dw = static_cast<int>(MeasureTextEx(GetFontDefault(), diffSan.c_str(), static_cast<float>(kBadgeSize), 0.0f).x);
+    DrawText(diffSan.c_str(), panelX + kPanelW - pad - dw, panelY + static_cast<int>(10 * s), kBadgeSize, {130, 148, 175, 200});
 
     // Question text — word-wrapped.
     const int kQSize  = std::max(14, static_cast<int>(19 * s));
     const int kQTextW = kPanelW - pad * 2;
-    const auto lines = wrapText(q.prompt, kQTextW, kQSize);
+    const auto qLines = wrapText(q.prompt, kQTextW, kQSize);
     int qY = panelY + static_cast<int>(34 * s);
-    for (const auto& line : lines) {
+    for (const auto& line : qLines) {
         DrawText(line.c_str(), panelX + pad, qY, kQSize, kTextColor);
         qY += kQSize + static_cast<int>(4 * s);
     }
@@ -803,32 +951,61 @@ void Renderer::drawTriviaModal(const Question& q, int selected,
         DrawText(label, panelX + pad + static_cast<int>(12 * s), choiceY + (kChoiceH - kChoiceSize) / 2,
                  kChoiceSize, {170, 185, 210, 255});
 
-        // Choice text.
-        DrawText(q.choices[i].c_str(), panelX + pad + static_cast<int>(30 * s), choiceY + (kChoiceH - kChoiceSize) / 2,
-                 kChoiceSize, kTextColor);
+        // Choice text — sanitize and wrap to avoid overflow.
+        const int textX = panelX + pad + static_cast<int>(30 * s);
+        const int textW = kPanelW - pad * 2 - static_cast<int>(30 * s);
+        const std::string choiceSan = sanitizeText(q.choices[i]);
+        const auto choiceLines = wrapText(choiceSan, textW, kChoiceSize);
+        const int lineGap = std::max(2, static_cast<int>(4 * s));
+        const int totalH = static_cast<int>(choiceLines.size()) * (kChoiceSize + lineGap) - lineGap;
+        int ly = choiceY + (kChoiceH - totalH) / 2;
+        for (const auto &ln : choiceLines) {
+            DrawText(ln.c_str(), textX, ly, kChoiceSize, kTextColor);
+            ly += kChoiceSize + lineGap;
+        }
 
-        choiceY += kChoiceH;
+        // Advance by the taller of the fixed slot height and the actual wrapped text height
+        // so that multi-line choices don't cause subsequent rows to overlap.
+        const int rowH = std::max(kChoiceH, totalH + static_cast<int>(4 * s));
+        choiceY += rowH;
     }
 
-    // Feedback row (shown after answering).
+    // Feedback row (shown after answering) — sanitize and allow wrapping of the
+    // optional quip so long lines don't overflow the panel.
     if (answered) {
-        const int feedY    = panelY + kPanelH - static_cast<int>(80 * s);
         const int feedSize = std::max(13, static_cast<int>(18 * s));
-        if (correct) {
-            const std::string msg = quip.empty() ? "CORRECT!" : "CORRECT!  " + quip;
-            DrawText(msg.c_str(), panelX + pad, feedY, feedSize, {100, 220, 100, 255});
-        } else {
-            const std::string msg = quip.empty() ? "WRONG." : "WRONG.  " + quip;
-            DrawText(msg.c_str(), panelX + pad, feedY, feedSize, {220, 80, 80, 255});
+        const int feedW    = kPanelW - pad * 2;
+        const int feedGap  = std::max(4, static_cast<int>(6 * s));
+        // The hint line sits at kPanelH - 26*s from the panel top.  Keep all
+        // feed lines above it so nothing bleeds outside the panel.
+        const int feedClipBottom = panelY + kPanelH - static_cast<int>(30 * s);
+
+        const std::string msg = correct
+            ? (quip.empty() ? "CORRECT!" : "CORRECT!  " + quip)
+            : (quip.empty() ? "WRONG."   : "WRONG.  "  + quip);
+        const auto feedLines = wrapText(msg, feedW, feedSize);
+
+        // Anchor the block so it ends at the clip boundary.
+        const int totalFeedH = static_cast<int>(feedLines.size()) * (feedSize + feedGap) - feedGap;
+        int fy = feedClipBottom - totalFeedH;
+        // Never start above the choices area.
+        fy = std::max(fy, panelY + static_cast<int>(190 * s));
+
+        const Color feedColor = correct ? Color{100, 220, 100, 255} : Color{220, 80, 80, 255};
+        for (const auto &ln : feedLines) {
+            if (fy + feedSize > feedClipBottom) break; // hard clip at panel edge
+            DrawText(ln.c_str(), panelX + pad, fy, feedSize, feedColor);
+            fy += feedSize + feedGap;
         }
     }
 
     // Hint line at the bottom.
-    const char* hint = answered ? "Press any key / click to continue"
-                                : "Click / 1-4 / \x18\x19 to choose   Enter / A to confirm";
+    const char* hintSrc = answered ? "Press any key / click to continue"
+                                   : "Click / 1-4 / \x18\x19 to choose   Enter / A to confirm";
+    const std::string hint = sanitizeText(std::string(hintSrc));
     const int kHintSize = std::max(10, static_cast<int>(14 * s));
-    const int hw = MeasureText(hint, kHintSize);
-    DrawText(hint, panelX + (kPanelW - hw) / 2, panelY + kPanelH - static_cast<int>(26 * s),
+    const int hw = static_cast<int>(MeasureTextEx(GetFontDefault(), hint.c_str(), static_cast<float>(kHintSize), 0.0f).x);
+    DrawText(hint.c_str(), panelX + (kPanelW - hw) / 2, panelY + kPanelH - static_cast<int>(26 * s),
              kHintSize, {130, 148, 175, 255});
 }
 

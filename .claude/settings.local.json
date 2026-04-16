@@ -81,7 +81,8 @@
       "Bash(rm scripts/add_batch.py)",
       "Bash(.venv/Scripts/python.exe -c ':*)",
       "Bash(python scripts/add_windows_trivia.py)",
-      "Bash(python scripts/validate_trivia.py)"
+      "Bash(python scripts/validate_trivia.py)",
+      "Bash(node -e ' *)"
     ]
   }
 }
