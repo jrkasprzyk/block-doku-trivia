@@ -1,3 +1,26 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core>=1.5.0"]
+build-backend = "poetry.core.masonry.api"
+
+[project]
+name = "block-doku-trivia"
+version = "0.1.0"
+description = "CLI helpers and scripts for block-doku-trivia"
+readme = "README.md"
+requires-python = ">=3.10,<4.0"
+dependencies = [
+	"promptukit",
+]
+
+[project.scripts]
+add-trivia = "scripts.add_trivia:main"
+add_trivia = "scripts.add_trivia:main"
+extract-trivia = "scripts.extract_trivia:main"
+extract_trivia = "scripts.extract_trivia:main"
+validate-trivia = "scripts.validate_trivia:main"
+validate_trivia = "scripts.validate_trivia:main"
+convert-audio = "scripts.convert_audio:main"
+convert_audio = "scripts.convert_audio:main"
+
+[tool.poetry]
+packages = [ { include = "scripts" } ]
