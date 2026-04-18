@@ -26,14 +26,18 @@
 
 - We fixed the scaling behavior, so that the game looks nice when it is fullscreen
 
+- Now the trivia-related stuff has been migrated to the new python package, promptukit
+
 ## Claude suggestions about overall workflow
 - [ ] Commit a little CONTRIBUTING.md or docs/trivia-style-guide.md to the repo that captures the rules in human-readable form. Future-you (and any collaborators, including any future Claude session that needs to understand the project) will benefit from having the style explicit and version-controlled rather than living only inside a Claude Code skill file. The skill enforces it; the doc explains why. The "as of 2024" rule deserves a footnote explaining that it exists because of an Academy Awards Trivial Pursuit incident in (year), and that Lauren was right. Note: I have added new material to the audit-trivia.md file (and will add more as new ideas surface)
 
-## Bugs
+## Bugs with Partial Fixes
 
 - [ ] Within the trivia questions and answers, some characters don't render properly, rendering a ? instead of another symbol. 
 
 - [ ] Text also goes outside of the boxes sometimes; the quips should be able to word-wrap!
+
+## Potential Enhancement
 
 - [ ] We should reconsider how the 'streak' is used. I guess it resets after you've answered a 4th question in a row, but it shouldn't. Perhaps a streak of 3 could give you tokens that could be used to save you for getting a question wrong? and it could also save you from dying by allowing you to remove a few grid boxes of your choosing?
 
