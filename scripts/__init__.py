@@ -1,10 +1,11 @@
 """Package marker for the scripts module so it can be installed editable.
 
-This file intentionally left minimal.
+Most of the real work lives in the ``promptukit`` package; the modules in
+this directory are thin shims that default paths to this repo's assets.
 """
 
 __all__ = [
     "add_trivia",
     "extract_trivia",
-    "cli_helpers",
+    "validate_trivia",
 ]

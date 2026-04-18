@@ -82,7 +82,10 @@
       "Bash(.venv/Scripts/python.exe -c ':*)",
       "Bash(python scripts/add_windows_trivia.py)",
       "Bash(python scripts/validate_trivia.py)",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "Bash(python -c \"import promptukit; print\\(promptukit.__file__\\)\")",
+      "Bash(.venv/Scripts/python.exe scripts/extract_trivia.py --list-categories)",
+      "Bash(.venv/Scripts/python.exe -c \"from scripts import add_trivia, extract_trivia, validate_trivia; print\\('add:', add_trivia.main\\); print\\('extract:', extract_trivia.main\\); print\\('validate:', validate_trivia.main\\)\")"
     ]
   }
 }
