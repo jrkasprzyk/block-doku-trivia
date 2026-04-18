@@ -12,7 +12,8 @@ Usage examples:
 - Serve the trivia over HTTP (useful for local development):
 
 ```sh
-python -m scripts.trivia_api serve --port 8000 --open
+# --cors is required when the game runs from a browser (cross-origin request)
+python -m scripts.trivia_api serve --cors --port 8000 --open
 ```
 
 - Print the current trivia JSON to stdout:

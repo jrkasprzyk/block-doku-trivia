@@ -2024,6 +2024,36 @@
       "quip_wrong": "It's a shim! Sounds like a sham to me... The pyvenv.cfg stores the home path as the forwarding address."
     },
     {
+      "id": "science and math_008",
+      "category": "science and math",
+      "difficulty": "hard",
+      "prompt": "Which of the following statements about the dollar sign ($) is true?",
+      "choices": [
+        "The dollar sign is shown only on the US Dollar",
+        "The dollar sign is shown on the Singaporean Dollar but no other",
+        "The dollar sign is on the US, Canadian, and Singaporean Dollar",
+        "The dollar sign is shown on neither the US, Canadian, nor Singaporean Dollar"
+      ],
+      "answer": 3,
+      "quip_correct": "Isn't that wild? And yet they all use the same dollar sign!",
+      "quip_wrong": "A theory suggests that the word dollar comes from a German word that ended in 'thaler'"
+    },
+    {
+      "id": "science and math_009",
+      "category": "science and math",
+      "difficulty": "hard",
+      "prompt": "The peso, dram, and pound got their names from which physical quantity?",
+      "choices": [
+        "length",
+        "weight",
+        "time",
+        "temperature"
+      ],
+      "answer": 1,
+      "quip_correct": "Kind of like a dram of whiskey?",
+      "quip_wrong": "A pound of prevention worth an ounce of cure."
+    },
+    {
       "id": "general_033",
       "category": "general",
       "difficulty": "hard",
@@ -4098,7 +4128,12 @@
       "category": "pop",
       "difficulty": "easy",
       "prompt": "On 'The Fresh Prince of Bel-Air,' what city does Will move from to live with his wealthy relatives?",
-      "choices": ["Philadelphia", "Baltimore", "Detroit", "Chicago"],
+      "choices": [
+        "Philadelphia",
+        "Baltimore",
+        "Detroit",
+        "Chicago"
+      ],
       "answer": 0,
       "quip_correct": "West Philly, born and raised.",
       "quip_wrong": "He came from West Philadelphia — stone for you."
@@ -4108,7 +4143,12 @@
       "category": "pop",
       "difficulty": "easy",
       "prompt": "In 'I Love Lucy,' what is Lucy's husband's full name?",
-      "choices": ["Fred Mertz", "Ricky Ricardo", "Desi Mertz", "Ricky Arnaz"],
+      "choices": [
+        "Fred Mertz",
+        "Ricky Ricardo",
+        "Desi Mertz",
+        "Ricky Arnaz"
+      ],
       "answer": 1,
       "quip_correct": "Luuucy, you got it right!",
       "quip_wrong": "Luuucy, you got some explaining to do."
@@ -4118,7 +4158,12 @@
       "category": "pop",
       "difficulty": "easy",
       "prompt": "On 'Family Matters,' which catchphrase is Steve Urkel famous for?",
-      "choices": ["How rude!", "Have mercy!", "Did I do that?", "Ay, caramba!"],
+      "choices": [
+        "How rude!",
+        "Have mercy!",
+        "Did I do that?",
+        "Ay, caramba!"
+      ],
       "answer": 2,
       "quip_correct": "Did you do that? Yes — nailed it.",
       "quip_wrong": "Stone — 'Did I do that?' was Urkel's line."
@@ -4128,7 +4173,12 @@
       "category": "pop",
       "difficulty": "easy",
       "prompt": "In 'Full House,' which actor played Uncle Jesse?",
-      "choices": ["Dave Coulier", "Bob Saget", "Scott Weinger", "John Stamos"],
+      "choices": [
+        "Dave Coulier",
+        "Bob Saget",
+        "Scott Weinger",
+        "John Stamos"
+      ],
       "answer": 3,
       "quip_correct": "Have mercy — John Stamos owned that role.",
       "quip_wrong": "Have mercy — it was John Stamos."
@@ -4138,7 +4188,12 @@
       "category": "pop",
       "difficulty": "easy",
       "prompt": "On 'Happy Days,' what is the Fonz's real first name?",
-      "choices": ["Arthur", "Ralph", "Henry", "Richie"],
+      "choices": [
+        "Arthur",
+        "Ralph",
+        "Henry",
+        "Richie"
+      ],
       "answer": 0,
       "quip_correct": "Ayyy! Arthur Fonzarelli, in the flesh.",
       "quip_wrong": "Ayyy — it's Arthur. Stone for you."
@@ -4148,7 +4203,12 @@
       "category": "pop",
       "difficulty": "easy",
       "prompt": "On 'Married... with Children,' what is Al Bundy's occupation?",
-      "choices": ["Car mechanic", "Shoe salesman", "Insurance agent", "Plumber"],
+      "choices": [
+        "Car mechanic",
+        "Shoe salesman",
+        "Insurance agent",
+        "Plumber"
+      ],
       "answer": 1,
       "quip_correct": "Four touchdowns in one game, now selling shoes.",
       "quip_wrong": "Stone — Al Bundy sold shoes."
@@ -4158,7 +4218,12 @@
       "category": "pop",
       "difficulty": "easy",
       "prompt": "Which city is the sitcom 'Friends' set in?",
-      "choices": ["Boston", "Chicago", "New York City", "Los Angeles"],
+      "choices": [
+        "Boston",
+        "Chicago",
+        "New York City",
+        "Los Angeles"
+      ],
       "answer": 2,
       "quip_correct": "Could it BE any more New York?",
       "quip_wrong": "Stone — they were in New York City."
@@ -4168,7 +4233,12 @@
       "category": "pop",
       "difficulty": "medium",
       "prompt": "In what year did Nick at Nite, Nickelodeon's classic TV programming block, launch?",
-      "choices": ["1979", "1981", "1983", "1985"],
+      "choices": [
+        "1979",
+        "1981",
+        "1983",
+        "1985"
+      ],
       "answer": 3,
       "quip_correct": "July 1, 1985 — the night TV got nostalgic.",
       "quip_wrong": "Stone — Nick at Nite launched in 1985."
@@ -4178,7 +4248,12 @@
       "category": "pop",
       "difficulty": "medium",
       "prompt": "What was the first TV show to air on Nick at Nite when it launched in July 1985?",
-      "choices": ["The Donna Reed Show", "I Love Lucy", "Bewitched", "The Brady Bunch"],
+      "choices": [
+        "The Donna Reed Show",
+        "I Love Lucy",
+        "Bewitched",
+        "The Brady Bunch"
+      ],
       "answer": 0,
       "quip_correct": "Donna Reed opened the first night of Nick at Nite.",
       "quip_wrong": "Stone — The Donna Reed Show kicked it off."
@@ -4188,7 +4263,12 @@
       "category": "pop",
       "difficulty": "medium",
       "prompt": "'Laverne & Shirley,' a hit comedy set in 1950s Milwaukee, was a spin-off of which show?",
-      "choices": ["Mork & Mindy", "Happy Days", "Joanie Loves Chachi", "The Fonz & Friends"],
+      "choices": [
+        "Mork & Mindy",
+        "Happy Days",
+        "Joanie Loves Chachi",
+        "The Fonz & Friends"
+      ],
       "answer": 1,
       "quip_correct": "Schlemiel! Schlimazel! Born straight from Happy Days.",
       "quip_wrong": "Stone — Laverne & Shirley spun off from Happy Days."
@@ -4198,7 +4278,12 @@
       "category": "pop",
       "difficulty": "medium",
       "prompt": "On 'Three's Company,' Don Knotts joined the cast after the Ropers departed. What was his character's name?",
-      "choices": ["Ed Norton", "Stan Roper", "Ralph Furley", "Bert Furley"],
+      "choices": [
+        "Ed Norton",
+        "Stan Roper",
+        "Ralph Furley",
+        "Bert Furley"
+      ],
       "answer": 2,
       "quip_correct": "Ralph Furley — Don Knotts at his comedic best.",
       "quip_wrong": "Stone — Don Knotts played Ralph Furley."
@@ -4208,7 +4293,12 @@
       "category": "pop",
       "difficulty": "medium",
       "prompt": "In 'Growing Pains,' Jason Seaver works from home as what kind of doctor?",
-      "choices": ["Cardiologist", "Pediatrician", "Dentist", "Psychiatrist"],
+      "choices": [
+        "Cardiologist",
+        "Pediatrician",
+        "Dentist",
+        "Psychiatrist"
+      ],
       "answer": 3,
       "quip_correct": "Shrinking heads from home — dad of the year.",
       "quip_wrong": "Stone — Jason Seaver was a psychiatrist."
@@ -4218,7 +4308,12 @@
       "category": "pop",
       "difficulty": "medium",
       "prompt": "What is Cosmo Kramer's first name on 'Seinfeld,' as revealed in a late-season episode?",
-      "choices": ["Cosmo", "Kenneth", "Eugene", "Martin"],
+      "choices": [
+        "Cosmo",
+        "Kenneth",
+        "Eugene",
+        "Martin"
+      ],
       "answer": 0,
       "quip_correct": "Cosmo — the man, the myth, the slide.",
       "quip_wrong": "Stone — Kramer's first name is Cosmo."
@@ -4228,7 +4323,12 @@
       "category": "pop",
       "difficulty": "medium",
       "prompt": "In 'All in the Family,' which New York City borough does Archie Bunker call home?",
-      "choices": ["The Bronx", "Queens", "Brooklyn", "Staten Island"],
+      "choices": [
+        "The Bronx",
+        "Queens",
+        "Brooklyn",
+        "Staten Island"
+      ],
       "answer": 1,
       "quip_correct": "704 Hauser Street, Queens — ground zero for TV's great debates.",
       "quip_wrong": "Stone — Archie lived in Queens."
@@ -4238,7 +4338,12 @@
       "category": "pop",
       "difficulty": "hard",
       "prompt": "The sitcom 'Taxi' is set at a fictional New York City cab company. What is it called?",
-      "choices": ["City Cab", "Yellow Cab", "Sunshine Cab Company", "Manhattan Taxi"],
+      "choices": [
+        "City Cab",
+        "Yellow Cab",
+        "Sunshine Cab Company",
+        "Manhattan Taxi"
+      ],
       "answer": 2,
       "quip_correct": "All hail the Sunshine Cab Company.",
       "quip_wrong": "Stone — it was Sunshine Cab Company."
@@ -4248,7 +4353,12 @@
       "category": "pop",
       "difficulty": "hard",
       "prompt": "On 'The Dick Van Dyke Show,' boss Alan Brady was rarely seen on screen. Which comedian played him — and also created the show?",
-      "choices": ["Danny Thomas", "Sheldon Leonard", "Morey Amsterdam", "Carl Reiner"],
+      "choices": [
+        "Danny Thomas",
+        "Sheldon Leonard",
+        "Morey Amsterdam",
+        "Carl Reiner"
+      ],
       "answer": 3,
       "quip_correct": "Carl Reiner created the show AND played the unseen boss.",
       "quip_wrong": "Stone — Carl Reiner played Alan Brady."
@@ -4258,7 +4368,12 @@
       "category": "pop",
       "difficulty": "hard",
       "prompt": "In 'Seinfeld,' Jerry and George pitch a TV show to NBC. What is that show called?",
-      "choices": ["Jerry", "Nothing", "The Pilot", "New York Stories"],
+      "choices": [
+        "Jerry",
+        "Nothing",
+        "The Pilot",
+        "New York Stories"
+      ],
       "answer": 0,
       "quip_correct": "A show called 'Jerry' — very meta, very Seinfeld.",
       "quip_wrong": "Stone — the show-within-a-show was 'Jerry.'"
@@ -4268,7 +4383,12 @@
       "category": "pop",
       "difficulty": "hard",
       "prompt": "On 'The Mary Tyler Moore Show,' what fictional Minneapolis TV station does Mary Richards work at?",
-      "choices": ["WCCO", "WJM-TV", "KSTP", "KARE"],
+      "choices": [
+        "WCCO",
+        "WJM-TV",
+        "KSTP",
+        "KARE"
+      ],
       "answer": 1,
       "quip_correct": "WJM-TV — she turned the world on with her smile.",
       "quip_wrong": "Stone — she worked at WJM-TV."
@@ -4278,7 +4398,12 @@
       "category": "pop",
       "difficulty": "hard",
       "prompt": "On 'Bewitched,' what is the name of Samantha's mortal husband?",
-      "choices": ["Larry Tate", "Arthur Hartley", "Darrin Stephens", "Roger Healey"],
+      "choices": [
+        "Larry Tate",
+        "Arthur Hartley",
+        "Darrin Stephens",
+        "Roger Healey"
+      ],
       "answer": 2,
       "quip_correct": "Poor Darrin — married a witch and couldn't win.",
       "quip_wrong": "Stone — his name was Darrin Stephens."
@@ -4288,7 +4413,12 @@
       "category": "pop",
       "difficulty": "hard",
       "prompt": "Which classic sitcom was among the first American TV programs to depict a pregnancy on screen, in episodes airing in 1952-53?",
-      "choices": ["Make Room for Daddy", "The Burns and Allen Show", "Leave It to Beaver", "I Love Lucy"],
+      "choices": [
+        "Make Room for Daddy",
+        "The Burns and Allen Show",
+        "Leave It to Beaver",
+        "I Love Lucy"
+      ],
       "answer": 3,
       "quip_correct": "Lucy's real pregnancy made TV history in 1952.",
       "quip_wrong": "Stone — Lucy was TV's trailblazing expectant mom."

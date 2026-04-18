@@ -199,6 +199,16 @@ validate-trivia             # uses assets/trivia.json by default
 validate_trivia assets/trivia.json
 ```
 
+Serve trivia over HTTP (e.g. for local frontend development):
+
+```powershell
+# --cors is required when the game runs from a browser (cross-origin request)
+serve-trivia --cors
+
+# custom host/port and auto-open browser
+serve-trivia --cors --host 0.0.0.0 --port 9000 --open
+```
+
 Convert audio examples:
 
 ```powershell
@@ -226,6 +236,11 @@ Quick CLI reference (major flags)
    - `--json-lines` — output items as JSON Lines
    - `-i/--interactive` — interactive picker
 - `validate-trivia [path]` — validate schema and content; optional path (default `assets/trivia.json`).
+- `serve-trivia`:
+   - `--cors` — enable CORS headers (required for browser clients; default: off)
+   - `--host HOST` — bind address (default: `127.0.0.1`)
+   - `--port PORT` — port to listen on (default: `8000`)
+   - `--open` — open the browser automatically after starting
 - `convert-audio`:
    - `--file` — convert a single file
    - `--src` — source directory to scan (default: `assets`)
@@ -243,6 +258,7 @@ Notes:
 - `extract-trivia` — extract/list trivia fields (maps to `scripts.extract_trivia:main`)
 - `validate-trivia` — validate the trivia JSON (maps to `scripts.validate_trivia:main`)
 - `convert-audio` — audio conversion helpers (maps to `scripts.convert_audio:main`)
+- `serve-trivia` — HTTP server for the trivia JSON (maps to `scripts.trivia_api:main`)
 
 Within Python code you can now import the shared helpers directly:
 

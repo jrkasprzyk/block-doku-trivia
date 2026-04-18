@@ -17,6 +17,7 @@ import threading
 import webbrowser
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+from urllib.parse import urlparse, parse_qs
 from pathlib import Path
 from typing import Any, Dict, Optional
 
@@ -68,10 +69,25 @@ def write_canonical(source: Optional[str] = None, force: bool = False) -> Path:
 
 class _Handler(SimpleHTTPRequestHandler):
     def do_GET(self):
-        if self.path.rstrip("/") == "/trivia":
+        parsed = urlparse(self.path)
+        path = parsed.path
+        qs = parse_qs(parsed.query)
+
+        if path.rstrip("/") == "/trivia":
             try:
                 data = load_trivia()
-                payload = json.dumps(data, ensure_ascii=False).encode("utf-8")
+                # Allow clients to request the raw questions array for compatibility
+                raw = False
+                if qs.get("raw", ["0"])[0].lower() in ("1", "true", "yes"):
+                    raw = True
+                if any(v.lower() == "array" for v in qs.get("format", [])):
+                    raw = True
+
+                payload_obj = data
+                if raw and isinstance(data, dict) and "questions" in data:
+                    payload_obj = data["questions"]
+
+                payload = json.dumps(payload_obj, ensure_ascii=False).encode("utf-8")
                 self.send_response(HTTPStatus.OK)
                 self.send_header("Content-Type", "application/json; charset=utf-8")
                 self.send_header("Content-Length", str(len(payload)))
@@ -80,23 +96,73 @@ class _Handler(SimpleHTTPRequestHandler):
             except Exception as exc:  # pragma: no cover - simple CLI helper
                 self.send_error(HTTPStatus.INTERNAL_SERVER_ERROR, str(exc))
             return
-        if self.path in ("/", ""):
+
+        if path in ("/questions", "/questions.json"):
+            try:
+                data = load_trivia()
+                payload_obj = data["questions"] if isinstance(data, dict) and "questions" in data else data
+                payload = json.dumps(payload_obj, ensure_ascii=False).encode("utf-8")
+                self.send_response(HTTPStatus.OK)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Content-Length", str(len(payload)))
+                self.end_headers()
+                self.wfile.write(payload)
+            except Exception as exc:  # pragma: no cover - simple CLI helper
+                self.send_error(HTTPStatus.INTERNAL_SERVER_ERROR, str(exc))
+            return
+
+        if path in ("/", ""):
             self.send_response(HTTPStatus.OK)
             self.send_header("Content-Type", "text/plain; charset=utf-8")
             self.end_headers()
             self.wfile.write(b"/trivia -> JSON\n")
             return
+
         return super().do_GET()
 
 
-def serve(host: str = "127.0.0.1", port: int = 8000, open_browser: bool = False) -> None:
+def serve(host: str = "127.0.0.1", port: int = 8000, open_browser: bool = False, cors: bool = False) -> None:
     addr = (host, port)
-    server = ThreadingHTTPServer(addr, _Handler)
+
+    HandlerClass = _Handler
+    if cors:
+        # Prefer the project's serve_with_cors implementation if available; otherwise
+        # provide a minimal CORS mixin so /trivia responses include Access-Control headers.
+        _swc = None
+        try:
+            from . import serve_with_cors as _swc  # package relative import
+        except Exception:
+            try:
+                import serve_with_cors as _swc  # fallback to top-level import
+            except Exception:
+                _swc = None
+
+        if _swc is not None and hasattr(_swc, "CORSRequestHandler"):
+            BaseCors = _swc.CORSRequestHandler
+            HandlerClass = type("CORSHandler", (_Handler, BaseCors), {})
+        else:
+            class _CorsMixin:
+                def end_headers(self):
+                    self.send_header("Access-Control-Allow-Origin", "*")
+                    self.send_header("Access-Control-Allow-Methods", "GET, OPTIONS")
+                    self.send_header("Access-Control-Allow-Headers", "Content-Type")
+                    super().end_headers()
+
+                def do_OPTIONS(self):
+                    self.send_response(HTTPStatus.OK)
+                    self.send_header("Access-Control-Allow-Origin", "*")
+                    self.send_header("Access-Control-Allow-Methods", "GET, OPTIONS")
+                    self.send_header("Access-Control-Allow-Headers", "Content-Type")
+                    self.end_headers()
+
+            HandlerClass = type("CORSHandler", (_Handler, _CorsMixin), {})
+
+    server = ThreadingHTTPServer(addr, HandlerClass)
     url = f"http://{host}:{port}/trivia"
     if open_browser:
         threading.Timer(0.25, lambda: webbrowser.open(url)).start()
     try:
-        print(f"Serving trivia at {url}")
+        print(f"Serving trivia at {url} (CORS={'on' if cors else 'off'})")
         server.serve_forever()
     except KeyboardInterrupt:
         print("Shutting down server")
@@ -111,6 +177,7 @@ def _main(argv: Optional[list[str]] = None) -> int:
     p_serve.add_argument("--host", default="127.0.0.1")
     p_serve.add_argument("--port", type=int, default=8000)
     p_serve.add_argument("--open", action="store_true", help="Open browser to the /trivia URL")
+    p_serve.add_argument("--cors", action="store_true", help="Enable CORS headers (uses scripts/serve_with_cors if available)")
 
     p_load = sub.add_parser("load", help="Load trivia JSON and print to stdout")
     p_load.add_argument("--path", default=None)
@@ -125,7 +192,7 @@ def _main(argv: Optional[list[str]] = None) -> int:
 
     args = parser.parse_args(argv)
     if args.cmd == "serve":
-        serve(args.host, args.port, args.open)
+        serve(args.host, args.port, args.open, cors=getattr(args, "cors", False))
         return 0
     if args.cmd == "load":
         data = load_trivia(args.path)
