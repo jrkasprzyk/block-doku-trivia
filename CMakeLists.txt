@@ -17,6 +17,27 @@ if(MSVC)
     add_compile_options(/W4 /MP /utf-8 /EHsc)
 endif()
 
+# Trivia JSON — downloaded from jsdelivr at configure time and bundled with the build.
+# Bump TRIVIA_VERSION here when a new release of promptukit is tagged.
+set(TRIVIA_VERSION "0.1.300")
+set(TRIVIA_URL
+    "https://cdn.jsdelivr.net/gh/jrkasprzyk/promptukit@v${TRIVIA_VERSION}/promptukit/data/question_banks/jrb_industries_trivia.json")
+set(TRIVIA_DEST "${CMAKE_CURRENT_BINARY_DIR}/jrb_industries_trivia.json")
+set(TRIVIA_FALLBACK "${CMAKE_SOURCE_DIR}/assets/jrb_industries_trivia.${TRIVIA_VERSION}.json")
+
+message(STATUS "Fetching trivia v${TRIVIA_VERSION} from jsdelivr...")
+file(DOWNLOAD "${TRIVIA_URL}" "${TRIVIA_DEST}"
+    STATUS _dl_status
+    TIMEOUT 15
+)
+list(GET _dl_status 0 _dl_code)
+if(_dl_code EQUAL 0)
+    message(STATUS "Trivia download OK (v${TRIVIA_VERSION})")
+else()
+    message(WARNING "Trivia download failed (${_dl_status}) — using local fallback: ${TRIVIA_FALLBACK}")
+    configure_file("${TRIVIA_FALLBACK}" "${TRIVIA_DEST}" COPYONLY)
+endif()
+
 find_package(raylib CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 
@@ -35,10 +56,13 @@ target_link_libraries(trivia_doku PRIVATE
     nlohmann_json::nlohmann_json
 )
 
-# Copy assets next to the executable so the game can find trivia.json at runtime.
-# On Windows multi-config generators the exe lives in build/Release/, build/Debug/, etc.
+# Copy assets next to the executable. On Windows multi-config generators the exe
+# lives in build/Release/, build/Debug/, etc.
 add_custom_command(TARGET trivia_doku POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/assets
         $<TARGET_FILE_DIR:trivia_doku>/assets
+    COMMAND ${CMAKE_COMMAND} -E copy
+        ${TRIVIA_DEST}
+        $<TARGET_FILE_DIR:trivia_doku>/assets/jrb_industries_trivia.json
 )

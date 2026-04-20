@@ -236,7 +236,7 @@ int main() {
     td::Board    board;
     td::Renderer renderer(layout);
     td::TriviaBank triviaBank;
-    triviaBank.loadFromFile("assets/trivia.json");
+    triviaBank.loadFromFile("assets/jrb_industries_trivia.json");
 
     // Optional: initialize audio and attempt to load conventionally-named assets
     // (no-op if files don't exist). User-provided assets should live under
